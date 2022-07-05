@@ -14,7 +14,8 @@
       "@loaders/*": ["./loaders/*"],
       "@services/*": ["./services/*"],
       "@interfaces/*": ["./interfaces/*"],
-      "@utils/*": ["./utils/*"]
+      "@utils/*": ["./utils/*"],
+      "@routes/*": ["./routes/*"]
     },
     "esModuleInterop": true,
     "experimentalDecorators": true,
