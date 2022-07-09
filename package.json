@@ -7,7 +7,7 @@
   "author": "hyunjin <leehj0110@kakao.com>",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "nodemon --exec ts-node -r tsconfig-paths/register ./src/index.ts",
     "test": "jest --coverage",
     "test0": "ts-node --project ./tsconfig.json -r tsconfig-paths/register tests/index.ts"
   },
