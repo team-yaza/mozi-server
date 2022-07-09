@@ -6,7 +6,7 @@ const startSever = () => {
   const app = express();
 
   loader(app);
-
+  
   app.listen(3000, () => console.log('server started'));
 };
 
