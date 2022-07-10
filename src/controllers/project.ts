@@ -31,7 +31,11 @@ export const createProjectHeaderHandler = async (req: Request, res: Response) =>
     const header = await createHeader(headerTitle);
     const project = await findProjectById(projectId);
 
-    project?.headers?.push(header); // TODO mongoose Model Type 정의 후 refactor
+    project?.headers?.push({
+      headerId: header.id,
+      title: header.title,
+      index: header.index,
+    }); // TODO mongoose Model Type 정의 후 refactor
 
     await project?.save();
 
