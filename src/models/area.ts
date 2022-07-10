@@ -4,7 +4,9 @@ const areaSchema = new mongoose.Schema({
   name: {
     type: String,
   },
-  projects: {},
+  projects: {
+    type: [{ projectId: mongoose.Schema.Types.ObjectId, title: String }],
+  },
   index: {
     type: Number,
   },
