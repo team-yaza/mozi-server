@@ -7,6 +7,9 @@ const projectSchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  index: {
+    type: Number,
+  },
   headers: {
     type: [{ headerId: mongoose.Schema.Types.ObjectId, title: String, index: Number }],
     default: [],
