@@ -1,10 +1,10 @@
 import express from 'express';
 
-import { getAllTodosHandler, createTodoHandler } from '@/controllers/todo';
+import { getAllHeadersHandler, createHeaderHandler } from '@/controllers/header';
 
 const headerRouter = express.Router();
 
-headerRouter.get('/all', getAllTodosHandler);
-headerRouter.post('/create', createTodoHandler);
+headerRouter.get('/all', getAllHeadersHandler);
+headerRouter.post('/create', createHeaderHandler);
 
 export default headerRouter;
