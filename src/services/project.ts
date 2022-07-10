@@ -9,3 +9,8 @@ export const createProject = async (todo: any) => {
   const project = await Project.create(todo);
   return project;
 };
+
+export const findProjectById = async (id: string) => {
+  const project = await Project.findById(id);
+  return project;
+};
