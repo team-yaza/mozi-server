@@ -25,10 +25,9 @@ export const createProjectHandler = async (req: Request, res: Response) => {
 
 export const createProjectHeaderHandler = async (req: Request, res: Response) => {
   try {
-    const headerTitle = req.body.header.title;
-    const projectId = req.body.projectId;
+    const { title: headerTitle, projectId, index } = req.body;
 
-    const header = await createHeader(headerTitle);
+    const header = await createHeader({ title: headerTitle, index });
     const project = await findProjectById(projectId);
 
     project?.headers?.push({
@@ -40,7 +39,8 @@ export const createProjectHeaderHandler = async (req: Request, res: Response) =>
     await project?.save();
 
     return res.status(201).json({ message: 'Header created in Project' });
-  } catch (error) {
+  } catch (error: any) {
+    console.log(error.message);
     res.status(400).json({ message: 'Header not created' });
   }
 };
