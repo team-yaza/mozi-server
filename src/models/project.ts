@@ -4,8 +4,12 @@ const projectSchema = new mongoose.Schema({
   title: {
     type: String,
   },
-  index: {
-    type: Number,
+  description: {
+    type: String,
+  },
+  headers: {
+    type: [{ headerId: mongoose.Types.ObjectId, title: String, index: Number }],
+    default: [],
   },
   createdAt: {
     type: Date,
@@ -13,6 +17,6 @@ const projectSchema = new mongoose.Schema({
   },
 });
 
-const Project = mongoose.model('Header', projectSchema);
+const Project = mongoose.model('Project', projectSchema);
 
 export default Project;
