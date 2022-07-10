@@ -6,6 +6,8 @@ const areaSchema = new mongoose.Schema({
   },
   projects: {
     type: [{ projectId: mongoose.Schema.Types.ObjectId, title: String }],
+    default: [],
+    ref: 'Project',
   },
   index: {
     type: Number,

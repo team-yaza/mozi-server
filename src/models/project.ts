@@ -10,6 +10,7 @@ const projectSchema = new mongoose.Schema({
   headers: {
     type: [{ headerId: mongoose.Schema.Types.ObjectId, title: String, index: Number }],
     default: [],
+    ref: 'Header',
   },
   createdAt: {
     type: Date,

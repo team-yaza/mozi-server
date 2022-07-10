@@ -7,6 +7,10 @@ const headerSchema = new mongoose.Schema({
   index: {
     type: Number,
   },
+  todos: {
+    type: [{ todoId: mongoose.Schema.Types.ObjectId, title: String }],
+    ref: 'Todo',
+  },
   createdAt: {
     type: Date,
     default: Date.now,
