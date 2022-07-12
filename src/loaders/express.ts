@@ -11,6 +11,7 @@ const options: cors.CorsOptions = {
 const expressLoader = (app: express.Application) => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
+  app.use(cors(options));
 
   app.use(cors(options));
 

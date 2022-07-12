@@ -4,7 +4,6 @@ const todoSchema = new mongoose.Schema({
   title: {
     type: String,
   },
-
   createdAt: {
     type: Date,
     default: Date.now,
