@@ -9,3 +9,14 @@ export const createTodo = async (todo: any) => {
   const newTodo = await Todo.create(todo);
   return newTodo;
 };
+
+export const deleteTodo = async (todoId: any) => {
+  try {
+    const result = await Todo.findOneAndDelete({
+      id: todoId,
+    });
+    return result;
+  } catch (error: any) {
+    console.log(error.message);
+  }
+};
