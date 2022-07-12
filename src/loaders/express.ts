@@ -8,12 +8,14 @@ const options: cors.CorsOptions = {
   credentials: true,
 };
 
+import routes from '@/routes';
+
 const expressLoader = (app: express.Application) => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cors(options));
 
-  app.use('/api', routes);
+  app.use('/api/v1', routes);
 };
 
 export default expressLoader;
