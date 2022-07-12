@@ -1,8 +1,10 @@
-import { createTodoHandler } from '@/controllers/todo';
 import express from 'express';
+
+import { getAllTodosHandler, createTodoHandler } from '@/controllers/todo';
 
 const todoRouter = express.Router();
 
-todoRouter.use('/create', createTodoHandler);
+todoRouter.get('/all', getAllTodosHandler);
+todoRouter.post('/create', createTodoHandler);
 
 export default todoRouter;
