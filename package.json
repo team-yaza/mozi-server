@@ -12,16 +12,17 @@
     "test0": "ts-node --project ./tsconfig.json -r tsconfig-paths/register tests/index.ts"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/jest": "^28.1.4",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "eslint": "^8.19.0",
     "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1",
-    "@types/jest": "^28.1.4",
     "jest": "^28.1.2",
+    "lint-staged": "^13.0.3",
     "mongodb-memory-server": "^8.7.2",
+    "prettier": "^2.7.1",
     "supertest": "^6.2.4",
     "ts-jest": "^28.0.5",
     "ts-node": "^10.8.1",
@@ -29,6 +30,7 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "helmet": "^5.1.0",
