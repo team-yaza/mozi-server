@@ -4,12 +4,7 @@
     "module": "commonjs",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      // "@controllers": ["src/controllers/*"],
-      // "@routes": ["src/routes/*"],
-      // "@utils": ["src/utils/*"],
-      // "@loaders": ["src/loaders/*"],
-      "@tests/*": ["tests/*"]
+      "@/*": ["src/*"]
     },
     "outDir": "./build",
     "esModuleInterop": true,
