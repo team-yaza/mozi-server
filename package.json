@@ -8,8 +8,9 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon --exec ts-node -r tsconfig-paths/register ./src/index.ts",
-    "test": "jest --coverage",
-    "prepare": "husky"
+    "test": "jest --passWithNoTests",
+    "lint": "eslint --fix .",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",

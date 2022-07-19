@@ -38,5 +38,7 @@ export const createProjectInAreaHandler = async (req: Request, res: Response) =>
     await area?.save();
 
     return res.status(200).json({ message: 'Project created in Area' });
-  } catch (error) {}
+  } catch (error: any) {
+    console.log(error.message);
+  }
 };
