@@ -11,13 +11,20 @@ export const createTodo = async (todo: any) => {
 };
 
 export const deleteTodo = async (todoId: any) => {
-  console.log(todoId);
-  try {
-    const result = await Todo.findOneAndDelete({
+  const result = await Todo.findOneAndDelete({
+    _id: todoId,
+  });
+  return result;
+};
+
+export const updateTodo = async (todoId: any, newTitle: any) => {
+  const result = await Todo.findByIdAndUpdate(
+    {
       _id: todoId,
-    });
-    return result;
-  } catch (error: any) {
-    console.log(error.message);
-  }
+    },
+    {
+      title: newTitle,
+    },
+  );
+  return result;
 };
