@@ -16,3 +16,15 @@ export const deleteTodo = async (todoId: any) => {
   });
   return result;
 };
+
+export const updateTodo = async (todoId: any, newTitle: any) => {
+  const result = await Todo.findByIdAndUpdate(
+    {
+      _id: todoId,
+    },
+    {
+      title: newTitle,
+    },
+  );
+  return result;
+};
