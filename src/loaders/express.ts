@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 
 import routes from '@/routes';
@@ -14,6 +14,10 @@ const expressLoader = (app: express.Application) => {
   app.use(cors(options));
 
   app.use('/api/v1', routes);
+
+  app.use((err: any, req: Request, res: Response) => {
+    res.status(err.status || 500);
+  });
 };
 
 export default expressLoader;
