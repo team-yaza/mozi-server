@@ -5,9 +5,9 @@ export const findAllTodos = async () => {
   return todos;
 };
 
-export const findTodo = async (todoId: any) => {
+export const findTodo = async (id: any) => {
   const todo = await Todo.findOne({
-    _id: todoId,
+    _id: id,
   });
   return todo;
 };
@@ -17,20 +17,20 @@ export const createTodo = async (todo: any) => {
   return newTodo;
 };
 
-export const deleteTodo = async (todoId: any) => {
+export const deleteTodo = async (id: any) => {
   const result = await Todo.findOneAndDelete({
-    _id: todoId,
+    _id: id,
   });
   return result;
 };
 
-export const updateTodo = async (todoId: any, newTitle: any) => {
+export const updateTodo = async (id: any, title: any) => {
   const result = await Todo.findByIdAndUpdate(
     {
-      _id: todoId,
+      _id: id,
     },
     {
-      title: newTitle,
+      title,
     },
   );
   return result;
