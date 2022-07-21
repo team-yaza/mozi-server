@@ -17,7 +17,7 @@ export const getTodosHandler = async (req: Request, res: Response) => {
 export const createTodoHandler = async (req: Request, res: Response) => {
   const todo = await createTodo(req.body);
 
-  res.status(200).json(todo);
+  res.status(201).json(todo);
 };
 
 export const deleteTodoHandler = async (req: Request, res: Response) => {

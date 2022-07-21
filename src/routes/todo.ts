@@ -12,7 +12,7 @@ const todoRouter = express.Router();
 
 todoRouter.get('/', getAllTodosHandler);
 todoRouter.get('/:id', getTodosHandler);
-todoRouter.post('/create', createTodoHandler);
+todoRouter.post('/', createTodoHandler);
 todoRouter.delete('/', deleteTodoHandler);
 todoRouter.patch('/', updateTodoHandler);
 
