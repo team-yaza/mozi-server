@@ -5,6 +5,13 @@ export const findAllTodos = async () => {
   return todos;
 };
 
+export const findTodos = async (todoId: any) => {
+  const todos = await Todo.find({
+    _id: todoId,
+  });
+  return todos;
+};
+
 export const createTodo = async (todo: any) => {
   const newTodo = await Todo.create(todo);
   return newTodo;

@@ -7,7 +7,7 @@ import projectRouter from '@/routes/project';
 
 const routes = express.Router();
 
-routes.use('/todo', todoRouter);
+routes.use('/todos', todoRouter);
 routes.use('/area', areaRouter);
 routes.use('/header', headerRouter);
 routes.use('/project', projectRouter);
