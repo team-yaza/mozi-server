@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { findAllTodos, createTodo, deleteTodo, updateTodo, findTodos } from '@/services/todo';
+import { findAllTodos, createTodo, deleteTodo, updateTodo, findTodo } from '@/services/todo';
 
 export const getAllTodosHandler = async (req: Request, res: Response) => {
   const todos = await findAllTodos();
@@ -8,8 +8,8 @@ export const getAllTodosHandler = async (req: Request, res: Response) => {
   res.status(200).json(todos);
 };
 
-export const getTodosHandler = async (req: Request, res: Response) => {
-  const todos = await findTodos(req.params.id);
+export const getTodoHandler = async (req: Request, res: Response) => {
+  const todos = await findTodo(req.params.id);
 
   res.status(200).json(todos);
 };
