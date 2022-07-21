@@ -1,3 +1,4 @@
 #!/bin/bash
-echo "Stopping any existing node servers"
-pkill node
+
+netstat -ano | findstr :3001
+taskkill /PID "123" /F 
