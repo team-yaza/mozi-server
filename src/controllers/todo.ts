@@ -21,7 +21,7 @@ export const createTodoHandler = async (req: Request, res: Response) => {
 };
 
 export const deleteTodoHandler = async (req: Request, res: Response) => {
-  const result = await deleteTodo(req.query['id']);
+  const result = await deleteTodo(req.params.id);
 
   if (result) res.status(200).json({ message: 'remove complete' });
   else throw 'Todo not found';
