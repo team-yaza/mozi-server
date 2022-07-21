@@ -31,6 +31,6 @@ export const updateTodoHandler = async (req: Request, res: Response) => {
   const { todoId, newTitle } = req.body;
   const result = await updateTodo(todoId, newTitle);
 
-  if (result) res.status(200).json({ message: 'update complete' });
+  if (result) res.status(201).json({ message: 'update complete' });
   else throw 'Todo was not updated';
 };
