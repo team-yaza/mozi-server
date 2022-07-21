@@ -1,12 +1,19 @@
 import express from 'express';
 
-import { getAllTodosHandler, createTodoHandler, deleteTodoHandler, updateTodoHandler } from '@/controllers/todo';
+import {
+  getAllTodosHandler,
+  createTodoHandler,
+  deleteTodoHandler,
+  updateTodoHandler,
+  getTodoHandler,
+} from '@/controllers/todo';
 
 const todoRouter = express.Router();
 
-todoRouter.get('/all', getAllTodosHandler);
-todoRouter.post('/create', createTodoHandler);
-todoRouter.delete('/', deleteTodoHandler);
+todoRouter.get('/', getAllTodosHandler);
+todoRouter.get('/:id', getTodoHandler);
+todoRouter.post('/', createTodoHandler);
+todoRouter.delete('/:id', deleteTodoHandler);
 todoRouter.patch('/', updateTodoHandler);
 
 export default todoRouter;
