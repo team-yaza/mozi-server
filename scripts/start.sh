@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# #install node modules
-# yarn 
+yarn 
 
-# #start our node app in the background
-# yarn start
+pm2 start mozi
