@@ -1,4 +1,5 @@
 #!/bin/bash
+
 echo "Stopping any existing node servers"
 
 netstat -ano | findstr :3001
