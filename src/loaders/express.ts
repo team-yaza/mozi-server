@@ -14,7 +14,7 @@ const expressLoader = (app: express.Application) => {
   app.use(cors(options));
 
   app.use('/api/v1', routes);
-
+  app.use('/', (_, res: Response) => res.send('hello mozi'));
   app.use((err: any, req: Request, res: Response) => {
     res.status(err.status || 500);
   });
