@@ -23,13 +23,13 @@ export const createTodoHandler = async (req: Request, res: Response) => {
 export const deleteTodoHandler = async (req: Request, res: Response) => {
   const result = await deleteTodo(req.params.id);
 
-  if (result) res.status(200).json({ message: 'remove complete' });
-  else throw 'Todo not found';
+  if (result) res.status(200).send();
+  else throw 'Todo was not found';
 };
 
 export const updateTodoHandler = async (req: Request, res: Response) => {
   const result = await updateTodo(req.params.id, req.body);
 
-  if (result) res.status(201).json({ message: 'update complete' });
+  if (result) res.status(201).send();
   else throw 'Todo was not updated';
 };
