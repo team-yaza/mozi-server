@@ -28,8 +28,7 @@ export const deleteTodoHandler = async (req: Request, res: Response) => {
 };
 
 export const updateTodoHandler = async (req: Request, res: Response) => {
-  const { id, title } = req.body;
-  const result = await updateTodo(id, title);
+  const result = await updateTodo(req.params.id, req.body);
 
   if (result) res.status(201).json({ message: 'update complete' });
   else throw 'Todo was not updated';

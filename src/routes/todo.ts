@@ -14,6 +14,6 @@ todoRouter.get('/', getAllTodosHandler);
 todoRouter.get('/:id', getTodoHandler);
 todoRouter.post('/', createTodoHandler);
 todoRouter.delete('/:id', deleteTodoHandler);
-todoRouter.patch('/', updateTodoHandler);
+todoRouter.patch('/:id', updateTodoHandler);
 
 export default todoRouter;
