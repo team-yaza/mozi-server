@@ -1,14 +1,21 @@
-# Mozi Server
+# mozi-sierver
 
-## Getting Started
+Greeting MOZI
 
-#### How to install
+## How To Start
+
+### Node version
+
+`v16.15.1`
+
+### MongoDB version
+
+`v5.0.9`
+
+#### Develop Mode
+
 ```
 yarn install
-```
 
-#### How to run
+yarn dev
 ```
-yarn start
-```
-
