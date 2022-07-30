@@ -8,12 +8,14 @@ import {
   getTodoHandler,
 } from '@/controllers/todo';
 
+import asyncHandler from '@/utils/asyncHandler';
+
 const todoRouter = express.Router();
 
-todoRouter.get('/', getAllTodosHandler);
-todoRouter.get('/:id', getTodoHandler);
-todoRouter.post('/', createTodoHandler);
-todoRouter.delete('/:id', deleteTodoHandler);
-todoRouter.patch('/', updateTodoHandler);
+todoRouter.get('/', asyncHandler(getAllTodosHandler));
+todoRouter.get('/:id', asyncHandler(getTodoHandler));
+todoRouter.post('/', asyncHandler(createTodoHandler));
+todoRouter.delete('/:id', asyncHandler(deleteTodoHandler));
+todoRouter.patch('/:id', asyncHandler(updateTodoHandler));
 
 export default todoRouter;
