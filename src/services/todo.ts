@@ -13,6 +13,11 @@ export const findTodo = async (id: any) => {
 };
 
 export const createTodo = async (todo: any) => {
+  const { longitude, latitude } = todo;
+  todo.location = {
+    type: 'Point',
+    coordinates: [longitude, latitude],
+  };
   const newTodo = await Todo.create(todo);
   return newTodo;
 };
