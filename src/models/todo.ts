@@ -8,6 +8,9 @@ const todoSchema = new mongoose.Schema(
     description: {
       type: String,
     },
+    done: {
+      type: Boolean,
+    },
     location: {
       type: {
         type: String,
