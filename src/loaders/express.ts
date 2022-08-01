@@ -4,7 +4,7 @@ import cors from 'cors';
 import routes from '@/routes';
 
 const options: cors.CorsOptions = {
-  origin: 'http://localhost:3000',
+  origin: '*',
   credentials: true,
 };
 
