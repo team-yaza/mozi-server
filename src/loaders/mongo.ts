@@ -8,7 +8,7 @@ const mongooseLoader = async () => {
     console.error(error);
     console.log('MongoDB connection error. Please make sure MongoDB is running.');
 
-    process.exit();
+    process.exit(0);
   });
 };
 
