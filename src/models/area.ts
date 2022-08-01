@@ -1,22 +1,23 @@
 import mongoose from 'mongoose';
 
-const areaSchema = new mongoose.Schema({
-  name: {
-    type: String,
+const areaSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+    },
+    projects: {
+      type: [{ id: mongoose.Schema.Types.ObjectId, title: String }],
+      default: [],
+      ref: 'Project',
+    },
+    index: {
+      type: Number,
+    },
   },
-  projects: {
-    type: [{ id: mongoose.Schema.Types.ObjectId, title: String }],
-    default: [],
-    ref: 'Project',
+  {
+    timestamps: true,
   },
-  index: {
-    type: Number,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+);
 
 const Area = mongoose.model('Area', areaSchema);
 

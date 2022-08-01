@@ -1,23 +1,30 @@
 import mongoose from 'mongoose';
 
-const todoSchema = new mongoose.Schema({
-  title: {
-    type: String,
-  },
-  location: {
-    type: {
+const todoSchema = new mongoose.Schema(
+  {
+    title: {
       type: String,
-      enum: ['Point'],
     },
-    coordinates: {
-      type: [Number],
+    description: {
+      type: String,
+    },
+    done: {
+      type: Boolean,
+    },
+    location: {
+      type: {
+        type: String,
+        enum: ['Point'],
+      },
+      coordinates: {
+        type: [Number],
+      },
     },
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+  {
+    timestamps: true,
   },
-});
+);
 
 const Todo = mongoose.model('Todo', todoSchema);
 
