@@ -30,6 +30,6 @@ export const deleteTodoHandler = async (req: Request, res: Response) => {
 export const updateTodoHandler = async (req: Request, res: Response) => {
   const result = await updateTodo(req.params.id, req.body);
 
-  if (result) res.status(201).send();
+  if (result) res.status(201).json(result);
   else throw 'Todo was not updated';
 };
