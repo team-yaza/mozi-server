@@ -35,7 +35,7 @@ export const updateTodo = async (id: any, todo: any) => {
       _id: id,
     },
     {
-      title: todo.title,
+      ...todo,
     },
   );
   return result;
