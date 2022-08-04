@@ -26,6 +26,18 @@ const todoSchema = new mongoose.Schema(
   },
 );
 
+todoSchema.virtual('id').get(function () {
+  return this._id.toHexString();
+});
+
+todoSchema.set('toJSON', {
+  virtuals: true,
+  versionKey: false,
+  transform: function (_, ret) {
+    delete ret._id;
+  },
+});
+
 const Todo = mongoose.model('Todo', todoSchema);
 
 export default Todo;
