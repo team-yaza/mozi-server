@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
+import path from 'path';
 
 import routes from '@/routes';
 
@@ -13,6 +14,7 @@ const expressLoader = (app: express.Application) => {
   app.use(express.urlencoded({ extended: false }));
   app.use(cors(options));
 
+  app.use('/static', express.static(path.join(__dirname, '../../public')));
   app.use('/api/v1', routes);
   app.use('/', (_, res: Response) => res.send('hello mozi'));
   app.use((err: any, req: Request, res: Response) => {
