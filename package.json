@@ -49,7 +49,7 @@
     "express-session": "^1.17.3",
     "helmet": "^5.1.0",
     "mongoose": "^6.4.1",
-    "passport": "^0.6.0",
+    "passport": "0.5.3",
     "passport-kakao": "^1.0.1",
     "web-push": "^3.5.0"
   },
