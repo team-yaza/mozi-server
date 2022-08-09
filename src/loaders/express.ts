@@ -14,7 +14,7 @@ const options: cors.CorsOptions = {
   credentials: true,
 };
 
-const expressLoader = async (app: express.Application) => {
+const expressLoader = (app: express.Application) => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cors(options));
