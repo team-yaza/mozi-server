@@ -3,18 +3,27 @@ import webpush from 'web-push';
 
 const webpushRouter = express.Router();
 
-webpushRouter.post('/subscribe', (req, res) => {
+webpushRouter.post('/', (req, res) => {
   //Get pushSubscription Object
+  // Send 201 - resource created
+  const payload = JSON.stringify({ title: 'Push Test' });
   const subscription = req.body;
 
-  // Send 201 - resource created
-  res.status(201).json({});
-
-  // Create payload
-  const payload = JSON.stringify({ title: 'Push Test' });
-
   // Pass Object into sendNotification
-  webpush.sendNotification(subscription, payload).catch((err) => console.error(err));
+  webpush
+    .sendNotification(subscription, payload)
+    .then((response: webpush.SendResult) => {
+      res.writeHead(response.statusCode, response.headers).end(response.body);
+    })
+    .catch((err) => {
+      if ('statusCode' in err) {
+        res.writeHead(err.statusCode, err.headers).end(err.body);
+      } else {
+        console.error('err : ', err);
+        res.statusCode = 500;
+        res.end();
+      }
+    });
 });
 
 export default webpushRouter;

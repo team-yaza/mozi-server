@@ -2,7 +2,6 @@ import express, { Request, Response } from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import path from 'path';
 
 import routes from '@/routes';
 
@@ -31,7 +30,6 @@ const expressLoader = (app: express.Application) => {
     }),
   );
 
-  app.use('/static', express.static(path.join(__dirname, '../../public')));
   app.use(
     '/api-docs',
     swaggerUi.serve,
