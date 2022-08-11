@@ -10,7 +10,7 @@ const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
 const options: cors.CorsOptions = {
   origin: '*',
-  credentials: true,
+  // credentials: true,
 };
 
 const expressLoader = (app: express.Application) => {
