@@ -6,7 +6,7 @@ import routes from '@/routes';
 
 const options: cors.CorsOptions = {
   origin: '*',
-  credentials: true,
+  // credentials: true,
 };
 
 const expressLoader = (app: express.Application) => {
