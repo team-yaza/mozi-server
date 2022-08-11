@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import path from 'path';
+import helmet from 'helmet';
 
 import routes from '@/routes';
 
@@ -12,6 +13,7 @@ const options: cors.CorsOptions = {
 const expressLoader = (app: express.Application) => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
+  app.use(helmet());
   app.use(cors(options));
 
   app.use('/static', express.static(path.join(__dirname, '../../public')));
