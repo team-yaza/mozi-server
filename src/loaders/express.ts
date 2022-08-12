@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import path from 'path';
+import helmet from 'helmet';
 
 import routes from '@/routes';
 
@@ -10,12 +12,13 @@ const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
 const options: cors.CorsOptions = {
   origin: '*',
-  // credentials: true,
+  credentials: true,
 };
 
 const expressLoader = (app: express.Application) => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
+  app.use(helmet());
   app.use(cors(options));
   app.use(cookieParser(process.env.COOKIE_SECRET));
   app.use(
