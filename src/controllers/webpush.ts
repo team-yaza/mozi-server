@@ -4,9 +4,8 @@ import webpush from 'web-push';
 
 export const notificationHandler = async (req: Request, res: Response) => {
   const todo = await findTodo(req.params.id);
-
   const payload = JSON.stringify(todo);
-  const subscription = req.body;
+  const subscription = JSON.parse(req.body.subscription);
 
   try {
     const webpushResponse = await webpush.sendNotification(subscription, payload);
