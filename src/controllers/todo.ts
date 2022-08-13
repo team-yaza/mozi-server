@@ -4,7 +4,6 @@ import { findAllTodos, createTodo, deleteTodo, updateTodo, findTodo } from '@/se
 
 export const getAllTodosHandler = async (req: Request, res: Response) => {
   const todos = await findAllTodos();
-
   res.status(200).json(todos);
 };
 
