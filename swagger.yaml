@@ -60,6 +60,10 @@ paths:
             properties:
               title:
                 type: 'string'
+              done:
+                type: 'boolean'
+              description:
+                type: 'string'
       responses:
         '201':
           examples:
@@ -131,6 +135,10 @@ definitions:
       _id:
         type: 'string'
       title:
+        type: 'string'
+      done:
+        type: 'boolean'
+      description:
         type: 'string'
       createdAt:
         type: 'string'
