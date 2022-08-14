@@ -9,7 +9,7 @@ export const findAllTodos = async () => {
   return todos;
 };
 
-export const findTodo = async (id: any) => {
+export const findTodo = async (id: string) => {
   const todo = await Todo.findOne({
     _id: id,
   });
@@ -23,7 +23,7 @@ export const createTodo = async (todo: any) => {
   return newTodo;
 };
 
-export const deleteTodo = async (id: any) => {
+export const deleteTodo = async (id: string) => {
   const result = await Todo.findOneAndDelete({
     _id: id,
   });
