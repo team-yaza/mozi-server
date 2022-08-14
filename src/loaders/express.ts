@@ -2,13 +2,12 @@ import express, { Request, Response } from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import path from 'path';
 import helmet from 'helmet';
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 
 import routes from '@/routes';
 
-const swaggerUi = require('swagger-ui-express');
-const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
 const options: cors.CorsOptions = {
   origin: '*',
