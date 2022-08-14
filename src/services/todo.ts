@@ -3,6 +3,9 @@ import { serializeGeoJson } from '@/utils/serialize';
 
 export const findAllTodos = async () => {
   const todos = await Todo.find();
+
+  if (todos.length === 0) return null;
+
   return todos;
 };
 
