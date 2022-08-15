@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 
 import { findAllTodos, createTodo, deleteTodo, updateTodo, findTodo } from '@/services/todo';
+import { createAlarm } from '@/services/alarm';
 
 export const getAllTodosHandler = async (req: Request, res: Response) => {
   const todos = await findAllTodos();
@@ -27,7 +29,11 @@ export const deleteTodoHandler = async (req: Request, res: Response) => {
 };
 
 export const updateTodoHandler = async (req: Request, res: Response) => {
-  const result = await updateTodo(req.params.id, req.body);
+  const { result, changeLocationFlag } = await updateTodo(req.params.id, req.body);
+
+  const location: any = result?.location;
+  if (!location.name && changeLocationFlag)
+    await createAlarm(new mongoose.Types.ObjectId('123456789011'), req.params.id);
 
   if (result) res.status(201).json(result);
   else throw 'Todo was not updated';
