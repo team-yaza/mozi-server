@@ -31,7 +31,7 @@ export const deleteTodo = async (id: string) => {
 };
 
 export const updateTodo = async (id: any, todo: any) => {
-  if (todo.longitude && todo.latitude) todo.location = serializeGeoJson(todo.longitude, todo.latitude);
+  if (todo.longitude && todo.latitude) todo.location = await serializeGeoJson(todo.longitude, todo.latitude);
   const result = await Todo.findByIdAndUpdate(
     {
       _id: id,

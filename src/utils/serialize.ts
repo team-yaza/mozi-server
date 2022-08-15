@@ -7,7 +7,7 @@ export const serializeGeoJson = async (longitude: number, latitude: number) => {
     {
       headers: {
         'X-NCP-APIGW-API-KEY-ID': `${process.env.NAVER_CLIENT_ID}`,
-        'X-NCP-APIGW-API-KEY': `${process.env.SECRET_KEY}`,
+        'X-NCP-APIGW-API-KEY': `${process.env.NAVER_SECRET_KEY}`,
       },
     },
   );
@@ -27,7 +27,7 @@ export const serializeGeoJson = async (longitude: number, latitude: number) => {
 
   return {
     type: 'Point',
-    name,
+    name: '충남대학교',
     coordinates: [longitude, latitude],
   };
 };
