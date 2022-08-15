@@ -17,8 +17,6 @@ export const findTodo = async (id: string) => {
 };
 
 export const createTodo = async (todo: any) => {
-  const { longitude, latitude } = todo;
-  todo.location = serializeGeoJson(longitude, latitude);
   const newTodo = await Todo.create(todo);
   return newTodo;
 };
@@ -40,5 +38,6 @@ export const updateTodo = async (id: any, todo: any) => {
       ...todo,
     },
   );
-  return result;
+  const changeLocationFlag = todo.longitude && todo.latitude ? true : false;
+  return { result, changeLocationFlag };
 };
