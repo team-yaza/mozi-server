@@ -8,18 +8,11 @@ const passportLoader = (app: express.Application) => {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  passport.serializeUser((user: any, done) => {
-    done(null, user.email);
-  });
+  passport.use(User.createStrategy() as any);
 
-  passport.deserializeUser(async (email, done) => {
-    const user = await User.findOne({
-      where: {
-        email,
-      },
-    });
-    done(null, user);
-  });
+  passport.serializeUser(User.serializeUser() as any);
+
+  passport.deserializeUser(User.deserializeUser());
 
   passport.use(kakaoStrategy);
 };
