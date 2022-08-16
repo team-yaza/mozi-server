@@ -16,6 +16,9 @@ const todoSchema = new mongoose.Schema(
         type: String,
         enum: ['Point'],
       },
+      name: {
+        type: String,
+      },
       coordinates: {
         type: [Number],
       },
