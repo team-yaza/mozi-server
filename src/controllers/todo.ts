@@ -25,7 +25,7 @@ export const deleteTodoHandler = async (req: Request, res: Response) => {
   const result = await deleteTodo(req.params.id);
   await deleteAlarm(req.params.id);
 
-  if (result) res.status(200).send();
+  if (result) res.status(200).json(result);
   else throw 'Todo was not found';
 };
 
