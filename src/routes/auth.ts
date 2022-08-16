@@ -1,7 +1,11 @@
+import { registerHandler } from '@/controllers/auth';
+import asyncHandler from '@/utils/asyncHandler';
 import express, { Request, Response } from 'express';
 import passport from 'passport';
 
 const authRouter = express.Router();
+
+authRouter.post('/register', asyncHandler(registerHandler));
 
 authRouter.get('/kakao', passport.authenticate('kakao'));
 
