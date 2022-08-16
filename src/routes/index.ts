@@ -5,6 +5,7 @@ import areaRouter from '@/routes/area';
 import headerRouter from '@/routes/header';
 import projectRouter from '@/routes/project';
 import webpushRouter from '@/routes/webpush';
+import alarmRouter from '@/routes/alarm';
 import authRouter from '@/routes/auth';
 
 const routes = express.Router();
@@ -14,6 +15,7 @@ routes.use('/area', areaRouter);
 routes.use('/header', headerRouter);
 routes.use('/project', projectRouter);
 routes.use('/webpush', webpushRouter);
+routes.use('/alarm', alarmRouter);
 routes.use('/auth', authRouter);
 
 export default routes;
