@@ -6,6 +6,6 @@ import asyncHandler from '@/utils/asyncHandler';
 
 const alarmRouter = express.Router();
 
-alarmRouter.get('/:id', asyncHandler(getAllAlarmHandler));
+alarmRouter.get('/', asyncHandler(getAllAlarmHandler));
 
 export default alarmRouter;

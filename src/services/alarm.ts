@@ -5,7 +5,7 @@ export const createAlarm = async (userId: any, todoId: any) => {
 };
 
 export const findAllAlarms = async (userId: any) => {
-  const alarms = await Alarm.findById({ userId });
+  const alarms = await Alarm.find({ userId });
   return alarms;
 };
 
