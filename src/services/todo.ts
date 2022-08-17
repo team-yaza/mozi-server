@@ -37,6 +37,9 @@ export const updateTodo = async (id: any, todo: any) => {
     {
       ...todo,
     },
+    {
+      new: true,
+    },
   );
   const changeLocationFlag = todo.longitude && todo.latitude ? true : false;
   return { result, changeLocationFlag };
