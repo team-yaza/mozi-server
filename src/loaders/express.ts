@@ -6,8 +6,6 @@ import helmet from 'helmet';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 
-import routes from '@/routes';
-
 const swaggerDocument = YAML.load('./swagger.yaml');
 const options: cors.CorsOptions = {
   origin: '*',
@@ -39,12 +37,6 @@ const expressLoader = (app: express.Application) => {
       explorer: true,
     }),
   );
-
-  app.use('/api/v1', routes);
-  app.use('/', (_, res: Response) => res.send('hello mozi'));
-  app.use((err: any, req: Request, res: Response) => {
-    res.status(err.status || 500);
-  });
 };
 
 export default expressLoader;
