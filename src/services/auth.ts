@@ -1,5 +1,4 @@
 import User from '@/models/user';
-import bcrypt from 'bcrypt';
 
 export const register = async (email: string, password: string) => {
   const exUser = await User.findOne({
@@ -11,7 +10,6 @@ export const register = async (email: string, password: string) => {
   }
 
   const user = new User({ email });
-  const hash = await bcrypt.hash(password, 12);
 
-  return await User.register(user, hash);
+  return await User.register(user, password);
 };
