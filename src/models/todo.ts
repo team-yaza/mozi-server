@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-interface ITodo {
+interface Todo {
   title: string;
   description: string;
   done: boolean;
@@ -11,7 +11,7 @@ interface ITodo {
   };
 }
 
-const todoSchema = new mongoose.Schema<ITodo>(
+const todoSchema = new mongoose.Schema<Todo>(
   {
     title: {
       type: String,
@@ -52,6 +52,6 @@ todoSchema.set('toJSON', {
   },
 });
 
-const Todo = mongoose.model<ITodo>('Todo', todoSchema);
+const Todo = mongoose.model<Todo>('Todo', todoSchema);
 
 export default Todo;
