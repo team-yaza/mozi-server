@@ -23,13 +23,11 @@ export const loginHandler = (req: Request, res: Response, next: NextFunction) =>
     if (!user) {
       return res.send('user authentication failed');
     }
-    // user를 serializeUser함수로 전달
     req.login(user, (error) => {
       if (error) {
         console.error(error);
         next(error);
       } else {
-        console.log(`${(req.user as any).username} login success`);
         res.redirect('/');
       }
     });
@@ -37,7 +35,6 @@ export const loginHandler = (req: Request, res: Response, next: NextFunction) =>
 };
 
 export const logoutHandler = (req: Request, res: Response) => {
-  console.log(`${(req.user as any).username} logout`);
   req.logout({}, (err) => {
     if (err) {
       console.error(err);
