@@ -7,6 +7,10 @@ export const registerHandler = async (req: Request, res: Response) => {
 
   const user = await register(username, password);
 
+  if (!user) {
+    return res.status(400).send(`${username} already exists.`);
+  }
+
   res.status(201).json(user);
 };
 
@@ -19,11 +23,13 @@ export const loginHandler = (req: Request, res: Response, next: NextFunction) =>
     if (!user) {
       return res.send('user authentication failed');
     }
+    // user를 serializeUser함수로 전달
     req.login(user, (error) => {
       if (error) {
         console.error(error);
         next(error);
       } else {
+        console.log(`${(req.user as any).username} login success`);
         res.redirect('/');
       }
     });
@@ -31,6 +37,7 @@ export const loginHandler = (req: Request, res: Response, next: NextFunction) =>
 };
 
 export const logoutHandler = (req: Request, res: Response) => {
+  console.log(`${(req.user as any).username} logout`);
   req.logout({}, (err) => {
     if (err) {
       console.error(err);
