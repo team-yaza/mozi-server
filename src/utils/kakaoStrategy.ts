@@ -8,17 +8,19 @@ const kakaoStrategy = new Strategy(
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
-      const email = profile._json.kakao_account.email;
-      const exUser: any = await User.findOne({
-        where: {
-          email,
+      const {
+        _json: {
+          kakao_account: { email: username },
         },
+      } = profile;
+      const exUser = await User.findOne({
+        username,
       });
       if (exUser) {
         done(null, exUser);
       } else {
         const newUser = await User.create({
-          email,
+          username,
         });
         done(null, newUser);
       }
