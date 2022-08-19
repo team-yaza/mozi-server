@@ -1,15 +1,15 @@
 import User from '@/models/user';
 
-export const register = async (email: string, password: string) => {
+export const register = async (username: string, password: string) => {
   const exUser = await User.findOne({
-    email,
+    username,
   });
 
   if (exUser) {
-    throw `${email} already exists`;
+    throw `${username} already exists`;
   }
 
-  const user = new User({ email });
+  const user = new User({ username });
 
   return await User.register(user, password);
 };
