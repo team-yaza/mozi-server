@@ -1,11 +1,15 @@
-import { registerHandler } from '@/controllers/auth';
-import asyncHandler from '@/utils/asyncHandler';
 import express, { Request, Response } from 'express';
+import { registerHandler, loginHandler, logoutHandler } from '@/controllers/auth';
+import { isLoggedIn, isNotLoggedIn } from '@/middlewares/login';
 import passport from 'passport';
 
 const authRouter = express.Router();
 
-authRouter.post('/register', asyncHandler(registerHandler));
+authRouter.post('/register', registerHandler);
+
+authRouter.post('/login', isNotLoggedIn, loginHandler);
+
+authRouter.get('/logout', isLoggedIn, logoutHandler);
 
 authRouter.get('/kakao', passport.authenticate('kakao'));
 
