@@ -6,7 +6,7 @@ export const register = async (username: string, password: string) => {
   });
 
   if (exUser) {
-    throw `${username} already exists`;
+    return null;
   }
 
   const user = new User({ username });
