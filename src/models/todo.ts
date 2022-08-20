@@ -11,6 +11,10 @@ const todoSchema = new mongoose.Schema(
     done: {
       type: Boolean,
     },
+    alarmed: {
+      type: Boolean,
+      default: false,
+    },
     location: {
       type: {
         type: String,

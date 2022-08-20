@@ -44,3 +44,13 @@ export const updateTodo = async (id: any, todo: any) => {
   const changeLocationFlag = todo.longitude && todo.latitude ? true : false;
   return { result, changeLocationFlag };
 };
+
+export const updateTodoAlarmed = async (id: any, alarmed: boolean) => {
+  const result = await Todo.findByIdAndUpdate(
+    {
+      _id: id,
+    },
+    { alarmed },
+  );
+  return result;
+};
