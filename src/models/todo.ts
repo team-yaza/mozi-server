@@ -1,6 +1,17 @@
 import mongoose from 'mongoose';
 
-const todoSchema = new mongoose.Schema(
+interface Todo {
+  title: string;
+  description: string;
+  done: boolean;
+  location: {
+    type: 'Point';
+    coolrdinate: [number];
+    name: string;
+  };
+}
+
+const todoSchema = new mongoose.Schema<Todo>(
   {
     title: {
       type: String,
@@ -41,6 +52,6 @@ todoSchema.set('toJSON', {
   },
 });
 
-const Todo = mongoose.model('Todo', todoSchema);
+const Todo = mongoose.model<Todo>('Todo', todoSchema);
 
 export default Todo;
