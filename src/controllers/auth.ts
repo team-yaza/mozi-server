@@ -15,7 +15,7 @@ export const registerHandler = async (req: Request, res: Response) => {
 };
 
 export const loginHandler = (req: Request, res: Response, next: NextFunction) => {
-  passport.authenticate('local', (error, user, info) => {
+  passport.authenticate('local', (error, user) => {
     if (error) {
       console.error(error);
       return next(error);

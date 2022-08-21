@@ -4,6 +4,7 @@ const naverApiUrl = 'https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2
 
 const naverApiRequest = async (longitude: number, latitude: number) => {
   const {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     data: { status, results },
   } = await axios.get(naverApiUrl, {
     headers: {
@@ -22,6 +23,7 @@ const parseAddress = (naverApiResults: any) => {
   if (naverApiResults.length === 0) {
     return 'Address was not found';
   }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [legalcode, admcode] = naverApiResults;
   const area = [];
   for (let i = 1; i <= 4; i++) {
