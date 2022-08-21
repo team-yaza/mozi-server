@@ -35,8 +35,9 @@ export const updateTodoHandler = async (req: Request, res: Response) => {
   const location: any = result?.location;
 
   // 첫번째 오브젝트 아이디는 유저 정보를 담고있어야함.
-  if (!location.name && changeLocationFlag)
+  if (location.name && changeLocationFlag) {
     await createAlarm(new mongoose.Types.ObjectId('123456789011'), req.params.id);
+  }
 
   if (result) res.status(201).json(result);
   else throw 'Todo was not updated';
