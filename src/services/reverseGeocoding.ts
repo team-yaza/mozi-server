@@ -19,6 +19,9 @@ const naverApiRequest = async (longitude: number, latitude: number) => {
 };
 
 const parseAddress = (naverApiResults: any) => {
+  if (naverApiResults.length === 0) {
+    return 'Address was not found';
+  }
   const [legalcode, admcode] = naverApiResults;
   const area = [];
   for (let i = 1; i <= 4; i++) {
