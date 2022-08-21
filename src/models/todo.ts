@@ -4,6 +4,7 @@ interface Todo {
   title: string;
   description: string;
   done: boolean;
+  alarmed: boolean;
   location: {
     type: 'Point';
     coolrdinate: [number];
