@@ -22,6 +22,7 @@ const todoSchema = new mongoose.Schema<Todo>(
     },
     done: {
       type: Boolean,
+      default: false,
     },
     alarmed: {
       type: Boolean,
