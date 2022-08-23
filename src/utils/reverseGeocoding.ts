@@ -8,8 +8,8 @@ const naverApiRequest = async (longitude: number, latitude: number) => {
     data: { status, results },
   } = await axios.get(naverApiUrl, {
     headers: {
-      'X-NCP-APIGW-API-KEY-ID': `${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}`,
-      'X-NCP-APIGW-API-KEY': `${process.env.PUBLIC_NAVER_SECRET_KEY}`,
+      'X-NCP-APIGW-API-KEY-ID': `${process.env.NAVER_CLIENT_ID}`,
+      'X-NCP-APIGW-API-KEY': `${process.env.NAVER_SECRET_KEY}`,
     },
     params: {
       coords: `${longitude},${latitude}`,
