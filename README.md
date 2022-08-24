@@ -1,6 +1,4 @@
-# mozi-server
-
-Greeting MOZI
+# MOZI
 
 ## How To Start
 
@@ -13,9 +11,9 @@ Greeting MOZI
 `v5.0.9`
 
 How to install
-* [Windows](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows-unattended/#install-mongodb-community-on-windows-using-msiexec.exe)
-* [Mac OS](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/#installing-mongodb-6.0-edition-edition)
 
+- [Windows](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows-unattended/#install-mongodb-community-on-windows-using-msiexec.exe)
+- [Mac OS](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/#installing-mongodb-6.0-edition-edition)
 
 #### Develop Mode
 
