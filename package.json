@@ -36,6 +36,7 @@
     "lint-staged": "^13.0.3",
     "mongodb-memory-server": "^8.7.2",
     "nodemon": "^2.0.19",
+    "pino-pretty": "^9.1.0",
     "prettier": "^2.7.1",
     "supertest": "^6.2.4",
     "swagger-ui-express": "^4.5.0",
@@ -58,6 +59,7 @@
     "passport-kakao": "^1.0.1",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^7.1.2",
+    "pino": "^8.4.2",
     "web-push": "^3.5.0"
   },
   "lint-staged": {
