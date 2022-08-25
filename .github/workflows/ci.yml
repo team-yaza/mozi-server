@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+    types: [opened, assigned, synchronize, labeled]
+
+defaults:
+  run:
+    working-directory: ./
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Build
+        run: yarn build
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Test
+        run: yarn test
+
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.2
+        with:
+          dry: True
+          github_token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+
+

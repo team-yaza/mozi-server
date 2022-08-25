@@ -2,14 +2,11 @@
   "compilerOptions": {
     "target": "es2016",
     "module": "commonjs",
+    "sourceMap": true,
+    "allowJs": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      // "@controllers": ["src/controllers/*"],
-      // "@routes": ["src/routes/*"],
-      // "@utils": ["src/utils/*"],
-      // "@loaders": ["src/loaders/*"],
-      "@tests/*": ["tests/*"]
+      "@/*": ["src/*"]
     },
     "outDir": "./build",
     "esModuleInterop": true,

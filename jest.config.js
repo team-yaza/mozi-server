@@ -5,7 +5,7 @@ const { resolve } = require('path');
 
 const moduleNameMapper = {}; //jest환경에서도 module Alias를 사용하기 위해 tsConfig의 paths를 가공해서 설정해줍니다.
 
-for (key in paths) {
+for (const key in paths) {
   const moduleName = `${key.slice(0, key.length - 1)}(.*)$`;
   moduleNameMapper[moduleName] = resolve(__dirname, `./src/${paths[key][0].slice(0, paths[key][0].length - 1)}$1`);
 }
@@ -16,7 +16,7 @@ module.exports = {
   roots: ['<rootDir>/src'],
   setupFiles: ['dotenv/config'],
   transform: { '^.+\\.tsx?$': 'ts-jest' },
-  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
+  testRegex: '(/tests/.*|(\\.|/)(test|spec))\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   moduleNameMapper,
   // setupFilesAfterEnv: ['<rootDir>/src/tests/setup.ts'], //테스트가 돌아가기 전에 의존성이나 추가 환경을 구성하기위한 setup file입니다.

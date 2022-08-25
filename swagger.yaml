@@ -1,0 +1,144 @@
+swagger: '2.0'
+info:
+  description: 'Mozi Server API.'
+  version: '1.0.0'
+  title: 'Mozi Server'
+host: 'localhost:3001'
+basePath: '/api/v1'
+tags:
+  - name: 'Todo'
+    description: '할일'
+schemes:
+  - 'http'
+paths:
+  /todos:
+    get:
+      tags:
+        - 'Todo'
+      summary: '사용자의 모든 todo를 가져옵니다.'
+      description: ''
+      operationId: 'addPet'
+      responses:
+        '200':
+          description: '성공'
+          examples:
+            application/json:
+              [
+                {
+                  '_id': '62daa6ae82c240361ada75dd',
+                  'title': 'Getting started',
+                  'createdAt': '2022-07-22T13:31:26.294Z',
+                  '__v': 0,
+                },
+                {
+                  '_id': '62daa73582c240361ada75e1',
+                  'title': 'Remember the milk',
+                  'createdAt': '2022-07-22T13:33:41.951Z',
+                  '__v': 0,
+                },
+                {
+                  '_id': '62daa73b82c240361ada75e3',
+                  'title': 'On my way',
+                  'createdAt': '2022-07-22T13:33:47.628Z',
+                  '__v': 0,
+                },
+              ]
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/TodoResponse'
+    post:
+      tags:
+        - 'Todo'
+      summary: '요청받은 Todo를 데이터베이스에 생성하고 생성한 Todo를 반환합니다.'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: '생성할 Todo 데이터'
+          required: true
+          schema:
+            properties:
+              title:
+                type: 'string'
+              done:
+                type: 'boolean'
+              description:
+                type: 'string'
+      responses:
+        '201':
+          examples:
+            application/json:
+              {
+                '_id': '62daa6ae82c240361ada75dd',
+                'title': 'Getting started',
+                'createdAt': '2022-07-22T13:31:26.294Z',
+                '__v': 0,
+              }
+          schema:
+            $ref: '#/definitions/TodoResponse'
+
+  /todos/{id}:
+    get:
+      tags:
+        - 'Todo'
+      summary: '사용자의 특정 Todo를 가져옵니다.'
+      description: ''
+      parameters:
+        - name: 'id'
+          in: 'path'
+          description: 'MongoDB의 ObjectId'
+          required: true
+          type: 'string'
+      responses:
+        '200':
+          description: 'Successful operation'
+    delete:
+      tags:
+        - 'Todo'
+      summary: '사용자의 특정 Todo를 삭제합니다.'
+      description: ''
+      parameters:
+        - name: 'id'
+          in: 'path'
+          description: 'MongoDB의 ObjectId'
+          required: true
+          type: 'string'
+      responses:
+        '200':
+          description: '성공'
+    patch:
+      tags:
+        - 'Todo'
+      summary: '사용자의 특정 Todo를 업데이트합니다.'
+      description: ''
+      parameters:
+        - name: 'id'
+          in: 'path'
+          description: 'MongoDB의 ObjectId'
+          required: true
+          type: 'string'
+        - in: 'body'
+          name: 'body'
+          description: '생성할 Todo 데이터'
+          required: true
+          schema:
+            properties:
+              title:
+                type: 'string'
+      responses:
+        '201':
+          description: '성공'
+definitions:
+  TodoResponse:
+    type: 'object'
+    properties:
+      _id:
+        type: 'string'
+      title:
+        type: 'string'
+      done:
+        type: 'boolean'
+      description:
+        type: 'string'
+      createdAt:
+        type: 'string'
