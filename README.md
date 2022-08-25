@@ -22,3 +22,11 @@ yarn install
 
 yarn dev
 ```
+
+### Production Mode
+
+```
+yarn build
+
+yarn start
+```
