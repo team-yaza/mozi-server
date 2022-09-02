@@ -55,11 +55,13 @@
     "express-session": "^1.17.3",
     "helmet": "^5.1.1",
     "mongoose": "^6.4.6",
+    "mysql2": "^2.3.3",
     "passport": "0.5.3",
     "passport-kakao": "^1.0.1",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^7.1.2",
     "pino": "^8.4.2",
+    "sequelize": "^6.21.4",
     "web-push": "^3.5.0"
   },
   "lint-staged": {
