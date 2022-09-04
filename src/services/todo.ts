@@ -1,5 +1,5 @@
 import Todo from '@/models/todo';
-import { serializeGeoJson } from '@/utils/serialize';
+// import { serializeGeoJson } from '@/utils/serialize';
 
 export const findAllTodos = async () => {
   const todos = await Todo.findAll();
@@ -26,8 +26,8 @@ export const deleteTodo = async (id: string) => {
 };
 
 export const updateTodo = async (id: any, todo: any) => {
-  const { longitude, latitude } = todo;
-  if (longitude && latitude) todo.location = serializeGeoJson(longitude, latitude);
+  // const { longitude, latitude } = todo;
+  // if (longitude && latitude) todo.location = serializeGeoJson(longitude, latitude);
   const result = await Todo.update(
     {
       ...todo,
