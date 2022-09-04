@@ -1,14 +1,13 @@
-import mongoose from 'mongoose';
-import passportLocalMongoose from 'passport-local-mongoose';
+import sequelize from '@/models';
+import { DataTypes } from 'sequelize';
 
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-  },
+const User = sequelize.define('user', {
+  email: DataTypes.STRING,
+  password: DataTypes.STRING,
 });
 
-userSchema.plugin(passportLocalMongoose);
-
-const User = mongoose.model('User', userSchema);
+(async () => {
+  await User.sync();
+})();
 
 export default User;
