@@ -1,5 +1,10 @@
-import User from '@/models/user';
+import dotenv from 'dotenv';
+
 import { Strategy } from 'passport-kakao';
+
+import User from '@/models/user';
+
+dotenv.config();
 
 const kakaoStrategy = new Strategy(
   {
@@ -8,19 +13,16 @@ const kakaoStrategy = new Strategy(
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
-      const {
-        _json: {
-          kakao_account: { email: username },
+      const exUser: any = await User.findOne({
+        where: {
+          email: profile._json.kakao_account.email,
         },
-      } = profile;
-      const exUser = await User.findOne({
-        username,
       });
       if (exUser) {
         done(null, exUser);
       } else {
         const newUser = await User.create({
-          username,
+          email: profile._json.kakao_account.email,
         });
         done(null, newUser);
       }
