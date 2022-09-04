@@ -2,17 +2,12 @@ import Todo from '@/models/todo';
 import { serializeGeoJson } from '@/utils/serialize';
 
 export const findAllTodos = async () => {
-  const todos = await Todo.find();
-
-  if (todos.length === 0) return null;
-
+  const todos = await Todo.findAll();
   return todos;
 };
 
 export const findTodo = async (id: string) => {
-  const todo = await Todo.findOne({
-    _id: id,
-  });
+  const todo = await Todo.findByPk(id);
   return todo;
 };
 
@@ -22,35 +17,41 @@ export const createTodo = async (todo: any) => {
 };
 
 export const deleteTodo = async (id: string) => {
-  const result = await Todo.findOneAndDelete({
-    _id: id,
+  const result = await Todo.destroy({
+    where: {
+      id,
+    },
   });
   return result;
 };
 
 export const updateTodo = async (id: any, todo: any) => {
-  if (todo.longitude && todo.latitude) todo.location = await serializeGeoJson(todo.longitude, todo.latitude);
-  const result = await Todo.findByIdAndUpdate(
-    {
-      _id: id,
-    },
+  const { longitude, latitude } = todo;
+  if (longitude && latitude) todo.location = serializeGeoJson(longitude, latitude);
+  const result = await Todo.update(
     {
       ...todo,
     },
     {
-      new: true,
+      where: {
+        id,
+      },
     },
   );
   const changeLocationFlag = todo.longitude && todo.latitude ? true : false;
-  return { result, changeLocationFlag };
+  return { affectedCount: result[0], changeLocationFlag };
 };
 
 export const updateTodoAlarmed = async (id: any, alarmed: boolean) => {
-  const result = await Todo.findByIdAndUpdate(
+  const result = await Todo.update(
     {
-      _id: id,
+      alarmed,
     },
-    { alarmed },
+    {
+      where: {
+        id,
+      },
+    },
   );
   return result;
 };
