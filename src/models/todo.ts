@@ -1,63 +1,16 @@
-import mongoose from 'mongoose';
+import sequelize from '@/models';
+import { DataTypes } from 'sequelize';
 
-interface Todo {
-  title: string;
-  description: string;
-  done: boolean;
-  alarmed: boolean;
-  location: {
-    type: 'Point';
-    coolrdinate: [number];
-    name: string;
-  };
-}
-
-const todoSchema = new mongoose.Schema<Todo>(
-  {
-    title: {
-      type: String,
-    },
-    description: {
-      type: String,
-    },
-    done: {
-      type: Boolean,
-      default: false,
-    },
-    alarmed: {
-      type: Boolean,
-      default: false,
-    },
-    location: {
-      type: {
-        type: String,
-        enum: ['Point'],
-      },
-      name: {
-        type: String,
-      },
-      coordinates: {
-        type: [Number],
-      },
-    },
-  },
-  {
-    timestamps: true,
-  },
-);
-
-todoSchema.virtual('id').get(function () {
-  return this._id.toHexString();
+const Todo = sequelize.define('todo', {
+  title: DataTypes.STRING,
+  description: DataTypes.STRING,
+  done: DataTypes.BOOLEAN,
+  alarmed: DataTypes.BOOLEAN,
+  location: DataTypes.GEOMETRY,
 });
 
-todoSchema.set('toJSON', {
-  virtuals: true,
-  versionKey: false,
-  transform: function (_, ret) {
-    delete ret._id;
-  },
-});
-
-const Todo = mongoose.model<Todo>('Todo', todoSchema);
+(async () => {
+  await Todo.sync();
+})();
 
 export default Todo;
