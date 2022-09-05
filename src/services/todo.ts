@@ -25,7 +25,7 @@ export const deleteTodo = async (id: string) => {
 };
 
 export const updateTodo = async (id: any, todo: any) => {
-  const result = await Todo.update(
+  const [affectedCount] = await Todo.update(
     {
       ...todo,
     },
@@ -35,20 +35,5 @@ export const updateTodo = async (id: any, todo: any) => {
       },
     },
   );
-  const changeLocationFlag = todo.longitude && todo.latitude ? true : false;
-  return { affectedCount: result[0], changeLocationFlag };
-};
-
-export const updateTodoAlarmed = async (id: any, alarmed: boolean) => {
-  const result = await Todo.update(
-    {
-      alarmed,
-    },
-    {
-      where: {
-        id,
-      },
-    },
-  );
-  return result;
+  return affectedCount;
 };
