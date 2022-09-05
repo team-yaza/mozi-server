@@ -11,6 +11,6 @@ export const notificationHandler = async (req: Request, res: Response) => {
 };
 
 export const setNotificationHandler = async (req: Request, res: Response) => {
-  const result = await updateTodoAlarmed(req.params.id, false);
-  res.status(200).json(result);
+  await updateTodoAlarmed(req.params.id, false);
+  res.status(200).send();
 };
