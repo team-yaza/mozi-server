@@ -8,7 +8,6 @@ export const registerHandler = async (req: Request, res: Response, next: NextFun
   try {
     const exUser = await User.findOne({ where: { email } });
     if (exUser) {
-      console.log('이미 가입된 이메일입니다.');
       return res.redirect('/login');
     }
 
@@ -33,7 +32,6 @@ export const loginHandler = (req: Request, res: Response, next: NextFunction) =>
     if (!user) {
       return res.redirect('/');
     }
-    console.log(`${user} login 성공`);
     req.login(user, (loginError) => {
       if (loginError) {
         console.error(loginError);
