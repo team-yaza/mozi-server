@@ -1,8 +1,8 @@
 import express from 'express';
-import { registerHandler } from '@/controllers/auth';
+import { kakaoHandler } from '@/controllers/auth';
 
 const authRouter = express.Router();
 
-authRouter.post('/register', registerHandler);
+authRouter.post('/kakao', kakaoHandler);
 
 export default authRouter;
