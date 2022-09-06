@@ -10,6 +10,8 @@ const User = sequelize.define('user', {
   email: DataTypes.STRING,
   password: DataTypes.STRING,
   image: DataTypes.STRING,
+  thumbnail_image_url: DataTypes.STRING,
+  profile_image_url: DataTypes.STRING,
 });
 
 (async () => {
