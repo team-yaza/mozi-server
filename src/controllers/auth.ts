@@ -4,8 +4,6 @@ import User from '@/models/user';
 export const registerHandler = async (req: Request, res: Response) => {
   const { email, name, id, image } = req.body;
 
-  console.log(req.session, '?');
-
   try {
     const existedUser = await User.findOne({ where: { id } });
     if (existedUser) {
