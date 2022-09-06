@@ -5,14 +5,11 @@ import passport from 'passport';
 
 const authRouter = express.Router();
 
-authRouter.post('/register', isNotLoggedIn, registerHandler);
-
+authRouter.post('/register', registerHandler);
+// authRouter.post('/register', isNotLoggedIn, registerHandler);
 authRouter.post('/login', isNotLoggedIn, loginHandler);
-
 authRouter.get('/logout', isLoggedIn, logoutHandler);
-
 authRouter.get('/kakao', passport.authenticate('kakao'));
-
 authRouter.get(
   '/kakao/callback',
   passport.authenticate('kakao', {
