@@ -1,6 +1,8 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
 
+import Todo from '@/models/todo';
+
 dotenv.config();
 
 const googleNearBySearchApiUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
@@ -47,4 +49,12 @@ export const getNearby = async (longitude: number, latitude: number, keyword: st
     };
   });
   return locations;
+};
+
+export const getTodosWithLocation = async () => {
+  return await Todo.findAll({
+    where: {
+      location: { ne: null }, // ne: Not Equal
+    },
+  });
 };
