@@ -7,6 +7,7 @@ const Todo = sequelize.define('todo', {
   done: DataTypes.BOOLEAN,
   alarmed: DataTypes.BOOLEAN,
   location: DataTypes.GEOMETRY,
+  soft_deleted: DataTypes.BOOLEAN,
 });
 
 (async () => {
