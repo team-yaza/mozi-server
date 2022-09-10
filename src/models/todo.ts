@@ -2,6 +2,10 @@ import sequelize from '@/models';
 import { DataTypes } from 'sequelize';
 
 const Todo = sequelize.define('todo', {
+  id: {
+    type: DataTypes.STRING,
+    primaryKey: true,
+  },
   title: DataTypes.STRING,
   description: DataTypes.STRING,
   done: DataTypes.BOOLEAN,
