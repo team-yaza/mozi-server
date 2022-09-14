@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid';
 import Todo from '@/models/todo';
 
 export const findAllTodos = async () => {
@@ -11,7 +12,7 @@ export const findTodo = async (id: string) => {
 };
 
 export const createTodo = async (todo: any) => {
-  const newTodo = await Todo.create(todo);
+  const newTodo = await Todo.create({ ...todo, id: uuid() });
   return newTodo;
 };
 
