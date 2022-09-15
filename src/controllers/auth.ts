@@ -8,7 +8,6 @@ import { getProfile } from '@/services/kakao';
 export const kakaoHandler = async (req: Request, res: Response) => {
   try {
     const { accessToken } = req.body;
-    console.log(accessToken);
 
     const result = await getProfile(accessToken);
 
@@ -46,7 +45,7 @@ export const kakaoHandler = async (req: Request, res: Response) => {
       { issuer: 'hyunjin' },
     );
 
-    res.cookie('token', token, { httpOnly: true });
+    res.cookie('token', token);
     res.status(200).json(token);
   } catch (error) {
     console.log(error);
