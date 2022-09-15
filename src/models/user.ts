@@ -1,21 +1,49 @@
-import sequelize from '@/models';
-import { DataTypes } from 'sequelize';
+import {
+  Model,
+  InferAttributes,
+  InferCreationAttributes,
+  NonAttribute,
+  CreationOptional,
+  Association,
+  HasManyGetAssociationsMixin,
+  HasManyAddAssociationMixin,
+  HasManySetAssociationsMixin,
+  HasManyRemoveAssociationMixin,
+  HasManyRemoveAssociationsMixin,
+  HasManyHasAssociationMixin,
+  HasManyHasAssociationsMixin,
+  HasManyCountAssociationsMixin,
+  HasManyCreateAssociationMixin,
+} from 'sequelize';
 
-const User = sequelize.define('user', {
-  id: {
-    type: DataTypes.STRING,
-    primaryKey: true,
-  },
-  name: DataTypes.STRING,
-  email: DataTypes.STRING,
-  password: DataTypes.STRING,
-  image: DataTypes.STRING,
-  thumbnail_image_url: DataTypes.STRING,
-  profile_image_url: DataTypes.STRING,
-});
+import Todo from '@/models/todo';
 
-(async () => {
-  await User.sync();
-})();
+class User extends Model<InferAttributes<User, { omit: 'todos' }>, InferCreationAttributes<User, { omit: 'todos' }>> {
+  declare id: CreationOptional<string>;
+
+  declare name: string;
+  declare email: string;
+  declare password?: string;
+  declare image?: string;
+  declare thumbnailImage?: string;
+  declare profileImage?: string;
+
+  declare getTodos: HasManyGetAssociationsMixin<Todo>;
+  declare addTodo: HasManyAddAssociationMixin<Todo, number>;
+  declare addTodos: HasManyAddAssociationMixin<Todo, number>;
+  declare setTodos: HasManySetAssociationsMixin<Todo, number>;
+  declare removeTodo: HasManyRemoveAssociationMixin<Todo, number>;
+  declare removeTodos: HasManyRemoveAssociationsMixin<Todo, number>;
+  declare hasTodo: HasManyHasAssociationMixin<Todo, number>;
+  declare hasTodos: HasManyHasAssociationsMixin<Todo, number>;
+  declare countTodos: HasManyCountAssociationsMixin;
+  declare createTodo: HasManyCreateAssociationMixin<Todo, 'ownerId'>;
+
+  declare todos?: NonAttribute<Todo[]>;
+
+  declare static associations: {
+    todos: Association<User, Todo>;
+  };
+}
 
 export default User;
