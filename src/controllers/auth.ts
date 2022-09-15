@@ -41,7 +41,6 @@ export const kakaoHandler = async (req: Request, res: Response) => {
     );
 
     res.cookie('token', token);
-    // res.cookie('token', token, { httpOnly: true });
     res.status(200).json(token);
   } catch (error) {
     console.log(error);

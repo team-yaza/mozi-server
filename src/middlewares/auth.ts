@@ -11,8 +11,13 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
       const decoded = jwt.verify(token, config.jwtSecret) as JwtPayload;
       req.user = await User.findByPk(decoded.id);
 
-      next();
+      // const { dataValues } = await User.findByPk(decoded.id);
+
+      console.log(req.user.dataValues);
+
+      return next();
     } catch (error) {
+      console.log(error);
       res.status(401).json({ message: 'id로 유저를 찾는데 실패했습니다.' });
     }
   }
