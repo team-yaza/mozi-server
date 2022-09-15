@@ -1,8 +1,13 @@
-import { Model, InferAttributes, InferCreationAttributes, CreationOptional, DataTypes } from 'sequelize';
-import sequelize from '@/models';
+import { Model, InferAttributes, InferCreationAttributes, CreationOptional, ForeignKey, NonAttribute } from 'sequelize';
+
+import User from '@/models/user';
 
 class Todo extends Model<InferAttributes<Todo>, InferCreationAttributes<Todo>> {
-  declare id: CreationOptional<number>;
+  declare id: CreationOptional<string>;
+
+  declare ownerId: ForeignKey<User['id']>;
+  declare owner?: NonAttribute<User>;
+
   declare title: string;
   declare description: string;
   declare done?: boolean;
@@ -10,35 +15,5 @@ class Todo extends Model<InferAttributes<Todo>, InferCreationAttributes<Todo>> {
   declare longitude?: CreationOptional<number>;
   declare latitude?: CreationOptional<number>;
 }
-
-Todo.init(
-  {
-    id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
-    done: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
-    alarmed: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
-    longitude: DataTypes.FLOAT,
-    latitude: DataTypes.FLOAT,
-  },
-  {
-    tableName: 'todos',
-    sequelize,
-  },
-);
-
-(async () => {
-  await Todo.sync();
-})();
 
 export default Todo;
