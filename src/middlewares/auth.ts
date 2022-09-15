@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
-import User from '@/models/user';
+// import User from '@/models/user';
 import config from '@/config';
 
 export const protect = async (req: Request, res: Response, next: NextFunction) => {
@@ -9,8 +9,8 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
     const token = req.headers.authorization.split(' ')[1];
     try {
       const decoded = jwt.verify(token, config.jwtSecret) as JwtPayload;
-      req.user = await User.findByPk(decoded.id);
-
+      // req.user = await User.findByPk(decoded.id);
+      decoded;
       next();
     } catch (error) {
       res.status(401).json({ message: 'id로 유저를 찾는데 실패했습니다.' });

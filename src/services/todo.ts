@@ -38,17 +38,3 @@ export const updateTodo = async (id: any, todo: any) => {
   );
   return affectedCount;
 };
-
-export const updateTodoAlarmed = async (id: any, alarmed: boolean) => {
-  const [affectedCount] = await Todo.update(
-    {
-      alarmed,
-    },
-    {
-      where: {
-        id,
-      },
-    },
-  );
-  return affectedCount;
-};
