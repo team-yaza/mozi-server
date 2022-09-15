@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+
 import User from '@/models/user';
 import config from '@/config';
 import { getProfile } from '@/services/kakao';
-import jwt from 'jsonwebtoken';
 
 export const kakaoHandler = async (req: Request, res: Response) => {
   try {

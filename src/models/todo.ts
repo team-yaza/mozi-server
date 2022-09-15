@@ -1,5 +1,4 @@
 import { Model, InferAttributes, InferCreationAttributes, CreationOptional, ForeignKey, NonAttribute } from 'sequelize';
-
 import User from '@/models/user';
 
 class Todo extends Model<InferAttributes<Todo>, InferCreationAttributes<Todo>> {
