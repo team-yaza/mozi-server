@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { findAllTodos, createTodo, deleteTodo, updateTodo, findTodo } from '@/services/todo';
 
 export const getAllTodosHandler = async (req: Request, res: Response) => {
-  const todos = await findAllTodos();
+  const todos = await findAllTodos(req.user.id);
 
   res.status(200).json(todos);
 };
@@ -15,8 +15,10 @@ export const getTodoHandler = async (req: Request, res: Response) => {
 };
 
 export const createTodoHandler = async (req: Request, res: Response) => {
-  const todo = await createTodo(req.body);
-
+  const todo = await createTodo({
+    ownerId: req.user.id,
+    ...req.body,
+  });
   res.status(201).json(todo);
 };
 

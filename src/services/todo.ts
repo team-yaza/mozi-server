@@ -1,8 +1,12 @@
 import { v4 as uuid } from 'uuid';
 import Todo from '@/models/todo';
 
-export const findAllTodos = async () => {
-  const todos = await Todo.findAll();
+export const findAllTodos = async (ownerId: string) => {
+  const todos = await Todo.findAll({
+    where: {
+      ownerId,
+    },
+  });
   return todos;
 };
 
