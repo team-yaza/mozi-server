@@ -12,20 +12,25 @@ export const kakaoHandler = async (req: Request, res: Response) => {
     const result = await getProfile(accessToken);
 
     const { id, email } = result;
-    const { nickname: name, profile_image_url, thumbnail_image_url } = result.kakao_account.profile;
+
+    const {
+      nickname: name,
+      profile_image_url: profileImage,
+      thumbnail_image_url: thumbnailImage,
+    } = result.kakao_account.profile;
 
     const existedUser: any = await User.findOne({ where: { id } });
 
     if (existedUser) {
-      await existedUser.update({ email, name, profile_image_url, thumbnail_image_url });
+      await existedUser.update({ email, name, profileImage, thumbnailImage });
       await existedUser.save();
     } else {
       await User.create({
         id,
         email,
         name,
-        profile_image_url,
-        thumbnail_image_url,
+        profileImage,
+        thumbnailImage,
       });
     }
 
@@ -34,7 +39,7 @@ export const kakaoHandler = async (req: Request, res: Response) => {
         id,
         name,
         email,
-        profile_image_url,
+        profileImage,
       },
       config.jwtSecret,
       { issuer: 'hyunjin' },
