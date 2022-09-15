@@ -1,21 +1,18 @@
-import sequelize from '@/models';
-import { DataTypes } from 'sequelize';
+import { Model, InferAttributes, InferCreationAttributes, CreationOptional, ForeignKey, NonAttribute } from 'sequelize';
+import User from '@/models/user';
 
-const Todo = sequelize.define('todo', {
-  id: {
-    type: DataTypes.STRING,
-    primaryKey: true,
-  },
-  title: DataTypes.STRING,
-  description: DataTypes.STRING,
-  done: DataTypes.BOOLEAN,
-  alarmed: DataTypes.BOOLEAN,
-  location: DataTypes.GEOMETRY,
-  soft_deleted: DataTypes.BOOLEAN,
-});
+class Todo extends Model<InferAttributes<Todo>, InferCreationAttributes<Todo>> {
+  declare id: CreationOptional<string>;
 
-(async () => {
-  await Todo.sync();
-})();
+  declare ownerId: ForeignKey<User['id']>;
+  declare owner?: NonAttribute<User>;
+
+  declare title: string;
+  declare description: string;
+  declare done?: boolean;
+  declare alarmed?: boolean;
+  declare longitude?: CreationOptional<number>;
+  declare latitude?: CreationOptional<number>;
+}
 
 export default Todo;

@@ -54,7 +54,7 @@ export const getNearby = async (longitude: number, latitude: number, keyword: st
 export const getTodosWithLocation = async () => {
   return await Todo.findAll({
     where: {
-      location: { ne: null }, // ne: Not Equal
+      // location: { ne: null }, // ne: Not Equal
     },
   });
 };
