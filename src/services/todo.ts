@@ -42,3 +42,13 @@ export const updateTodo = async (id: any, todo: any) => {
   );
   return affectedCount;
 };
+
+export const deleteAllTodos = async (ownerId: string) => {
+  const result = await Todo.destroy({
+    where: {
+      ownerId,
+    },
+  });
+
+  return result;
+};
