@@ -7,7 +7,7 @@ import YAML from 'yamljs';
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 const options: cors.CorsOptions = {
-  origin: ['http://localhost:3000'],
+  origin: ['http://localhost:3000', 'https://mozi-client.vercel.app', 'https://mozi.cz'],
   credentials: true,
 };
 
