@@ -44,9 +44,8 @@ export const kakaoHandler = async (req: Request, res: Response) => {
       config.jwtSecret,
       { issuer: 'hyunjin' },
     );
-
-    res.cookie('token', token);
     res.status(200).json(token);
+    // res.status(200).cookie('token', token, { secure: true, sameSite: 'none', path: '/' }).json(token);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: '카카오 로그인에 실패했습니다.' });
