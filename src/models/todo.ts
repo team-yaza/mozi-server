@@ -9,11 +9,14 @@ class Todo extends Model<InferAttributes<Todo>, InferCreationAttributes<Todo>> {
 
   declare title: string;
   declare description: string;
-  declare done?: boolean;
-  declare index?: number;
-  declare alarmed?: boolean;
-  declare longitude?: CreationOptional<number>;
-  declare latitude?: CreationOptional<number>;
+
+  declare done: CreationOptional<boolean>;
+  declare alarmed: CreationOptional<boolean>;
+
+  declare longitude: CreationOptional<number>;
+  declare latitude: CreationOptional<number>;
+
+  declare index: CreationOptional<number>;
 }
 
 export default Todo;
