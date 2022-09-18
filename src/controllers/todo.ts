@@ -30,11 +30,9 @@ export const deleteTodoHandler = async (req: Request, res: Response) => {
 };
 
 export const updateTodoHandler = async (req: Request, res: Response) => {
-  const affectedCount = await updateTodo(req.params.id, req.body);
+  const todo = await updateTodo(req.params.id, req.body);
 
-  const todo = await findTodo(req.params.id);
-
-  if (affectedCount) res.status(201).json(todo);
+  if (todo) res.status(201).json(todo);
   else throw 'Todo was not updated';
 };
 

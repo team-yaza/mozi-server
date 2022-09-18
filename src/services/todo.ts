@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid';
 import Todo from '@/models/todo';
 
 export const findAllTodos = async (ownerId: string) => {
@@ -10,37 +9,31 @@ export const findAllTodos = async (ownerId: string) => {
   return todos;
 };
 
-export const findTodo = async (id: string) => {
-  const todo = await Todo.findByPk(id);
+export const findTodo = async (todoId: string) => {
+  const todo = await Todo.findByPk(todoId);
   return todo;
 };
 
 export const createTodo = async (todo: any) => {
-  const newTodo = await Todo.create({ ...todo, id: uuid() });
+  const newTodo = await Todo.create({ ...todo });
   return newTodo;
 };
 
-export const deleteTodo = async (id: string) => {
+export const deleteTodo = async (todoId: string) => {
   const result = await Todo.destroy({
     where: {
-      id,
+      id: todoId,
     },
   });
   return result;
 };
 
-export const updateTodo = async (id: any, todo: any) => {
-  const [affectedCount] = await Todo.update(
-    {
-      ...todo,
-    },
-    {
-      where: {
-        id,
-      },
-    },
-  );
-  return affectedCount;
+export const updateTodo = async (todoId: string, newTodo: any) => {
+  const todo = await Todo.findByPk(todoId);
+  await todo?.update({
+    ...newTodo,
+  });
+  return todo;
 };
 
 export const deleteAllTodos = async (ownerId: string) => {
