@@ -10,9 +10,11 @@ const userInit = (sequelize: Sequelize) => {
         defaultValue: UUIDV4,
         primaryKey: true,
       },
+
       name: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
+
       image: DataTypes.STRING,
       thumbnailImage: DataTypes.STRING,
       profileImage: DataTypes.STRING,
@@ -32,8 +34,10 @@ const todoInit = (sequelize: Sequelize) => {
         defaultValue: UUIDV4,
         primaryKey: true,
       },
+
       title: DataTypes.STRING,
       description: DataTypes.STRING,
+
       done: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
@@ -42,8 +46,11 @@ const todoInit = (sequelize: Sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+
       longitude: DataTypes.FLOAT,
       latitude: DataTypes.FLOAT,
+
+      index: DataTypes.INTEGER,
     },
     {
       tableName: 'todos',
