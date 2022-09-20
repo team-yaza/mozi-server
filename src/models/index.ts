@@ -68,7 +68,8 @@ const todoUserInit = () => {
 };
 
 const modelInit = async () => {
-  const sequelize = new Sequelize('mysql://root:root@localhost:3306/mozi', {
+  const host = process.env.NODE_ENV === 'development' ? 'localhost' : 'db';
+  const sequelize = new Sequelize(`mysql://root:root@${host}:3306/mozi`, {
     logging: false,
   });
   todoInit(sequelize);
