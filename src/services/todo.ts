@@ -29,11 +29,9 @@ export const deleteTodo = async (todoId: string) => {
 };
 
 export const updateTodo = async (todoId: string, newTodo: any) => {
-  const todo = await Todo.findByPk(todoId);
-  await todo?.update({
-    ...newTodo,
-  });
-  return todo;
+  const updatedTodo = await Todo.update({ ...newTodo }, { where: { id: todoId } });
+
+  return updatedTodo;
 };
 
 export const deleteAllTodos = async (ownerId: string) => {
