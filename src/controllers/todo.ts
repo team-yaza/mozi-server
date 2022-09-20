@@ -3,6 +3,8 @@ import { Request, Response } from 'express';
 import { findAllTodos, createTodo, deleteTodo, updateTodo, findTodo, deleteAllTodos } from '@/services/todo';
 
 export const getAllTodosHandler = async (req: Request, res: Response) => {
+  if (!req.user) throw 'User not found';
+
   const todos = await findAllTodos(req.user.id);
 
   res.status(200).json(todos);
@@ -15,6 +17,8 @@ export const getTodoHandler = async (req: Request, res: Response) => {
 };
 
 export const createTodoHandler = async (req: Request, res: Response) => {
+  if (!req.user) throw 'User not found';
+
   const todo = await createTodo({
     ownerId: req.user.id,
     ...req.body,
@@ -37,7 +41,8 @@ export const updateTodoHandler = async (req: Request, res: Response) => {
 };
 
 export const deleteAllTodosHandler = async (req: Request, res: Response) => {
-  const result = await deleteAllTodos(req.user.id);
+  if (!req.user) throw 'User not found';
 
+  const result = await deleteAllTodos(req.user.id);
   res.status(200).json(result);
 };
