@@ -38,5 +38,6 @@ export const updateTodoHandler = async (req: Request, res: Response) => {
 
 export const deleteAllTodosHandler = async (req: Request, res: Response) => {
   const result = await deleteAllTodos(req.user.id);
+
   res.status(200).json(result);
 };
