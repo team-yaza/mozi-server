@@ -1,0 +1,9 @@
+#certbot
+data
+
+#mysql
+db
+
+#git & github
+.git
+.github
