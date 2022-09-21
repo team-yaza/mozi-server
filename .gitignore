@@ -107,3 +107,6 @@ build
 
 #certbot
 data
+
+#database
+db
