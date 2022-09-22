@@ -17,6 +17,7 @@ class Todo extends Model<InferAttributes<Todo>, InferCreationAttributes<Todo>> {
   declare latitude: CreationOptional<number>;
 
   declare index: CreationOptional<number>;
+  declare softDeleted: boolean;
 }
 
 export default Todo;

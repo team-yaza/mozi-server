@@ -51,6 +51,7 @@ const todoInit = (sequelize: Sequelize) => {
       latitude: DataTypes.FLOAT,
 
       index: DataTypes.INTEGER,
+      softDeleted: DataTypes.BOOLEAN,
     },
     {
       tableName: 'todos',
