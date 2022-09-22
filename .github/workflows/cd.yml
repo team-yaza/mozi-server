@@ -33,15 +33,15 @@ jobs:
           JWT_SECRET: ${{secrets.JWT_SECRET}}
           GOOGLE_NEARBYSEARCH_API_KEY: ${{secrets.GOOGLE_NEARBYSEARCH_API_KEY}}
         run: |
-          echo "NODE_ENV=$NODE_ENV" > .env.local
-          echo "PORT=$PORT" >> .env.local
-          echo "NAVER_CLIENT_ID=$NAVER_CLIENT_ID" >> .env.local
-          echo "NAVER_SECRET_KEY=$NAVER_SECRET_KEY" >> .env.local
-          echo "KAKAO_BASE_URL=$KAKAO_BASE_URL" >> .env.local
-          echo "KAKAO_REST_API_KEY=$KAKAO_REST_API_KEY" >> .env.local
-          echo "KAKAO_CLIENT_SECRET=$KAKAO_CLIENT_SECRET" >> .env.local
-          echo "JWT_SECRET=$JWT_SECRET" >> .env.local
-          echo "GOOGLE_NEARBYSEARCH_API_KEY=$GOOGLE_NEARBYSEARCH_API_KEY" >> .env.local
+          echo "NODE_ENV=$NODE_ENV" > .env
+          echo "PORT=$PORT" >> .env
+          echo "NAVER_CLIENT_ID=$NAVER_CLIENT_ID" >> .env
+          echo "NAVER_SECRET_KEY=$NAVER_SECRET_KEY" >> .env
+          echo "KAKAO_BASE_URL=$KAKAO_BASE_URL" >> .env
+          echo "KAKAO_REST_API_KEY=$KAKAO_REST_API_KEY" >> .env
+          echo "KAKAO_CLIENT_SECRET=$KAKAO_CLIENT_SECRET" >> .env
+          echo "JWT_SECRET=$JWT_SECRET" >> .env
+          echo "GOOGLE_NEARBYSEARCH_API_KEY=$GOOGLE_NEARBYSEARCH_API_KEY" >> .env
           docker build -f Dockerfile -t hancihu/mozi-server .
           docker push hancihu/mozi-server
 
