@@ -8,8 +8,8 @@
   "license": "MIT",
   "scripts": {
     "prestart": "rm -rf ./build && yarn build",
-    "start": "ts-node -r tsconfig-paths/register --files build/index.js",
-    "dev": "nodemon --exec ts-node -r tsconfig-paths/register --files ./src/index.ts",
+    "start": "cross-env NODE_ENV=production ts-node -r tsconfig-paths/register --files build/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon --exec ts-node -r tsconfig-paths/register --files ./src/index.ts",
     "test": "jest --passWithNoTests",
     "lint": "eslint --fix src",
     "prepare": "husky install",
@@ -28,6 +28,7 @@
     "@types/yamljs": "^0.2.31",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
+    "cross-env": "^7.0.3",
     "eslint": "^8.19.0",
     "husky": "^8.0.1",
     "jest": "^28.1.2",
