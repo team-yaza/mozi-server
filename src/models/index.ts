@@ -54,6 +54,7 @@ const todoInit = (sequelize: Sequelize) => {
     },
     {
       tableName: 'todos',
+      paranoid: true,
       sequelize,
     },
   );
