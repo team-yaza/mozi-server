@@ -8,7 +8,6 @@ import {
   getTodoHandler,
   deleteAllTodosHandler,
 } from '@/controllers/todo';
-
 import asyncHandler from '@/utils/asyncHandler';
 
 const todoRouter = express.Router();
