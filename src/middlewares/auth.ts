@@ -7,8 +7,11 @@ import config from '@/config';
 export const protect = async (req: Request, res: Response, next: NextFunction) => {
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     const token = req.headers.authorization.split(' ')[1];
+    console.log('protect');
+    console.log(token);
 
-    if (token === 'null') {
+    if (token === 'null' || token === 'undefined') {
+      console.log('zzz');
       return res.status(401).json({ message: '토큰이 존재하지 않습니다.' });
     }
 

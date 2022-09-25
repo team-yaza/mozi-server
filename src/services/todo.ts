@@ -5,6 +5,7 @@ export const findAllTodos = async (ownerId: string) => {
     where: {
       ownerId,
     },
+    paranoid: false,
   });
 
   return todos;
@@ -15,18 +16,21 @@ export const findTodo = async (todoId: string) => {
     where: {
       id: todoId,
     },
+    paranoid: false,
   });
 
   return todo;
 };
 
 export const createTodo = async (todo: Todo) => {
+  console.log('controller 도착');
   const newTodo = await Todo.create({ ...todo });
 
   return newTodo;
 };
 
 export const deleteTodo = async (todoId: string) => {
+  console.log('삭제');
   const result = await Todo.destroy({
     where: {
       id: todoId,
@@ -41,6 +45,7 @@ export const updateTodo = async (todoId: string, newTodo: any) => {
     where: {
       id: todoId,
     },
+    paranoid: false,
   });
 
   await updatedTodo?.update({
