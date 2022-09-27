@@ -6,6 +6,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=mozi
+      - TZ=Asia/Seoul
     volumes:
       - ./db:/var/lib/mysql
     networks:
@@ -20,6 +21,8 @@ services:
       - ./nginx:/etc/nginx/conf.d
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
+    environment:
+      - TZ=Asia/Seoul
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     ports:
@@ -43,6 +46,8 @@ services:
     networks:
       mozinetwork:
         ipv4_address: 172.23.0.9
+    environment:
+      - TZ=Asia/Seoul
     ports:
       - '3001:3001'
     depends_on:
