@@ -47,6 +47,7 @@ const todoInit = (sequelize: Sequelize) => {
         defaultValue: false,
       },
 
+      locationName: DataTypes.STRING,
       longitude: DataTypes.FLOAT,
       latitude: DataTypes.FLOAT,
 
