@@ -23,14 +23,12 @@ export const findTodo = async (todoId: string) => {
 };
 
 export const createTodo = async (todo: Todo) => {
-  console.log('controller 도착');
   const newTodo = await Todo.create({ ...todo });
 
   return newTodo;
 };
 
 export const deleteTodo = async (todoId: string) => {
-  console.log('삭제');
   const result = await Todo.destroy({
     where: {
       id: todoId,
