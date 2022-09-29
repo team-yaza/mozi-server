@@ -1,26 +1,25 @@
 swagger: '2.0'
 info:
-  description: 'Mozi Server API.'
-  version: '1.0.0'
   title: 'Mozi Server'
+  description: 'Mozi Server API입니다.'
+  version: 1.0.0
+
 host: 'localhost:3001'
 basePath: '/api/v1'
-tags:
-  - name: 'Todo'
-    description: '할일'
 schemes:
   - 'http'
+
 paths:
   /todos:
     get:
+      summary: 사용자의 모든 Todo를 가져옵니다.
       tags:
         - 'Todo'
-      summary: '사용자의 모든 Todo를 가져옵니다.'
-      description: ''
-      operationId: 'addPet'
       responses:
         '200':
-          description: '성공'
+          description: 성공
+          schema:
+            $ref: '#/definitions/Todo'
           examples:
             application/json:
               [
@@ -30,6 +29,7 @@ paths:
                   'description': 'what was it?',
                   'done': false,
                   'alarmed': false,
+                  'locationName': '',
                   'longitude': null,
                   'latitude': null,
                   'index': null,
@@ -44,6 +44,7 @@ paths:
                   'description': 'buy now',
                   'done': false,
                   'alarmed': false,
+                  'locationName': '',
                   'longitude': null,
                   'latitude': null,
                   'index': 2,
@@ -58,6 +59,7 @@ paths:
                   'description': 'are belong to you',
                   'done': false,
                   'alarmed': false,
+                  'locationName': '',
                   'longitude': null,
                   'latitude': null,
                   'index': null,
@@ -67,132 +69,193 @@ paths:
                   'ownerId': '2432241311',
                 },
               ]
-          schema:
-            type: 'array'
-            items:
-              $ref: '#/definitions/TodoResponse'
     post:
-      tags:
-        - 'Todo'
-      summary: 'Todo를 DB에 생성하고 생성한 Todo를 반환합니다.'
+      summary: Todo를 DB에 생성하고 생성한 Todo를 가져옵니다.
       parameters:
-        - in: 'body'
-          name: 'body'
-          description: '생성할 Todo 데이터'
+        - in: body
+          name: Todo
           required: true
+          type: object
+          description: 새로 생성할 Todo
           schema:
+            type: object
             properties:
               title:
-                type: 'string'
+                type: string
+                example: All my base
               description:
-                type: 'string'
-              done:
-                type: 'boolean'
-              alarmed:
-                type: 'boolean'
+                type: string
+                example: are belong to you
+              locationName:
+                type: string
+                example: '선릉역'
               longitude:
-                type: 'number'
+                type: number
+                example: 127.04894823187121
               latitude:
-                type: 'number'
+                type: number
+                example: 37.50466496606413
               index:
-                type: 'number'
+                type: number
+                example: 1
+      tags:
+        - 'Todo'
       responses:
         '201':
-          examples:
-            application/json:
-              {
-                'id': 'b54cdffb-2711-406a-bcc2-74ec02dfd80f',
-                'ownerId': '2432241311',
-                'title': 'All my base',
-                'description': ' are belong to you',
-                'done': false,
-                'alarmed': false,
-                'index': 1,
-                'updatedAt': '2022-09-24T03:45:31.014Z',
-                'createdAt': '2022-09-24T03:45:31.014Z',
-              }
+          description: 성공
           schema:
-            $ref: '#/definitions/TodoResponse'
+            type: object
+            properties:
+              id:
+                type: string
+                example: b54cdffb-2711-406a-bcc2-74ec02dfd80f
+              ownerId:
+                type: string
+                example: 2432241311
+              owner:
+                type: object
+              title:
+                type: string
+                example: All my base
+              description:
+                type: string
+                example: are belong to you
+              done:
+                type: boolean
+                example: false
+              alarmed:
+                type: boolean
+                example: false
+              locationName:
+                type: string
+                example: '선릉역'
+              longitude:
+                type: number
+                example: 127.04894823187121
+              latitude:
+                type: number
+                example: 37.50466496606413
+              index:
+                type: number
+                example: 1
+              createdAt:
+                type: string
+                example: '2022-09-24T03:45:31.014Z'
+              updatedAt:
+                type: string
+                example: '2022-09-24T03:45:31.014Z'
+              deletedAt:
+                type: string
+                example: ''
 
   /todos/{id}:
     get:
+      summary: ID를 통해서 Todo를 가져옵니다.
       tags:
         - 'Todo'
-      summary: 'Todo를 가져옵니다.'
-      description: ''
       parameters:
-        - name: 'id'
-          in: 'path'
-          description: 'Todo의 uuid'
+        - in: path
+          name: id
           required: true
-          type: 'string'
+          type: string
+          description: 가져오려는 Todo의 ID(uuid)
       responses:
         '200':
-          examples:
-            application/json:
-              {
-                'id': 'b54cdffb-2711-406a-bcc2-74ec02dfd80f',
-                'ownerId': '2432241311',
-                'title': 'All my base',
-                'description': ' are belong to you',
-                'done': false,
-                'alarmed': false,
-                'index': 1,
-                'updatedAt': '2022-09-24T03:45:31.014Z',
-                'createdAt': '2022-09-24T03:45:31.014Z',
-              }
+          description: '성공'
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                example: b54cdffb-2711-406a-bcc2-74ec02dfd80f
+              ownerId:
+                type: string
+                example: 2432241311
+              owner:
+                type: object
+              title:
+                type: string
+                example: All my base
+              description:
+                type: string
+                example: are belong to you
+              done:
+                type: boolean
+                example: false
+              alarmed:
+                type: boolean
+                example: false
+              locationName:
+                type: string
+                example: '선릉역'
+              longitude:
+                type: number
+                example: 127.04894823187121
+              latitude:
+                type: number
+                example: 37.50466496606413
+              index:
+                type: number
+                example: 1
+              createdAt:
+                type: string
+                example: '2022-09-24T03:45:31.014Z'
+              updatedAt:
+                type: string
+                example: '2022-09-24T03:45:31.014Z'
+              deletedAt:
+                type: string
+                example: ''
     delete:
+      summary: ID를 통해서 Todo를 삭제합니다.
       tags:
         - 'Todo'
-      summary: '특정 Todo를 삭제합니다.'
-      description: ''
       parameters:
-        - name: 'id'
-          in: 'path'
-          description: 'uuid'
+        - in: path
+          name: id
           required: true
-          type: 'string'
+          type: string
+          description: 삭제하려는 Todo의 ID(uuid)
       responses:
         '200':
+          description: 성공
           examples:
             application/json: 1
     patch:
+      summary: ID를 통해서 Todo를 업데이트합니다.
       tags:
         - 'Todo'
-      summary: '특정 Todo를 업데이트합니다.'
-      description: ''
       parameters:
-        - name: 'id'
-          in: 'path'
-          description: 'uuid'
+        - in: path
+          name: id
           required: true
-          type: 'string'
-        - in: 'body'
-          name: 'body'
-          description: '업데이트할 Todo 필드'
+          type: string
+          description: 업데이트하려는 Todo의 ID(uuid)
+        - in: body
+          name: Todo
           required: true
+          type: object
+          description: 새로 업데이트할 Todo
           schema:
+            type: object
             properties:
               title:
-                type: 'string'
-                example: 'All my base'
+                type: string
+                example: All my base
               description:
-                type: 'string'
-                example: 'are belong to you'
-              done:
-                type: 'boolean'
-                example: false
-              alarmed:
-                type: 'boolean'
-                example: false
+                type: string
+                example: are belong to you
+              locationName:
+                type: string
+                example: '선릉역'
               longitude:
-                type: 'number'
-                example: 127.0016985
+                type: number
+                example: 127.04894823187121
               latitude:
-                type: 'number'
-                example: 37.5642135
+                type: number
+                example: 37.50466496606413
               index:
-                type: 'number'
+                type: number
                 example: 1
       responses:
         '201':
@@ -205,24 +268,28 @@ paths:
                 'description': ' are belong to you',
                 'done': false,
                 'alarmed': false,
+                'locationName': '선릉역',
                 'longitude': 127.0016985,
                 'latitude': 37.5642135,
                 'index': 1,
                 'updatedAt': '2022-09-24T03:45:31.014Z',
                 'createdAt': '2022-09-24T03:45:31.014Z',
               }
+
   /location/nearby:
     post:
+      summary: 경위도와 주어진 키워드를 기준으로 장소를 검색해서 가져옵니다.
       tags:
         - 'location'
-      summary: '현재 경위도와 주어진 키워드를 기준으로 장소를 검색해서 리스트로 반환합니다'
-      description: ''
       parameters:
-        - in: 'body'
-          name: 'body'
-          description: '경도, 위도, 키워드'
-          required: true
+        - in: body
+          name: location information
+          description: 검색할 장소의 경도, 위도와 검색할 키워드.
           schema:
+            type: object
+            required:
+              - longitude
+              - latitude
             properties:
               longitude:
                 type: number
@@ -235,6 +302,7 @@ paths:
                 example: '스타벅스'
       responses:
         '200':
+          description: '성공'
           examples:
             application/json:
               [
@@ -245,16 +313,50 @@ paths:
                 '스타벅스 관악서울대입구R점',
               ]
 definitions:
-  TodoResponse:
-    type: 'object'
+  User:
     properties:
-      _id:
-        type: 'string'
+      id:
+        type: string
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      image:
+        type: string
+      thumbnailImage:
+        type: string
+      profileImage:
+        type: string
+      todos:
+        type: Todo[]
+
+  Todo:
+    properties:
+      id:
+        type: string
+      ownerId:
+        type: string
+      owner:
+        type: User
       title:
-        type: 'string'
-      done:
-        type: 'boolean'
+        type: string
       description:
-        type: 'string'
+        type: string
+      done:
+        type: boolean
+      alarmed:
+        type: boolean
+      locationName:
+        type: string
+      longitude:
+        type: number
+      latitude:
+        type: number
+      index:
+        type: number
       createdAt:
-        type: 'string'
+        type: string
+      deletedAt:
+        type: string
