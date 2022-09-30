@@ -10,7 +10,7 @@
     "prestart": "rm -rf ./build && yarn build",
     "start": "cross-env NODE_ENV=production ts-node -r tsconfig-paths/register --files build/index.js",
     "dev": "cross-env NODE_ENV=development nodemon --exec ts-node -r tsconfig-paths/register --files ./src/index.ts",
-    "test": "jest --passWithNoTests",
+    "test": "cross-env NODE_ENV=test jest --passWithNoTests",
     "lint": "eslint --fix src",
     "prepare": "husky install",
     "build": "tsc -p tsconfig.json"
