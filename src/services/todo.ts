@@ -1,9 +1,9 @@
 import Todo from '@/models/todo';
 
-export const findAllTodos = async (ownerId: string) => {
+export const findAllTodos = async (userId: string) => {
   const todos = await Todo.findAll({
     where: {
-      ownerId,
+      userId,
     },
     paranoid: false,
   });
@@ -53,10 +53,10 @@ export const updateTodo = async (todoId: string, newTodo: any) => {
   return updatedTodo;
 };
 
-export const deleteAllTodos = async (ownerId: string) => {
+export const deleteAllTodos = async (userId: string) => {
   const result = await Todo.destroy({
     where: {
-      ownerId,
+      userId,
     },
   });
 

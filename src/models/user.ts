@@ -24,7 +24,6 @@ class User extends Model<InferAttributes<User, { omit: 'todos' }>, InferCreation
   declare name: string;
   declare email: string;
   declare password?: string;
-  declare image?: string;
   declare thumbnailImage?: string;
   declare profileImage?: string;
 
@@ -37,7 +36,7 @@ class User extends Model<InferAttributes<User, { omit: 'todos' }>, InferCreation
   declare hasTodo: HasManyHasAssociationMixin<Todo, number>;
   declare hasTodos: HasManyHasAssociationsMixin<Todo, number>;
   declare countTodos: HasManyCountAssociationsMixin;
-  declare createTodo: HasManyCreateAssociationMixin<Todo, 'ownerId'>;
+  declare createTodo: HasManyCreateAssociationMixin<Todo, 'userId'>;
 
   declare todos?: NonAttribute<Todo[]>;
 

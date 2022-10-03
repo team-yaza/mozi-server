@@ -9,7 +9,6 @@ interface User {
 
   todos?: Todo[];
 
-  image?: string;
   thumbnailImage?: string;
   profileImage?: string;
 }

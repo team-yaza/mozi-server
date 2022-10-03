@@ -3,7 +3,7 @@ import User from './user';
 interface Todo {
   id?: string;
 
-  ownerId?: string;
+  userId?: string;
   owner?: User;
 
   title: string;
