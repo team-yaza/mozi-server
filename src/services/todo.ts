@@ -54,10 +54,12 @@ export const updateTodo = async (todoId: string, newTodo: any) => {
 };
 
 export const deleteAllTodos = async (ownerId: string) => {
+  console.log(ownerId);
   const result = await Todo.destroy({
     where: {
       ownerId,
     },
+    force: true,
   });
 
   return result;
