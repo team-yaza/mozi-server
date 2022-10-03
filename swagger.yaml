@@ -1,13 +1,11 @@
-swagger: '2.0'
+openapi: 3.0.0
 info:
-  title: 'Mozi Server'
-  description: 'Mozi Server API입니다.'
+  title: Mozi Server
+  description: Mozi Server API입니다.
   version: 1.0.0
 
-host: 'localhost:3001'
-basePath: '/api/v1'
-schemes:
-  - 'http'
+servers:
+  - url: http://localhost:3001/api/v1
 
 paths:
   /todos:
@@ -18,345 +16,243 @@ paths:
       responses:
         '200':
           description: 성공
-          schema:
-            $ref: '#/definitions/Todo'
-          examples:
+          content:
             application/json:
-              [
-                {
-                  'id': '178dcfbc-0123-4a18-bd91-1a3b74cef47f',
-                  'title': 'Getting started',
-                  'description': 'what was it?',
-                  'done': false,
-                  'alarmed': false,
-                  'locationName': '',
-                  'longitude': null,
-                  'latitude': null,
-                  'index': null,
-                  'createdAt': '2022-09-24T03:44:51.000Z',
-                  'updatedAt': '2022-09-24T03:44:51.000Z',
-                  'deletedAt': null,
-                  'ownerId': '2432241311',
-                },
-                {
-                  'id': '7c8d247b-ec0e-48bf-8089-49e3fb0fe21c',
-                  'title': 'remember the milk',
-                  'description': 'buy now',
-                  'done': false,
-                  'alarmed': false,
-                  'locationName': '',
-                  'longitude': null,
-                  'latitude': null,
-                  'index': 2,
-                  'createdAt': '2022-09-24T03:44:34.000Z',
-                  'updatedAt': '2022-09-24T03:44:34.000Z',
-                  'deletedAt': null,
-                  'ownerId': '2432241311',
-                },
-                {
-                  'id': 'b54cdffb-2711-406a-bcc2-74ec02dfd80f',
-                  'title': 'All my base',
-                  'description': 'are belong to you',
-                  'done': false,
-                  'alarmed': false,
-                  'locationName': '',
-                  'longitude': null,
-                  'latitude': null,
-                  'index': null,
-                  'createdAt': '2022-09-24T03:45:31.000Z',
-                  'updatedAt': '2022-09-24T03:45:31.000Z',
-                  'deletedAt': null,
-                  'ownerId': '2432241311',
-                },
-              ]
+              schema:
+                type: object
+                example:
+                  [
+                    {
+                      'id': '178dcfbc-0123-4a18-bd91-1a3b74cef47f',
+                      'userId': '2432241311',
+                      'title': 'Getting started',
+                      'description': 'what was it?',
+                      'done': false,
+                      'alarmed': false,
+                      'locationName': '',
+                      'longitude': null,
+                      'latitude': null,
+                      'index': null,
+                      'createdAt': '2022-09-24T03:44:51.000Z',
+                      'updatedAt': '2022-09-24T03:44:51.000Z',
+                      'deletedAt': null,
+                    },
+                    {
+                      'id': '7c8d247b-ec0e-48bf-8089-49e3fb0fe21c',
+                      'userId': '2432241311',
+                      'title': 'remember the milk',
+                      'description': 'buy now',
+                      'done': false,
+                      'alarmed': false,
+                      'locationName': '',
+                      'longitude': null,
+                      'latitude': null,
+                      'index': 2,
+                      'createdAt': '2022-09-24T03:44:34.000Z',
+                      'updatedAt': '2022-09-24T03:44:34.000Z',
+                      'deletedAt': null,
+                    },
+                    {
+                      'id': 'b54cdffb-2711-406a-bcc2-74ec02dfd80f',
+                      'userId': '2432241311',
+                      'title': 'All my base',
+                      'description': 'are belong to you',
+                      'done': false,
+                      'alarmed': false,
+                      'locationName': '',
+                      'longitude': null,
+                      'latitude': null,
+                      'index': null,
+                      'createdAt': '2022-09-24T03:45:31.000Z',
+                      'updatedAt': '2022-09-24T03:45:31.000Z',
+                      'deletedAt': null,
+                    },
+                  ]
+      security:
+        - bearerAuth: []
     post:
-      summary: Todo를 DB에 생성하고 생성한 Todo를 가져옵니다.
-      parameters:
-        - in: body
-          name: Todo
-          required: true
-          type: object
-          description: 새로 생성할 Todo
-          schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: All my base
-              description:
-                type: string
-                example: are belong to you
-              locationName:
-                type: string
-                example: '선릉역'
-              longitude:
-                type: number
-                example: 127.04894823187121
-              latitude:
-                type: number
-                example: 37.50466496606413
-              index:
-                type: number
-                example: 1
       tags:
-        - 'Todo'
+        - Todo
+      summary: Todo를 DB에 생성하고 생성한 Todo를 가져옵니다.
+      requestBody:
+        description: 새로 생성할 Todo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Todo'
+        required: true
       responses:
         '201':
           description: 성공
-          schema:
-            type: object
-            properties:
-              id:
-                type: string
-                example: b54cdffb-2711-406a-bcc2-74ec02dfd80f
-              ownerId:
-                type: string
-                example: 2432241311
-              owner:
-                type: object
-              title:
-                type: string
-                example: All my base
-              description:
-                type: string
-                example: are belong to you
-              done:
-                type: boolean
-                example: false
-              alarmed:
-                type: boolean
-                example: false
-              locationName:
-                type: string
-                example: '선릉역'
-              longitude:
-                type: number
-                example: 127.04894823187121
-              latitude:
-                type: number
-                example: 37.50466496606413
-              index:
-                type: number
-                example: 1
-              createdAt:
-                type: string
-                example: '2022-09-24T03:45:31.014Z'
-              updatedAt:
-                type: string
-                example: '2022-09-24T03:45:31.014Z'
-              deletedAt:
-                type: string
-                example: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+      security:
+        - bearerAuth: []
 
   /todos/{id}:
     get:
-      summary: ID를 통해서 Todo를 가져옵니다.
       tags:
         - 'Todo'
+      summary: ID를 통해서 Todo를 가져옵니다.
       parameters:
-        - in: path
-          name: id
-          required: true
-          type: string
+        - name: id
+          in: path
           description: 가져오려는 Todo의 ID(uuid)
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: '성공'
-          schema:
-            type: object
-            properties:
-              id:
-                type: string
-                example: b54cdffb-2711-406a-bcc2-74ec02dfd80f
-              ownerId:
-                type: string
-                example: 2432241311
-              owner:
-                type: object
-              title:
-                type: string
-                example: All my base
-              description:
-                type: string
-                example: are belong to you
-              done:
-                type: boolean
-                example: false
-              alarmed:
-                type: boolean
-                example: false
-              locationName:
-                type: string
-                example: '선릉역'
-              longitude:
-                type: number
-                example: 127.04894823187121
-              latitude:
-                type: number
-                example: 37.50466496606413
-              index:
-                type: number
-                example: 1
-              createdAt:
-                type: string
-                example: '2022-09-24T03:45:31.014Z'
-              updatedAt:
-                type: string
-                example: '2022-09-24T03:45:31.014Z'
-              deletedAt:
-                type: string
-                example: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+      security:
+        - bearerAuth: []
     delete:
-      summary: ID를 통해서 Todo를 삭제합니다.
       tags:
         - 'Todo'
+      summary: ID를 통해서 Todo를 삭제합니다.
       parameters:
-        - in: path
-          name: id
-          required: true
-          type: string
+        - name: id
+          in: path
           description: 삭제하려는 Todo의 ID(uuid)
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: 성공
           examples:
             application/json: 1
+      security:
+        - bearerAuth: []
     patch:
-      summary: ID를 통해서 Todo를 업데이트합니다.
       tags:
         - 'Todo'
+      summary: ID를 통해서 Todo를 업데이트합니다.
       parameters:
-        - in: path
-          name: id
-          required: true
-          type: string
+        - name: id
+          in: path
           description: 업데이트하려는 Todo의 ID(uuid)
-        - in: body
-          name: Todo
           required: true
-          type: object
-          description: 새로 업데이트할 Todo
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: All my base
-              description:
-                type: string
-                example: are belong to you
-              locationName:
-                type: string
-                example: '선릉역'
-              longitude:
-                type: number
-                example: 127.04894823187121
-              latitude:
-                type: number
-                example: 37.50466496606413
-              index:
-                type: number
-                example: 1
+            type: string
+      requestBody:
+        description: 새로 업데이트할 Todo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Todo'
+        required: true
       responses:
         '201':
-          examples:
+          description: 성공
+          content:
             application/json:
-              {
-                'id': 'b54cdffb-2711-406a-bcc2-74ec02dfd80f',
-                'ownerId': '2432241311',
-                'title': 'All my base',
-                'description': ' are belong to you',
-                'done': false,
-                'alarmed': false,
-                'locationName': '선릉역',
-                'longitude': 127.0016985,
-                'latitude': 37.5642135,
-                'index': 1,
-                'updatedAt': '2022-09-24T03:45:31.014Z',
-                'createdAt': '2022-09-24T03:45:31.014Z',
-              }
+              schema:
+                $ref: '#/components/schemas/Todo'
+      security:
+        - bearerAuth: []
 
   /location/nearby:
     post:
-      summary: 경위도와 주어진 키워드를 기준으로 장소를 검색해서 가져옵니다.
       tags:
         - 'location'
-      parameters:
-        - in: body
-          name: location information
-          description: 검색할 장소의 경도, 위도와 검색할 키워드.
-          schema:
-            type: object
-            required:
-              - longitude
-              - latitude
-            properties:
-              longitude:
-                type: number
-                example: 127.0016985
-              latitude:
-                type: number
-                example: 37.5642135
-              keyword:
-                type: string
-                example: '스타벅스'
+      summary: 경위도와 주어진 키워드를 기준으로 장소를 검색해서 가져옵니다.
+      requestBody:
+        description: 경위도와 키워드
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationSearch'
+        required: true
       responses:
         '200':
           description: '성공'
-          examples:
+          content:
             application/json:
-              [
-                '스타벅스 더종로R점',
-                '스타벅스 서울타워점',
-                '스타벅스 서울역사점',
-                '스타벅스 파미에파크R점',
-                '스타벅스 관악서울대입구R점',
-              ]
-definitions:
-  User:
-    properties:
-      id:
-        type: string
-      name:
-        type: string
-      email:
-        type: string
-      password:
-        type: string
-      image:
-        type: string
-      thumbnailImage:
-        type: string
-      profileImage:
-        type: string
-      todos:
-        type: Todo[]
-
-  Todo:
-    properties:
-      id:
-        type: string
-      ownerId:
-        type: string
-      owner:
-        type: User
-      title:
-        type: string
-      description:
-        type: string
-      done:
-        type: boolean
-      alarmed:
-        type: boolean
-      locationName:
-        type: string
-      longitude:
-        type: number
-      latitude:
-        type: number
-      index:
-        type: number
-      createdAt:
-        type: string
-      deletedAt:
-        type: string
+              schema:
+                type: object
+                example:
+                  [
+                    { 'name': '스타벅스 선릉역점', 'location': [127.0484458, 37.5039656] },
+                    { 'name': '스타벅스 선릉동신빌딩R점', 'location': [127.050481, 37.5052818] },
+                    { 'name': '스타벅스 선릉로점', 'location': [127.0467617, 37.5049945] },
+                  ]
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 2432241311
+        name:
+          type: string
+          example: 김상근
+        email:
+          type: string
+        password:
+          type: string
+        thumbnailImage:
+          type: string
+          example: http://k.kakaocdn.net/dn/JzzMA/btrzvznKm3k/TgW0XNHcLGwJjJXXiidjp0/img_110x110.jpg
+        profileImage:
+          type: string
+          example: http://k.kakaocdn.net/dn/JzzMA/btrzvznKm3k/TgW0XNHcLGwJjJXXiidjp0/img_640x640.jpg
+        todos:
+          type: Todo[]
+    Todo:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ea4970aa-c3bc-4e89-90f9-2293501978bd
+        userId:
+          type: string
+          example: 2432241311
+        title:
+          type: string
+          example: All my base
+        description:
+          type: string
+          example: are belong to you
+        done:
+          type: boolean
+          example: false
+        alarmed:
+          type: boolean
+          example: false
+        locationName:
+          type: string
+          example: 선릉역
+        longitude:
+          type: number
+          example: 127.04894823187121
+        latitude:
+          type: number
+          example: 37.50466496606413
+        index:
+          type: number
+          example: 1
+    LocationSearch:
+      type: object
+      properties:
+        keyword:
+          type: string
+          example: 스타벅스
+        longitude:
+          type: number
+          example: 127.04894823187121
+        latitude:
+          type: number
+          example: 37.50466496606413
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
