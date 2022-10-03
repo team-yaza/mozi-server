@@ -15,7 +15,6 @@ const userInit = (sequelize: Sequelize) => {
       email: DataTypes.STRING,
       password: DataTypes.STRING,
 
-      image: DataTypes.STRING,
       thumbnailImage: DataTypes.STRING,
       profileImage: DataTypes.STRING,
     },
