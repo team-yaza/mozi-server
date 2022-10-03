@@ -16,7 +16,7 @@ export const getTodoHandler = async (req: Request, res: Response) => {
 
 export const createTodoHandler = async (req: Request, res: Response) => {
   const todo = await createTodo({
-    ownerId: req.user.id,
+    userId: req.user.id,
     ...req.body,
   });
   res.status(201).json(todo);

@@ -4,7 +4,7 @@ import User from '@/models/user';
 class Todo extends Model<InferAttributes<Todo>, InferCreationAttributes<Todo>> {
   declare id: CreationOptional<string>;
 
-  declare ownerId: ForeignKey<User['id']>;
+  declare userId: ForeignKey<User['id']>;
   declare owner?: NonAttribute<User>;
 
   declare title: string;

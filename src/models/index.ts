@@ -15,7 +15,6 @@ const userInit = (sequelize: Sequelize) => {
       email: DataTypes.STRING,
       password: DataTypes.STRING,
 
-      image: DataTypes.STRING,
       thumbnailImage: DataTypes.STRING,
       profileImage: DataTypes.STRING,
     },
@@ -64,7 +63,7 @@ const todoInit = (sequelize: Sequelize) => {
 const todoUserInit = () => {
   User.hasMany(Todo, {
     sourceKey: 'id',
-    foreignKey: 'ownerId',
+    foreignKey: 'userId',
     as: 'todos',
   });
 };
