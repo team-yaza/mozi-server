@@ -64,7 +64,7 @@ const todoInit = (sequelize: Sequelize) => {
 const todoUserInit = () => {
   User.hasMany(Todo, {
     sourceKey: 'id',
-    foreignKey: 'ownerId',
+    foreignKey: 'userId',
     as: 'todos',
   });
 };
