@@ -12,6 +12,9 @@ interface Todo {
   done?: boolean;
   alarmed?: boolean;
 
+  dueDate?: Date;
+  alarmDate?: Date;
+
   locationName?: string;
   longitude?: number;
   latitude?: number;
