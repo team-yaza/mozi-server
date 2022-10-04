@@ -90,9 +90,10 @@ paths:
                 $ref: '#/components/schemas/Todo'
       security:
         - bearerAuth: []
-
+        
   /todos/{id}:
     get:
+      summary: ID를 통해서 Todo를 가져옵니다.
       tags:
         - 'Todo'
       summary: ID를 통해서 Todo를 가져옵니다.
@@ -113,6 +114,7 @@ paths:
       security:
         - bearerAuth: []
     delete:
+      summary: ID를 통해서 Todo를 삭제합니다.
       tags:
         - 'Todo'
       summary: ID를 통해서 Todo를 삭제합니다.
@@ -131,6 +133,7 @@ paths:
       security:
         - bearerAuth: []
     patch:
+      summary: ID를 통해서 Todo를 업데이트합니다.
       tags:
         - 'Todo'
       summary: ID를 통해서 Todo를 업데이트합니다.
@@ -139,6 +142,8 @@ paths:
           in: path
           description: 업데이트하려는 Todo의 ID(uuid)
           required: true
+          type: object
+          description: 새로 업데이트할 Todo
           schema:
             type: string
       requestBody:
@@ -160,6 +165,7 @@ paths:
 
   /location/nearby:
     post:
+      summary: 경위도와 주어진 키워드를 기준으로 장소를 검색해서 가져옵니다.
       tags:
         - 'location'
       summary: 경위도와 주어진 키워드를 기준으로 장소를 검색해서 가져옵니다.
