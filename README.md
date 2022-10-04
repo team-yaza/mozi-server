@@ -6,14 +6,13 @@
 
 `v16.15.1`
 
-### MongoDB version
+### MySQL version
 
-`v5.0.9`
+`v8.0.29`
 
 How to install
 
-- [Windows](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows-unattended/#install-mongodb-community-on-windows-using-msiexec.exe)
-- [Mac OS](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/#installing-mongodb-6.0-edition-edition)
+- [MySQL downloads](https://dev.mysql.com/downloads/mysql/)
 
 #### Develop Mode
 
@@ -29,4 +28,9 @@ yarn dev
 yarn build
 
 yarn start
+```
+
+### Test Mode
+```
+yarn test
 ```

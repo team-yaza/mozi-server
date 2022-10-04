@@ -58,6 +58,7 @@ export const deleteAllTodos = async (userId: string) => {
     where: {
       userId,
     },
+    force: true,
   });
 
   return result;
