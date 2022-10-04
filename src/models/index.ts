@@ -46,6 +46,9 @@ const todoInit = (sequelize: Sequelize) => {
         defaultValue: false,
       },
 
+      dueDate: DataTypes.DATE,
+      alarmDate: DataTypes.DATE,
+
       locationName: DataTypes.STRING,
       longitude: DataTypes.FLOAT,
       latitude: DataTypes.FLOAT,

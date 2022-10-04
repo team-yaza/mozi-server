@@ -10,12 +10,15 @@ servers:
 paths:
   /todos:
     get:
-      summary: 사용자의 모든 Todo를 가져옵니다.
       tags:
         - 'Todo'
+
+      summary: 사용자의 모든 Todo를 가져옵니다.
+
       responses:
         '200':
           description: 성공
+
           content:
             application/json:
               schema:
@@ -29,6 +32,8 @@ paths:
                       'description': 'what was it?',
                       'done': false,
                       'alarmed': false,
+                      'dueDate': '2022-10-04T20:15:00.000Z',
+                      'alarmDate': '2022-10-04T20:15:00.000Z',
                       'locationName': '',
                       'longitude': null,
                       'latitude': null,
@@ -44,6 +49,8 @@ paths:
                       'description': 'buy now',
                       'done': false,
                       'alarmed': false,
+                      'dueDate': '2022-10-04T20:15:00.000Z',
+                      'alarmDate': '2022-10-04T20:15:00.000Z',
                       'locationName': '',
                       'longitude': null,
                       'latitude': null,
@@ -59,6 +66,8 @@ paths:
                       'description': 'are belong to you',
                       'done': false,
                       'alarmed': false,
+                      'dueDate': '2022-10-04T20:15:00.000Z',
+                      'alarmDate': '2022-10-04T20:15:00.000Z',
                       'locationName': '',
                       'longitude': null,
                       'latitude': null,
@@ -68,12 +77,16 @@ paths:
                       'deletedAt': null,
                     },
                   ]
+
       security:
         - bearerAuth: []
+
     post:
       tags:
         - Todo
+
       summary: Todo를 DB에 생성하고 생성한 Todo를 가져옵니다.
+
       requestBody:
         description: 새로 생성할 Todo
         content:
@@ -81,6 +94,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Todo'
         required: true
+
       responses:
         '201':
           description: 성공
@@ -88,15 +102,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Todo'
+
       security:
         - bearerAuth: []
-        
+
   /todos/{id}:
     get:
-      summary: ID를 통해서 Todo를 가져옵니다.
       tags:
         - 'Todo'
+
       summary: ID를 통해서 Todo를 가져옵니다.
+
       parameters:
         - name: id
           in: path
@@ -104,6 +120,7 @@ paths:
           required: true
           schema:
             type: string
+
       responses:
         '200':
           description: '성공'
@@ -111,13 +128,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Todo'
+
       security:
         - bearerAuth: []
+
     delete:
-      summary: ID를 통해서 Todo를 삭제합니다.
       tags:
         - 'Todo'
+
       summary: ID를 통해서 Todo를 삭제합니다.
+
       parameters:
         - name: id
           in: path
@@ -125,27 +145,31 @@ paths:
           required: true
           schema:
             type: string
+
       responses:
         '200':
           description: 성공
           examples:
             application/json: 1
+
       security:
         - bearerAuth: []
+
     patch:
-      summary: ID를 통해서 Todo를 업데이트합니다.
       tags:
         - 'Todo'
+
       summary: ID를 통해서 Todo를 업데이트합니다.
+
       parameters:
         - name: id
           in: path
           description: 업데이트하려는 Todo의 ID(uuid)
           required: true
           type: object
-          description: 새로 업데이트할 Todo
           schema:
             type: string
+
       requestBody:
         description: 새로 업데이트할 Todo
         content:
@@ -153,6 +177,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Todo'
         required: true
+
       responses:
         '201':
           description: 성공
@@ -160,15 +185,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Todo'
+
       security:
         - bearerAuth: []
 
   /location/nearby:
     post:
-      summary: 경위도와 주어진 키워드를 기준으로 장소를 검색해서 가져옵니다.
       tags:
         - 'location'
+
       summary: 경위도와 주어진 키워드를 기준으로 장소를 검색해서 가져옵니다.
+
       requestBody:
         description: 경위도와 키워드
         content:
@@ -176,6 +203,7 @@ paths:
             schema:
               $ref: '#/components/schemas/LocationSearch'
         required: true
+
       responses:
         '200':
           description: '성공'
@@ -189,6 +217,7 @@ paths:
                     { 'name': '스타벅스 선릉동신빌딩R점', 'location': [127.050481, 37.5052818] },
                     { 'name': '스타벅스 선릉로점', 'location': [127.0467617, 37.5049945] },
                   ]
+
 components:
   schemas:
     User:
@@ -212,6 +241,7 @@ components:
           example: http://k.kakaocdn.net/dn/JzzMA/btrzvznKm3k/TgW0XNHcLGwJjJXXiidjp0/img_640x640.jpg
         todos:
           type: Todo[]
+
     Todo:
       type: object
       properties:
@@ -233,6 +263,14 @@ components:
         alarmed:
           type: boolean
           example: false
+        dueDate:
+          type: string
+          format: date-time
+          example: '2022-10-04T20:15:00.000Z'
+        alarmDate:
+          type: string
+          format: date-time
+          example: '2022-10-04T20:15:00.000Z'
         locationName:
           type: string
           example: 선릉역
@@ -245,6 +283,7 @@ components:
         index:
           type: number
           example: 1
+
     LocationSearch:
       type: object
       properties:
@@ -257,6 +296,7 @@ components:
         latitude:
           type: number
           example: 37.50466496606413
+
   securitySchemes:
     bearerAuth:
       type: http
