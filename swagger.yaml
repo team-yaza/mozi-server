@@ -32,6 +32,8 @@ paths:
                       'description': 'what was it?',
                       'done': false,
                       'alarmed': false,
+                      'dueDate': '2022-10-04T20:15:00.000Z',
+                      'alarmDate': '2022-10-04T20:15:00.000Z',
                       'locationName': '',
                       'longitude': null,
                       'latitude': null,
@@ -47,6 +49,8 @@ paths:
                       'description': 'buy now',
                       'done': false,
                       'alarmed': false,
+                      'dueDate': '2022-10-04T20:15:00.000Z',
+                      'alarmDate': '2022-10-04T20:15:00.000Z',
                       'locationName': '',
                       'longitude': null,
                       'latitude': null,
@@ -62,6 +66,8 @@ paths:
                       'description': 'are belong to you',
                       'done': false,
                       'alarmed': false,
+                      'dueDate': '2022-10-04T20:15:00.000Z',
+                      'alarmDate': '2022-10-04T20:15:00.000Z',
                       'locationName': '',
                       'longitude': null,
                       'latitude': null,
@@ -259,6 +265,12 @@ components:
           example: false
         dueDate:
           type: string
+          format: date-time
+          example: '2022-10-04T20:15:00.000Z'
+        alarmDate:
+          type: string
+          format: date-time
+          example: '2022-10-04T20:15:00.000Z'
         locationName:
           type: string
           example: 선릉역
