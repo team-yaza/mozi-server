@@ -53,7 +53,6 @@ export const updateTodo = async (todoId: string, newTodo: any) => {
   return updatedTodo;
 };
 
-
 export const deleteAllTodos = async (userId: string) => {
   const result = await Todo.destroy({
     where: {

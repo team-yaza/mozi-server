@@ -10,10 +10,16 @@ const privateVapidKey = 'QNapwA1rlszq7UdCqLo5s5aORi5jAAlCEFMEfZaw4tU';
 
 webpush.setVapidDetails('mailto:leehj0110@kakao.com', publicVapidKey, privateVapidKey);
 
-const startSever = () => {
+export const getServer = async () => {
   const app = express();
 
-  loader(app);
+  await loader(app);
+
+  return app;
+};
+
+const startSever = async () => {
+  const app = await getServer();
 
   app.listen(3001, () => logger.info('server started'));
 };
