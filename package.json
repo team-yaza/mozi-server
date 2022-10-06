@@ -56,7 +56,8 @@
     "mysql2": "^2.3.3",
     "pino": "^8.4.2",
     "sequelize": "^6.21.4",
-    "web-push": "^3.5.0"
+    "web-push": "^3.5.0",
+    "zod": "^3.19.1"
   },
   "lint-staged": {
     "*.ts": [
