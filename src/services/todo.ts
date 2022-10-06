@@ -28,11 +28,12 @@ export const createTodo = async (todo: Todo) => {
   return newTodo;
 };
 
-export const deleteTodo = async (todoId: string) => {
+export const deleteTodo = async (todoId: string, force = false) => {
   const result = await Todo.destroy({
     where: {
       id: todoId,
     },
+    force,
   });
 
   return result;
