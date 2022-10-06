@@ -10,15 +10,15 @@ import {
 } from '@/controllers/todo';
 
 import asyncHandler from '@/utils/asyncHandler';
-import { uuidHandler } from '@/middlewares/todo';
+import { uuidValidator } from '@/middlewares/todo';
 
 const todoRouter = express.Router();
 
 todoRouter.get('/', asyncHandler(getAllTodosHandler));
-todoRouter.get('/:id', uuidHandler, asyncHandler(getTodoHandler));
+todoRouter.get('/:id', uuidValidator, asyncHandler(getTodoHandler));
 todoRouter.post('/', asyncHandler(createTodoHandler));
 todoRouter.delete('/all', asyncHandler(deleteAllTodosHandler));
-todoRouter.delete('/:id', uuidHandler, asyncHandler(deleteTodoHandler));
-todoRouter.patch('/:id', uuidHandler, asyncHandler(updateTodoHandler));
+todoRouter.delete('/:id', uuidValidator, asyncHandler(deleteTodoHandler));
+todoRouter.patch('/:id', uuidValidator, asyncHandler(updateTodoHandler));
 
 export default todoRouter;

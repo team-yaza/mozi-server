@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
 import { z } from 'zod';
 
-export const uuidHandler = (req: Request, res: Response, next: NextFunction) => {
+export const uuidValidator = (req: Request, res: Response, next: NextFunction) => {
   const uuidSchema = z.string().uuid();
 
   try {
