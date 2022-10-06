@@ -129,6 +129,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Todo'
 
+        '400':
+          description: '올바르지 않은 uuid'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UUIDError'
+
       security:
         - bearerAuth: []
 
@@ -151,6 +158,13 @@ paths:
           description: 성공
           examples:
             application/json: 1
+
+        '400':
+          description: '올바르지 않은 uuid'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UUIDError'
 
       security:
         - bearerAuth: []
@@ -185,6 +199,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Todo'
+
+        '400':
+          description: '올바르지 않은 uuid'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UUIDError'
 
       security:
         - bearerAuth: []
@@ -283,6 +304,13 @@ components:
         index:
           type: number
           example: 1
+
+    UUIDError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Invalid uuid
 
     LocationSearch:
       type: object
