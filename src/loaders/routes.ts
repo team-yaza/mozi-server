@@ -9,7 +9,8 @@ export const routesLoader = (app: express.Application) => {
     next(new createHttpError.NotFound('No such page'));
   });
 
-  app.use((err: HttpError, req: Request, res: Response) => {
-    res.status(err.status).send(err.message);
+  // eslint-disable-next-line
+  app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
+    res.status(err.status).json(err);
   });
 };
