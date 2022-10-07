@@ -1,4 +1,5 @@
 import Todo from '@/models/todo';
+import { todoNotFound } from '@/utils/error';
 
 export const findAllTodos = async (userId: string) => {
   const todos = await Todo.findAll({
@@ -19,6 +20,8 @@ export const findTodo = async (todoId: string) => {
     paranoid: false,
   });
 
+  if (!todo) throw todoNotFound;
+
   return todo;
 };
 
@@ -29,28 +32,34 @@ export const createTodo = async (todo: Todo) => {
 };
 
 export const deleteTodo = async (todoId: string) => {
-  const result = await Todo.destroy({
+  const todo = await Todo.findOne({
     where: {
       id: todoId,
     },
   });
 
-  return result;
+  if (!todo) throw todoNotFound;
+
+  await todo.destroy();
+
+  return todo;
 };
 
 export const updateTodo = async (todoId: string, newTodo: any) => {
-  const updatedTodo = await Todo.findOne({
+  const todo = await Todo.findOne({
     where: {
       id: todoId,
     },
     paranoid: false,
   });
 
-  await updatedTodo?.update({
+  if (!todo) throw todoNotFound;
+
+  await todo.update({
     ...newTodo,
   });
 
-  return updatedTodo;
+  return todo;
 };
 
 export const deleteAllTodos = async (userId: string) => {

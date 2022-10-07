@@ -130,14 +130,14 @@ paths:
                 $ref: '#/components/schemas/Todo'
 
         '400':
-          description: '올바르지 않은 UUID'
+          description: 올바르지 않은 UUID
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/InvalidUUID'
 
         '404':
-          description: 'Todo를 찾을 수 없음'
+          description: Todo를 찾을 수 없음
           content:
             application/json:
               schema:
@@ -163,18 +163,20 @@ paths:
       responses:
         '200':
           description: 성공
-          examples:
-            application/json: 1
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
 
         '400':
-          description: '올바르지 않은 UUID'
+          description: 올바르지 않은 UUID
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/InvalidUUID'
 
         '404':
-          description: 'Todo를 찾을 수 없음'
+          description: Todo를 찾을 수 없음
           content:
             application/json:
               schema:
@@ -215,14 +217,14 @@ paths:
                 $ref: '#/components/schemas/Todo'
 
         '400':
-          description: '올바르지 않은 UUID'
+          description: 올바르지 않은 UUID
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/InvalidUUID'
 
         '404':
-          description: 'Todo를 찾을 수 없음'
+          description: Todo를 찾을 수 없음
           content:
             application/json:
               schema:
@@ -248,7 +250,7 @@ paths:
 
       responses:
         '200':
-          description: '성공'
+          description: 성공
           content:
             application/json:
               schema:

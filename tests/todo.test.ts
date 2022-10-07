@@ -52,8 +52,8 @@ describe('Todo service', () => {
     const [firstTodo] = await getAllTodos(app);
     const { id } = firstTodo;
 
-    const deletedCount = await deleteTodo(app, id!);
+    const todo = await deleteTodo(app, id!);
 
-    expect(deletedCount).toEqual(1);
+    expect(todo.id!).toEqual(id);
   });
 });
