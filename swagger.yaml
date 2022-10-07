@@ -116,7 +116,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: 가져오려는 Todo의 ID(uuid)
+          description: 가져오려는 Todo의 ID(UUID)
           required: true
           schema:
             type: string
@@ -130,11 +130,18 @@ paths:
                 $ref: '#/components/schemas/Todo'
 
         '400':
-          description: '올바르지 않은 uuid'
+          description: '올바르지 않은 UUID'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UUIDError'
+                $ref: '#/components/schemas/InvalidUUID'
+
+        '404':
+          description: 'Todo를 찾을 수 없음'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoNotFound'
 
       security:
         - bearerAuth: []
@@ -148,7 +155,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: 삭제하려는 Todo의 ID(uuid)
+          description: 삭제하려는 Todo의 ID(UUID)
           required: true
           schema:
             type: string
@@ -160,11 +167,18 @@ paths:
             application/json: 1
 
         '400':
-          description: '올바르지 않은 uuid'
+          description: '올바르지 않은 UUID'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UUIDError'
+                $ref: '#/components/schemas/InvalidUUID'
+
+        '404':
+          description: 'Todo를 찾을 수 없음'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoNotFound'
 
       security:
         - bearerAuth: []
@@ -178,7 +192,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: 업데이트하려는 Todo의 ID(uuid)
+          description: 업데이트하려는 Todo의 ID(UUID)
           required: true
           type: object
           schema:
@@ -201,11 +215,18 @@ paths:
                 $ref: '#/components/schemas/Todo'
 
         '400':
-          description: '올바르지 않은 uuid'
+          description: '올바르지 않은 UUID'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UUIDError'
+                $ref: '#/components/schemas/InvalidUUID'
+
+        '404':
+          description: 'Todo를 찾을 수 없음'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoNotFound'
 
       security:
         - bearerAuth: []
@@ -305,12 +326,19 @@ components:
           type: number
           example: 1
 
-    UUIDError:
+    TodoNotFound:
       type: object
       properties:
         message:
           type: string
-          example: Invalid uuid
+          example: Todo not found
+
+    InvalidUUID:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Invalid todo UUID
 
     LocationSearch:
       type: object
