@@ -15,6 +15,7 @@ export const routesLoader = (app: express.Application) => {
     if (err instanceof ZodError) {
       return res.status(400).json(err);
     }
+
     return res.status(err.status).json(err);
   });
 };
