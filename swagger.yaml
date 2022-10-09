@@ -130,11 +130,7 @@ paths:
                 $ref: '#/components/schemas/Todo'
 
         '400':
-          description: 올바르지 않은 UUID
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InvalidUUID'
+          description: 올바르지 않은 요청
 
         '404':
           description: Todo를 찾을 수 없음
@@ -169,11 +165,7 @@ paths:
                 $ref: '#/components/schemas/Todo'
 
         '400':
-          description: 올바르지 않은 UUID
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InvalidUUID'
+          description: 올바르지 않은 요청
 
         '404':
           description: Todo를 찾을 수 없음
@@ -217,11 +209,7 @@ paths:
                 $ref: '#/components/schemas/Todo'
 
         '400':
-          description: 올바르지 않은 UUID
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InvalidUUID'
+          description: 올바르지 않은 요청
 
         '404':
           description: Todo를 찾을 수 없음
@@ -261,6 +249,9 @@ paths:
                     { 'name': '스타벅스 선릉동신빌딩R점', 'location': [127.050481, 37.5052818] },
                     { 'name': '스타벅스 선릉로점', 'location': [127.0467617, 37.5049945] },
                   ]
+
+        '400':
+          description: 올바르지 않은 요청
 
 components:
   schemas:
@@ -334,13 +325,6 @@ components:
         message:
           type: string
           example: Todo not found
-
-    InvalidUUID:
-      type: object
-      properties:
-        message:
-          type: string
-          example: Invalid todo UUID
 
     LocationSearch:
       type: object
