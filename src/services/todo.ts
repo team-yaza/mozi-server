@@ -32,7 +32,7 @@ export const createTodo = async (todo: Todo) => {
 };
 
 export const deleteTodo = async (todoId: string, force = false) => {
-  const result = await Todo.findOne({
+  const todo = await Todo.findOne({
     where: {
       id: todoId,
     },
