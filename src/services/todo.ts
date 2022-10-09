@@ -31,16 +31,19 @@ export const createTodo = async (todo: Todo) => {
   return newTodo;
 };
 
-export const deleteTodo = async (todoId: string) => {
-  const todo = await Todo.findOne({
+export const deleteTodo = async (todoId: string, force = false) => {
+  const result = await Todo.findOne({
     where: {
       id: todoId,
     },
+    paranoid: false,
   });
 
   if (!todo) throw todoNotFound;
 
-  await todo.destroy();
+  await todo.destroy({
+    force,
+  });
 
   return todo;
 };

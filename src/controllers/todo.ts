@@ -28,6 +28,13 @@ export const deleteTodoHandler = async (req: Request, res: Response) => {
   res.status(200).json(todo);
 };
 
+export const forceDeleteTodoHandler = async (req: Request, res: Response) => {
+  const result = await deleteTodo(req.params.id, true);
+
+  if (result) res.status(200).json(result);
+  else throw 'Todo was not found';
+};
+
 export const updateTodoHandler = async (req: Request, res: Response) => {
   const todo = await updateTodo(req.params.id, req.body);
 
