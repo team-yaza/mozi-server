@@ -31,8 +31,7 @@ export const deleteTodoHandler = async (req: Request, res: Response) => {
 export const forceDeleteTodoHandler = async (req: Request, res: Response) => {
   const result = await deleteTodo(req.params.id, true);
 
-  if (result) res.status(200).json(result);
-  else throw 'Todo was not found';
+  res.status(200).json(result);
 };
 
 export const updateTodoHandler = async (req: Request, res: Response) => {
