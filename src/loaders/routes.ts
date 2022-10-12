@@ -16,6 +16,10 @@ export const routesLoader = (app: express.Application) => {
       return res.status(400).json(err);
     }
 
+    if (err) {
+      console.log(err);
+    }
+
     return res.status(err.status).json(err);
   });
 };
