@@ -15,8 +15,8 @@ export const todoValidator = (req: Request, res: Response, next: NextFunction) =
 
     userId: z.preprocess(() => req.user.id, z.string()),
 
-    title: z.string().max(100),
-    description: z.string().max(200),
+    title: z.string().max(100).optional(),
+    description: z.string().max(200).optional(),
 
     done: z.boolean().optional(),
     alarmed: z.boolean().optional(),
