@@ -46,6 +46,8 @@
     "yamljs": "^0.3.0"
   },
   "dependencies": {
+    "@sentry/node": "^7.15.0",
+    "@sentry/tracing": "^7.15.0",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",

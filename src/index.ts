@@ -1,6 +1,8 @@
 import 'dotenv/config';
 import express from 'express';
 import webpush from 'web-push';
+import * as Sentry from '@sentry/node';
+import * as Tracing from '@sentry/tracing';
 
 import loader from '@/loaders';
 import logger from '@/utils/logger';
@@ -12,6 +14,17 @@ webpush.setVapidDetails('mailto:leehj0110@kakao.com', publicVapidKey, privateVap
 
 export const getServer = async () => {
   const app = express();
+
+  Sentry.init({
+    dsn: 'https://48e5185ee9804737a8899675d69b1d32@o4503968160481280.ingest.sentry.io/4503987021676544',
+    integrations: [new Sentry.Integrations.Http({ tracing: true }), new Tracing.Integrations.Express({ app })],
+    tracesSampleRate: 1.0,
+  });
+
+  app.use(Sentry.Handlers.requestHandler());
+  app.use(Sentry.Handlers.tracingHandler());
+  app.use(Sentry.Handlers.requestHandler());
+  app.use(Sentry.Handlers.tracingHandler());
 
   await loader(app);
 
@@ -25,3 +38,5 @@ const startSever = async () => {
 };
 
 startSever();
+
+process.on('unhandledRejection', (error) => console.log(error));
