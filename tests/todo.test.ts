@@ -18,26 +18,26 @@ const updatedTodo: Todo = {
   latitude: 47,
 };
 
+let app: any;
+
+beforeAll(async () => {
+  app = await getServer();
+});
+
 describe('Todo service', () => {
   test('GET /api/v1/todos', async () => {
-    const app = await getServer();
-
     const todos = await getAllTodos(app);
 
     expect(Array.isArray(todos)).toBeTruthy();
   });
 
   test('POST /api/v1/todos', async () => {
-    const app = await getServer();
-
     const todo = await createTodo(app, newTodo);
 
     expect(todo).toMatchObject(newTodo);
   });
 
   test('PATCH /api/v1/todos', async () => {
-    const app = await getServer();
-
     const [firstTodo] = await getAllTodos(app);
     const { id } = firstTodo;
 
@@ -47,8 +47,6 @@ describe('Todo service', () => {
   });
 
   test('DELETE /api/v1/todos', async () => {
-    const app = await getServer();
-
     const [firstTodo] = await getAllTodos(app);
     const { id } = firstTodo;
 
