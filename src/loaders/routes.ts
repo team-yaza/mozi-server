@@ -1,7 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
-import routes from '@/routes';
 import createHttpError, { HttpError } from 'http-errors';
+import * as Sentry from '@sentry/node';
 import { ZodError } from 'zod';
+
+import routes from '@/routes';
 
 export const routesLoader = (app: express.Application) => {
   app.use('/api/v1', routes);
@@ -9,6 +11,9 @@ export const routesLoader = (app: express.Application) => {
   app.use('/', (req: Request, res: Response, next: NextFunction) => {
     next(new createHttpError.NotFound('No such page'));
   });
+
+  // The error handler must be before any other error middleware and after all controllers
+  app.use(Sentry.Handlers.errorHandler());
 
   // eslint-disable-next-line
   app.use((err: HttpError | ZodError, req: Request, res: Response, next: NextFunction) => {
