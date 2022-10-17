@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import express, { Application } from 'express';
+import express from 'express';
 import webpush from 'web-push';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
