@@ -16,15 +16,15 @@ export const routesLoader = (app: express.Application) => {
   app.use(Sentry.Handlers.errorHandler());
 
   // eslint-disable-next-line
-  app.use((err: HttpError | ZodError, req: Request, res: Response, next: NextFunction) => {
+  app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
     if (err instanceof ZodError) {
       return res.status(400).json(err);
     }
 
-    if (!('status' in err)) {
-      return res.status(500).json(err);
+    if (err instanceof HttpError) {
+      return res.status(err.status).json(err);
     }
 
-    return res.status(err.status).json(err);
+    return res.status(500).json(err);
   });
 };
