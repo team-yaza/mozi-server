@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import createHttpError, { HttpError } from 'http-errors';
+import { HttpError } from 'http-errors';
 import * as Sentry from '@sentry/node';
 import { ZodError } from 'zod';
 
