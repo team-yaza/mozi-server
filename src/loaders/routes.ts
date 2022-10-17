@@ -15,7 +15,6 @@ export const routesLoader = (app: express.Application) => {
   // The error handler must be before any other error middleware and after all controllers
   app.use(Sentry.Handlers.errorHandler());
 
-  // eslint-disable-next-line
   app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
     if (err instanceof ZodError) {
       return res.status(400).json(err);
