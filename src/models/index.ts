@@ -76,7 +76,9 @@ const modelInit = async (sequelize: Sequelize) => {
   userInit(sequelize);
   todoUserInit();
 
-  await sequelize.sync();
+  await sequelize.sync({
+    force: true,
+  });
 };
 
 export default modelInit;
