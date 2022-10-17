@@ -8,6 +8,7 @@ const sequelizeLoader = async () => {
     user: 'root',
     password: 'root',
   });
+
   await connection.query('CREATE DATABASE IF NOT EXISTS mozi;');
   await modelInit();
 };
