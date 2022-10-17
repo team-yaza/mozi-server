@@ -7,7 +7,7 @@ import routes from '@/routes';
 
 export const routesLoader = (app: express.Application) => {
   app.use('/api/v1', routes);
-
+  
   app.use('/', (req: Request, res: Response, next: NextFunction) => {
     res.status(404).send('Page not found');
   });
