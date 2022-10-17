@@ -71,22 +71,12 @@ const todoUserInit = () => {
   });
 };
 
-const modelInit = async () => {
-  const host = process.env.NODE_ENV === 'development' ? 'localhost' : 'db';
-  const sequelize = new Sequelize(`mysql://root:root@${host}:3306/mozi`, {
-    logging: false,
-    database: 'mozi',
-  });
-
+const modelInit = async (sequelize: Sequelize) => {
   todoInit(sequelize);
   userInit(sequelize);
   todoUserInit();
 
-  try {
-    await sequelize.sync({ force: false });
-  } catch (error) {
-    console.log(error);
-  }
+  await sequelize.sync();
 };
 
 export default modelInit;
