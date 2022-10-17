@@ -40,5 +40,4 @@ const startSever = async () => {
 startSever();
 
 process.on('unhandledRejection', (error) => console.log(error));
-
 process.on('uncaughtException', (error) => console.log(error));
