@@ -8,15 +8,15 @@ import routes from '@/routes';
 export const routesLoader = (app: express.Application) => {
   app.use('/api/v1', routes);
 
-  app.use('/', (req: Request, res: Response, next: NextFunction) => {
+  app.use('/', (_: Request, __: Response, next: NextFunction) => {
     next(new createHttpError.NotFound('No such page'));
   });
 
   // The error handler must be before any other error middleware and after all controllers
   app.use(Sentry.Handlers.errorHandler());
 
-  // eslint-disable-next-line
-  app.use((err: HttpError | ZodError, req: Request, res: Response, next: NextFunction) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  app.use((err: HttpError | ZodError, _: Request, res: Response, __: NextFunction) => {
     if (err instanceof ZodError) {
       return res.status(400).json(err);
     }
