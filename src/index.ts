@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import express from 'express';
+import express, { Application } from 'express';
 import webpush from 'web-push';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
@@ -12,7 +12,7 @@ const privateVapidKey = 'QNapwA1rlszq7UdCqLo5s5aORi5jAAlCEFMEfZaw4tU';
 
 webpush.setVapidDetails('mailto:leehj0110@kakao.com', publicVapidKey, privateVapidKey);
 
-export const getServer = async () => {
+const getServer = async () => {
   const app = express();
 
   Sentry.init({

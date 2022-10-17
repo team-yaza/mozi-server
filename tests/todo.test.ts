@@ -1,4 +1,6 @@
-import { getServer } from '../src/index';
+import express, { Application } from 'express';
+import loader from '../src/loaders';
+
 import { createTodo, deleteTodo, getAllTodos, updateTodo } from './todo';
 import Todo from '../src/types/todo';
 
@@ -18,10 +20,11 @@ const updatedTodo: Todo = {
   latitude: 47,
 };
 
-let app: any;
+let app: Application;
 
 beforeAll(async () => {
-  app = await getServer();
+  app = express();
+  await loader(app);
 });
 
 describe('Todo service', () => {
