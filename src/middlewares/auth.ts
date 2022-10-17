@@ -22,7 +22,7 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
       return next();
     } catch (error) {
       console.log(error);
-      res.status(401).json({ message: 'id로 유저를 찾는데 실패했습니다.' });
+      return res.status(401).json({ message: 'id로 유저를 찾는데 실패했습니다.' });
     }
   }
 

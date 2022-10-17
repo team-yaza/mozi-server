@@ -12,7 +12,7 @@ const privateVapidKey = 'QNapwA1rlszq7UdCqLo5s5aORi5jAAlCEFMEfZaw4tU';
 
 webpush.setVapidDetails('mailto:leehj0110@kakao.com', publicVapidKey, privateVapidKey);
 
-export const getServer = async () => {
+const getServer = async () => {
   const app = express();
 
   Sentry.init({
@@ -40,3 +40,5 @@ const startSever = async () => {
 startSever();
 
 process.on('unhandledRejection', (error) => console.log(error));
+
+process.on('uncaughtException', (error) => console.log(error));
