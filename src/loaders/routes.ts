@@ -9,7 +9,7 @@ export const routesLoader = (app: express.Application) => {
   app.use('/api/v1', routes);
 
   app.use('/', (req: Request, res: Response, next: NextFunction) => {
-    next(new createHttpError.NotFound('No such page'));
+    res.status(404).send('Page not found');
   });
 
   // The error handler must be before any other error middleware and after all controllers
