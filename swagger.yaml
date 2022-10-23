@@ -1,144 +1,346 @@
-swagger: '2.0'
+openapi: 3.0.0
 info:
-  description: 'Mozi Server API.'
-  version: '1.0.0'
-  title: 'Mozi Server'
-host: 'localhost:3001'
-basePath: '/api/v1'
-tags:
-  - name: 'Todo'
-    description: '할일'
-schemes:
-  - 'http'
+  title: Mozi Server
+  description: Mozi Server API입니다.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3001/api/v1
+
 paths:
   /todos:
     get:
       tags:
         - 'Todo'
-      summary: '사용자의 모든 todo를 가져옵니다.'
-      description: ''
-      operationId: 'addPet'
+
+      summary: 사용자의 모든 Todo를 가져옵니다.
+
       responses:
         '200':
-          description: '성공'
-          examples:
+          description: 성공
+
+          content:
             application/json:
-              [
-                {
-                  '_id': '62daa6ae82c240361ada75dd',
-                  'title': 'Getting started',
-                  'createdAt': '2022-07-22T13:31:26.294Z',
-                  '__v': 0,
-                },
-                {
-                  '_id': '62daa73582c240361ada75e1',
-                  'title': 'Remember the milk',
-                  'createdAt': '2022-07-22T13:33:41.951Z',
-                  '__v': 0,
-                },
-                {
-                  '_id': '62daa73b82c240361ada75e3',
-                  'title': 'On my way',
-                  'createdAt': '2022-07-22T13:33:47.628Z',
-                  '__v': 0,
-                },
-              ]
-          schema:
-            type: 'array'
-            items:
-              $ref: '#/definitions/TodoResponse'
+              schema:
+                type: object
+                example:
+                  [
+                    {
+                      'id': '178dcfbc-0123-4a18-bd91-1a3b74cef47f',
+                      'userId': '2432241311',
+                      'title': 'Getting started',
+                      'description': 'what was it?',
+                      'done': false,
+                      'alarmed': false,
+                      'dueDate': '2022-10-04T20:15:00.000Z',
+                      'alarmDate': '2022-10-04T20:15:00.000Z',
+                      'locationName': '',
+                      'longitude': null,
+                      'latitude': null,
+                      'index': null,
+                      'createdAt': '2022-09-24T03:44:51.000Z',
+                      'updatedAt': '2022-09-24T03:44:51.000Z',
+                      'deletedAt': null,
+                    },
+                    {
+                      'id': '7c8d247b-ec0e-48bf-8089-49e3fb0fe21c',
+                      'userId': '2432241311',
+                      'title': 'remember the milk',
+                      'description': 'buy now',
+                      'done': false,
+                      'alarmed': false,
+                      'dueDate': '2022-10-04T20:15:00.000Z',
+                      'alarmDate': '2022-10-04T20:15:00.000Z',
+                      'locationName': '',
+                      'longitude': null,
+                      'latitude': null,
+                      'index': 2,
+                      'createdAt': '2022-09-24T03:44:34.000Z',
+                      'updatedAt': '2022-09-24T03:44:34.000Z',
+                      'deletedAt': null,
+                    },
+                    {
+                      'id': 'b54cdffb-2711-406a-bcc2-74ec02dfd80f',
+                      'userId': '2432241311',
+                      'title': 'All my base',
+                      'description': 'are belong to you',
+                      'done': false,
+                      'alarmed': false,
+                      'dueDate': '2022-10-04T20:15:00.000Z',
+                      'alarmDate': '2022-10-04T20:15:00.000Z',
+                      'locationName': '',
+                      'longitude': null,
+                      'latitude': null,
+                      'index': null,
+                      'createdAt': '2022-09-24T03:45:31.000Z',
+                      'updatedAt': '2022-09-24T03:45:31.000Z',
+                      'deletedAt': null,
+                    },
+                  ]
+
+      security:
+        - bearerAuth: []
+
     post:
       tags:
-        - 'Todo'
-      summary: '요청받은 Todo를 데이터베이스에 생성하고 생성한 Todo를 반환합니다.'
-      parameters:
-        - in: 'body'
-          name: 'body'
-          description: '생성할 Todo 데이터'
-          required: true
-          schema:
-            properties:
-              title:
-                type: 'string'
-              done:
-                type: 'boolean'
-              description:
-                type: 'string'
+        - Todo
+
+      summary: Todo를 DB에 생성하고 생성한 Todo를 가져옵니다.
+
+      requestBody:
+        description: 새로 생성할 Todo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Todo'
+        required: true
+
       responses:
         '201':
-          examples:
+          description: 성공
+          content:
             application/json:
-              {
-                '_id': '62daa6ae82c240361ada75dd',
-                'title': 'Getting started',
-                'createdAt': '2022-07-22T13:31:26.294Z',
-                '__v': 0,
-              }
-          schema:
-            $ref: '#/definitions/TodoResponse'
+              schema:
+                $ref: '#/components/schemas/Todo'
+
+      security:
+        - bearerAuth: []
 
   /todos/{id}:
     get:
       tags:
         - 'Todo'
-      summary: '사용자의 특정 Todo를 가져옵니다.'
-      description: ''
+
+      summary: ID를 통해서 Todo를 가져옵니다.
+
       parameters:
-        - name: 'id'
-          in: 'path'
-          description: 'MongoDB의 ObjectId'
+        - name: id
+          in: path
+          description: 가져오려는 Todo의 ID(UUID)
           required: true
-          type: 'string'
+          schema:
+            type: string
+
       responses:
         '200':
-          description: 'Successful operation'
+          description: '성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+
+        '400':
+          description: 올바르지 않은 요청
+
+        '404':
+          description: Todo를 찾을 수 없음
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoNotFound'
+
+      security:
+        - bearerAuth: []
+
     delete:
       tags:
         - 'Todo'
-      summary: '사용자의 특정 Todo를 삭제합니다.'
-      description: ''
+
+      summary: ID를 통해서 Todo를 삭제합니다.
+
       parameters:
-        - name: 'id'
-          in: 'path'
-          description: 'MongoDB의 ObjectId'
+        - name: id
+          in: path
+          description: 삭제하려는 Todo의 ID(UUID)
           required: true
-          type: 'string'
+          schema:
+            type: string
+
       responses:
         '200':
-          description: '성공'
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+
+        '400':
+          description: 올바르지 않은 요청
+
+        '404':
+          description: Todo를 찾을 수 없음
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoNotFound'
+
+      security:
+        - bearerAuth: []
+
     patch:
       tags:
         - 'Todo'
-      summary: '사용자의 특정 Todo를 업데이트합니다.'
-      description: ''
+
+      summary: ID를 통해서 Todo를 업데이트합니다.
+
       parameters:
-        - name: 'id'
-          in: 'path'
-          description: 'MongoDB의 ObjectId'
+        - name: id
+          in: path
+          description: 업데이트하려는 Todo의 ID(UUID)
           required: true
-          type: 'string'
-        - in: 'body'
-          name: 'body'
-          description: '생성할 Todo 데이터'
-          required: true
+          type: object
           schema:
-            properties:
-              title:
-                type: 'string'
+            type: string
+
+      requestBody:
+        description: 새로 업데이트할 Todo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Todo'
+        required: true
+
       responses:
         '201':
-          description: '성공'
-definitions:
-  TodoResponse:
-    type: 'object'
-    properties:
-      _id:
-        type: 'string'
-      title:
-        type: 'string'
-      done:
-        type: 'boolean'
-      description:
-        type: 'string'
-      createdAt:
-        type: 'string'
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+
+        '400':
+          description: 올바르지 않은 요청
+
+        '404':
+          description: Todo를 찾을 수 없음
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoNotFound'
+
+      security:
+        - bearerAuth: []
+
+  /location/nearby:
+    post:
+      tags:
+        - 'location'
+
+      summary: 경위도와 주어진 키워드를 기준으로 장소를 검색해서 가져옵니다.
+
+      requestBody:
+        description: 경위도와 키워드
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationSearch'
+        required: true
+
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  [
+                    { 'name': '스타벅스 선릉역점', 'location': [127.0484458, 37.5039656] },
+                    { 'name': '스타벅스 선릉동신빌딩R점', 'location': [127.050481, 37.5052818] },
+                    { 'name': '스타벅스 선릉로점', 'location': [127.0467617, 37.5049945] },
+                  ]
+
+        '400':
+          description: 올바르지 않은 요청
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 2432241311
+        name:
+          type: string
+          example: 김상근
+        email:
+          type: string
+        password:
+          type: string
+        thumbnailImage:
+          type: string
+          example: http://k.kakaocdn.net/dn/JzzMA/btrzvznKm3k/TgW0XNHcLGwJjJXXiidjp0/img_110x110.jpg
+        profileImage:
+          type: string
+          example: http://k.kakaocdn.net/dn/JzzMA/btrzvznKm3k/TgW0XNHcLGwJjJXXiidjp0/img_640x640.jpg
+        todos:
+          type: Todo[]
+
+    Todo:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ea4970aa-c3bc-4e89-90f9-2293501978bd
+        userId:
+          type: string
+          example: 2432241311
+        title:
+          type: string
+          example: All my base
+        description:
+          type: string
+          example: are belong to you
+        done:
+          type: boolean
+          example: false
+        alarmed:
+          type: boolean
+          example: false
+        dueDate:
+          type: string
+          format: date-time
+          example: '2022-10-04T20:15:00.000Z'
+        alarmDate:
+          type: string
+          format: date-time
+          example: '2022-10-04T20:15:00.000Z'
+        locationName:
+          type: string
+          example: 선릉역
+        longitude:
+          type: number
+          example: 127.04894823187121
+        latitude:
+          type: number
+          example: 37.50466496606413
+        index:
+          type: number
+          example: 1
+
+    TodoNotFound:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Todo not found
+
+    LocationSearch:
+      type: object
+      properties:
+        keyword:
+          type: string
+          example: 스타벅스
+        longitude:
+          type: number
+          example: 127.04894823187121
+        latitude:
+          type: number
+          example: 37.50466496606413
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

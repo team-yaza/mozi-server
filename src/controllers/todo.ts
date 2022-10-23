@@ -1,44 +1,57 @@
 import { Request, Response } from 'express';
-import mongoose from 'mongoose';
-
-import { findAllTodos, createTodo, deleteTodo, updateTodo, findTodo } from '@/services/todo';
-import { createAlarm, deleteAlarm } from '@/services/alarm';
+import { findAllTodos, createTodo, deleteTodo, updateTodo, findTodo, deleteAllTodos } from '@/services/todo';
+import Todo from '@/models/todo';
 
 export const getAllTodosHandler = async (req: Request, res: Response) => {
-  const todos = await findAllTodos();
+  const todos = await findAllTodos(req.user.id);
+
   res.status(200).json(todos);
 };
 
 export const getTodoHandler = async (req: Request, res: Response) => {
-  const todos = await findTodo(req.params.id);
+  const todo = await findTodo(req.params.id);
 
-  res.status(200).json(todos);
+  res.status(200).json(todo);
 };
 
 export const createTodoHandler = async (req: Request, res: Response) => {
-  const todo = await createTodo(req.body);
+  const todo = await createTodo({
+    userId: req.user.id,
+    ...req.body,
+  });
 
   res.status(201).json(todo);
 };
 
 export const deleteTodoHandler = async (req: Request, res: Response) => {
-  const result = await deleteTodo(req.params.id);
-  await deleteAlarm(req.params.id);
+  const todo = await deleteTodo(req.params.id);
 
-  if (result) res.status(200).json(result);
-  else throw 'Todo was not found';
+  res.status(200).json(todo);
+};
+
+export const forceDeleteTodoHandler = async (req: Request, res: Response) => {
+  const result = await deleteTodo(req.params.id, true);
+
+  res.status(200).json(result);
 };
 
 export const updateTodoHandler = async (req: Request, res: Response) => {
-  const { result, changeLocationFlag } = await updateTodo(req.params.id, req.body);
+  const todo = await updateTodo(req.params.id, req.body);
 
-  const location: any = result?.location;
+  res.status(201).json(todo);
+};
 
-  // 첫번째 오브젝트 아이디는 유저 정보를 담고있어야함.
-  if (location.name && changeLocationFlag) {
-    await createAlarm(new mongoose.Types.ObjectId('123456789011'), req.params.id);
-  }
+export const deleteAllTodosHandler = async (req: Request, res: Response) => {
+  const result = await deleteAllTodos(req.user.id);
 
-  if (result) res.status(201).json(result);
-  else throw 'Todo was not updated';
+  res.status(200).json(result);
+};
+
+export const syncTodoHandler = async (req: Request, res: Response) => {
+  const [todo] = await Todo.upsert({
+    ...req.body,
+    userId: req.user.id,
+  });
+
+  res.status(200).json(todo);
 };

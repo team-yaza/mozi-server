@@ -1,63 +1,26 @@
-import mongoose from 'mongoose';
+import { Model, InferAttributes, InferCreationAttributes, CreationOptional, ForeignKey, NonAttribute } from 'sequelize';
+import User from '@/models/user';
 
-interface Todo {
-  title: string;
-  description: string;
-  done: boolean;
-  alarmed: boolean;
-  location: {
-    type: 'Point';
-    coolrdinate: [number];
-    name: string;
-  };
+class Todo extends Model<InferAttributes<Todo>, InferCreationAttributes<Todo>> {
+  declare id: CreationOptional<string>;
+
+  declare userId: ForeignKey<User['id']>;
+  declare owner?: NonAttribute<User>;
+
+  declare title: string;
+  declare description: string;
+
+  declare done: CreationOptional<boolean>;
+  declare alarmed: CreationOptional<boolean>;
+
+  declare dueDate: CreationOptional<Date>;
+  declare alarmDate: CreationOptional<Date>;
+
+  declare locationName: CreationOptional<string>;
+  declare longitude: CreationOptional<number>;
+  declare latitude: CreationOptional<number>;
+
+  declare index: CreationOptional<number>;
 }
-
-const todoSchema = new mongoose.Schema<Todo>(
-  {
-    title: {
-      type: String,
-    },
-    description: {
-      type: String,
-    },
-    done: {
-      type: Boolean,
-      default: false,
-    },
-    alarmed: {
-      type: Boolean,
-      default: false,
-    },
-    location: {
-      type: {
-        type: String,
-        enum: ['Point'],
-      },
-      name: {
-        type: String,
-      },
-      coordinates: {
-        type: [Number],
-      },
-    },
-  },
-  {
-    timestamps: true,
-  },
-);
-
-todoSchema.virtual('id').get(function () {
-  return this._id.toHexString();
-});
-
-todoSchema.set('toJSON', {
-  virtuals: true,
-  versionKey: false,
-  transform: function (_, ret) {
-    delete ret._id;
-  },
-});
-
-const Todo = mongoose.model<Todo>('Todo', todoSchema);
 
 export default Todo;

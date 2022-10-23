@@ -1,0 +1,59 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:latest
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=mozi
+      - TZ=Asia/Seoul
+    volumes:
+      - ./db:/var/lib/mysql
+    networks:
+      mozinetwork:
+        ipv4_address: 172.23.0.7
+    ports:
+      - '3306:3306'
+  nginx:
+    image: nginx:latest
+    restart: unless-stopped
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    environment:
+      - TZ=Asia/Seoul
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      mozinetwork:
+        ipv4_address: 172.23.0.8
+    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
+    depends_on:
+      - mozi-server
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+  mozi-server:
+    image: hancihu/mozi-server
+    networks:
+      mozinetwork:
+        ipv4_address: 172.23.0.9
+    environment:
+      - TZ=Asia/Seoul
+    ports:
+      - '3001:3001'
+    depends_on:
+      - db
+networks:
+  mozinetwork:
+    ipam:
+      config:
+        - subnet: 172.23.0.0/24

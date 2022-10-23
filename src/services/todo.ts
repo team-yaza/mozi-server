@@ -1,56 +1,77 @@
 import Todo from '@/models/todo';
-import { serializeGeoJson } from '@/utils/serialize';
+import { todoNotFound } from '@/utils/error';
 
-export const findAllTodos = async () => {
-  const todos = await Todo.find();
-
-  if (todos.length === 0) return null;
+export const findAllTodos = async (userId: string) => {
+  const todos = await Todo.findAll({
+    where: {
+      userId,
+    },
+    paranoid: false,
+  });
 
   return todos;
 };
 
-export const findTodo = async (id: string) => {
+export const findTodo = async (todoId: string) => {
   const todo = await Todo.findOne({
-    _id: id,
+    where: {
+      id: todoId,
+    },
+    paranoid: false,
   });
+
+  if (!todo) throw todoNotFound;
+
   return todo;
 };
 
-export const createTodo = async (todo: any) => {
-  const newTodo = await Todo.create(todo);
+export const createTodo = async (todo: Todo) => {
+  const newTodo = await Todo.create({ ...todo });
+
   return newTodo;
 };
 
-export const deleteTodo = async (id: string) => {
-  const result = await Todo.findOneAndDelete({
-    _id: id,
+export const deleteTodo = async (todoId: string, force = false) => {
+  const todo = await Todo.findOne({
+    where: {
+      id: todoId,
+    },
+    paranoid: false,
   });
-  return result;
+
+  if (!todo) throw todoNotFound;
+
+  await todo.destroy({
+    force,
+  });
+
+  return todo;
 };
 
-export const updateTodo = async (id: any, todo: any) => {
-  if (todo.longitude && todo.latitude) todo.location = await serializeGeoJson(todo.longitude, todo.latitude);
-  const result = await Todo.findByIdAndUpdate(
-    {
-      _id: id,
+export const updateTodo = async (todoId: string, newTodo: any) => {
+  const todo = await Todo.findOne({
+    where: {
+      id: todoId,
     },
-    {
-      ...todo,
-    },
-    {
-      new: true,
-    },
-  );
-  const changeLocationFlag = todo.longitude && todo.latitude ? true : false;
-  return { result, changeLocationFlag };
+    paranoid: false,
+  });
+
+  if (!todo) throw todoNotFound;
+
+  await todo.update({
+    ...newTodo,
+  });
+
+  return todo;
 };
 
-export const updateTodoAlarmed = async (id: any, alarmed: boolean) => {
-  const result = await Todo.findByIdAndUpdate(
-    {
-      _id: id,
+export const deleteAllTodos = async (userId: string) => {
+  const result = await Todo.destroy({
+    where: {
+      userId,
     },
-    { alarmed },
-  );
+    force: true,
+  });
+
   return result;
 };

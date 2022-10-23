@@ -104,3 +104,9 @@ dist
 .tern-port
 
 build
+
+#certbot
+data
+
+#database
+db

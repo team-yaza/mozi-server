@@ -1,49 +1,47 @@
-import { Request, Response, NextFunction } from 'express';
-import passport from 'passport';
-import { register } from '@/services/auth';
+import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 
-export const registerHandler = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
+import User from '@/models/user';
+import config from '@/config';
+import { getProfile } from '@/services/kakao';
 
-  const user = await register(username, password);
+export const kakaoHandler = async (req: Request, res: Response) => {
+  const { accessToken } = req.body;
 
-  if (!user) {
-    return res.status(400).send(`${username} already exists.`);
+  const result = await getProfile(accessToken);
+
+  const { id, email } = result;
+
+  const {
+    nickname: name,
+    profile_image_url: profileImage,
+    thumbnail_image_url: thumbnailImage,
+  } = result.kakao_account.profile;
+
+  const existedUser: any = await User.findOne({ where: { id } });
+
+  if (existedUser) {
+    await existedUser.update({ email, name, profileImage, thumbnailImage });
+    await existedUser.save();
+  } else {
+    await User.create({
+      id,
+      email,
+      name,
+      profileImage,
+      thumbnailImage,
+    });
   }
 
-  res.status(201).json(user);
-};
-
-export const loginHandler = (req: Request, res: Response, next: NextFunction) => {
-  passport.authenticate('local', (error, user) => {
-    if (error) {
-      console.error(error);
-      return next(error);
-    }
-    if (!user) {
-      return res.send('user authentication failed');
-    }
-    req.login(user, (error) => {
-      if (error) {
-        console.error(error);
-        next(error);
-      } else {
-        res.redirect('/');
-      }
-    });
-  })(req, res, next);
-};
-
-export const logoutHandler = (req: Request, res: Response) => {
-  req.logout({}, (err) => {
-    if (err) {
-      console.error(err);
-    }
-  });
-  req.session.destroy((err) => {
-    if (err) {
-      console.error(err);
-    }
-  });
-  res.redirect('/');
+  const token = jwt.sign(
+    {
+      id,
+      name,
+      email,
+      profileImage,
+    },
+    config.jwtSecret,
+    { issuer: 'hyunjin' },
+  );
+  res.status(200).json(token);
 };
