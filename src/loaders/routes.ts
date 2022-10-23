@@ -1,13 +1,13 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { HttpError } from 'http-errors';
-import * as Sentry from '@sentry/node';
 import { ZodError } from 'zod';
+import * as Sentry from '@sentry/node';
 
 import routes from '@/routes';
 
 export const routesLoader = (app: express.Application) => {
   app.use('/api/v1', routes);
-  
+
   app.use('/', (req: Request, res: Response, next: NextFunction) => {
     res.status(404).send('Page not found');
   });
