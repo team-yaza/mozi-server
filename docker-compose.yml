@@ -1,19 +1,5 @@
 version: '3.8'
 services:
-  db:
-    image: mysql:latest
-    restart: unless-stopped
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=mozi
-      - TZ=Asia/Seoul
-    volumes:
-      - ./db:/var/lib/mysql
-    networks:
-      mozinetwork:
-        ipv4_address: 172.23.0.7
-    ports:
-      - '3306:3306'
   nginx:
     image: nginx:latest
     restart: unless-stopped
@@ -50,8 +36,6 @@ services:
       - TZ=Asia/Seoul
     ports:
       - '3001:3001'
-    depends_on:
-      - db
 networks:
   mozinetwork:
     ipam:
