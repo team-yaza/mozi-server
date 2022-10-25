@@ -30,6 +30,12 @@ jobs:
           KAKAO_CLIENT_SECRET: ${{secrets.KAKAO_CLIENT_SECRET}}
           JWT_SECRET: ${{secrets.JWT_SECRET}}
           GOOGLE_NEARBYSEARCH_API_KEY: ${{secrets.GOOGLE_NEARBYSEARCH_API_KEY}}
+          MYSQL_USER: ${{secrets.MYSQL_USER}}
+          MYSQL_PASSWORD: ${{secrets.MYSQL_PASSWORD}}
+          DATABASE_NAME: ${{secrets.DATABASE_NAME}}
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
+          DATABASE_PORT: ${{secrets.DATABASE_PORT}}
+
         run: |
           echo "NODE_ENV=$NODE_ENV" > .env
           echo "PORT=$PORT" >> .env
@@ -40,6 +46,11 @@ jobs:
           echo "KAKAO_CLIENT_SECRET=$KAKAO_CLIENT_SECRET" >> .env
           echo "JWT_SECRET=$JWT_SECRET" >> .env
           echo "GOOGLE_NEARBYSEARCH_API_KEY=$GOOGLE_NEARBYSEARCH_API_KEY" >> .env
+          echo "MYSQL_USER=$MYSQL_USER" >> .env
+          echo "MYSQL_PASSWORD=$MYSQL_PASSWORD" >> .env
+          echo "DATABASE_NAME=$DATABASE_NAME" >> .env
+          echo "DATABASE_URL=$DATABASE_URL" >> .env
+          echo "DATABASE_PORT=$DATABASE_PORT" >> .env
           docker build -f Dockerfile -t hancihu/mozi-server .
           docker push hancihu/mozi-server
 
