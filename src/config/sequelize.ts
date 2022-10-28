@@ -18,8 +18,8 @@ export default {
     port: process.env.DATABASE_PORT,
   },
   test: {
-    user: 'test',
-    password: 'test',
+    user: 'root',
+    password: 'root',
     database: 'test',
     host: 'localhost',
     port: process.env.DATABASE_PORT,
