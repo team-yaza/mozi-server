@@ -21,7 +21,7 @@ const sequelizeLoader = async () => {
     username: user,
     password,
     database,
-    port: parseInt(port!),
+    port: parseInt(port ?? '3306'),
     logging: false,
   });
 
