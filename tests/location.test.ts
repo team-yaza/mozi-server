@@ -67,7 +67,7 @@ describe('InstantSearch', () => {
     const { body: locations } = await search(longitude, latitude, keyword);
 
     for (const location of locations) {
-      expect(validator(location)).toBe(true);
+      expect(validator(location)).toBeTruthy();
     }
   });
 });
