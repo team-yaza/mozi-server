@@ -19,7 +19,7 @@ beforeAll(async () => {
   user = new MockUser();
   await MUser.create(user);
 
-  expect(config.jwtSecret || process.env.JWT_SECRET).toBeTruthy();
+  expect(process.env.PORT).toBeTruthy();
   token = jwt.sign(Object.assign({}, user), config.jwtSecret || process.env.JWT_SECRET || '', { issuer: 'hyunjin' });
 });
 
