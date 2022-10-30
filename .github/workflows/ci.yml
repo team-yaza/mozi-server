@@ -17,7 +17,19 @@ jobs:
         run: |
           sudo /etc/init.d/mysql start
 
-      - name: Set up env
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Build
+        run: yarn build
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Test env
         env:
           NODE_ENV: ${{ secrets.NODE_ENV }}
           PORT: ${{ secrets.PORT }}
@@ -35,7 +47,6 @@ jobs:
           DATABASE_PORT: ${{secrets.DATABASE_PORT}}
 
         run: |
-          echo "JWT_SECRET=$JWT_SECRET" >> .env
           echo "NODE_ENV=$NODE_ENV" > .env
           echo "PORT=$PORT" >> .env
           echo "NAVER_CLIENT_ID=$NAVER_CLIENT_ID" >> .env
@@ -43,24 +54,13 @@ jobs:
           echo "KAKAO_BASE_URL=$KAKAO_BASE_URL" >> .env
           echo "KAKAO_REST_API_KEY=$KAKAO_REST_API_KEY" >> .env
           echo "KAKAO_CLIENT_SECRET=$KAKAO_CLIENT_SECRET" >> .env
+          echo "JWT_SECRET=$JWT_SECRET" >> .env
           echo "GOOGLE_NEARBYSEARCH_API_KEY=$GOOGLE_NEARBYSEARCH_API_KEY" >> .env
           echo "MYSQL_USER=$MYSQL_USER" >> .env
           echo "MYSQL_PASSWORD=$MYSQL_PASSWORD" >> .env
           echo "DATABASE_NAME=$DATABASE_NAME" >> .env
           echo "DATABASE_URL=$DATABASE_URL" >> .env
           echo "DATABASE_PORT=$DATABASE_PORT" >> .env
-
-      - name: Checkout source code
-        uses: actions/checkout@v2
-
-      - name: Install Dependencies
-        run: yarn install
-
-      - name: Build
-        run: yarn build
-
-      - name: Lint
-        run: yarn lint
 
       - name: Test
         run: yarn test
