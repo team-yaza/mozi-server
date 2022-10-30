@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise';
 import modelInit from '@/models';
-import { ConnectionRefusedError, Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize';
 import config from '@/config/sequelize';
 
 const sequelizeLoader = async () => {
