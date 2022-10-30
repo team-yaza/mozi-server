@@ -1,7 +1,7 @@
 import { faker as fakerko } from '@faker-js/faker/locale/ko';
 import { faker } from '@faker-js/faker';
 
-export class User {
+export class MockUser {
   declare id: string;
   declare email: string;
   declare name: string;

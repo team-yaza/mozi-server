@@ -3,15 +3,13 @@ import supertest from 'supertest';
 
 import { faker as fakerko } from '@faker-js/faker/locale/ko';
 import { faker } from '@faker-js/faker';
-import { User } from '../users/user';
 import { Query } from '../location/location';
+
 import Todo from '../../src/models/todo';
 
 export class MockTodo {
   declare id: string;
-
   declare userId: string;
-  declare owner: User;
 
   declare title: string;
   declare description: string;
@@ -28,11 +26,9 @@ export class MockTodo {
 
   declare index: number;
 
-  constructor(owner: User) {
+  constructor(userId: string) {
     this.id = faker.datatype.uuid();
-
-    this.userId = owner.id;
-    this.owner = owner;
+    this.userId = userId;
 
     this.title = fakerko.commerce.product();
     this.description = fakerko.commerce.productDescription();
@@ -49,6 +45,10 @@ export class MockTodo {
     this.latitude = latitude;
 
     this.index = faker.datatype.number(100);
+  }
+
+  async register() {
+    await Todo.create(this);
   }
 }
 

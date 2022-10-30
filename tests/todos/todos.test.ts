@@ -1,69 +1,66 @@
-// import express, { Application } from 'express';
-// import loader from '../../src/loaders/index';
+import express, { Application } from 'express';
+import loader from '../../src/loaders/index';
 
-// import { User } from '../users/user';
-// import MUser from '../../src/models/user';
-// import config from '../../src/config';
-// import jwt from 'jsonwebtoken';
+import { MockUser } from '../users/user';
+import MUser from '../../src/models/user';
+import config from '../../src/config';
+import jwt from 'jsonwebtoken';
 
-// import { MockTodo, removeAllTodos, request } from './todo';
+import { MockTodo, removeAllTodos, request } from './todo';
 
-// let app: Application;
-// let user: User;
-// let token: string;
+let app: Application;
+let user: MockUser;
+let token: string;
 
-// beforeAll(async () => {
-//   app = express();
-//   await loader(app);
+beforeAll(async () => {
+  app = express();
+  await loader(app);
 
-//   user = new User();
-//   await MUser.create(user);
+  user = new MockUser();
+  await MUser.create(user);
 
-//   token = jwt.sign(Object.assign({}, user), config.jwtSecret, { issuer: 'hyunjin' });
-// });
+  token = jwt.sign(Object.assign({}, user), config.jwtSecret, { issuer: 'hyunjin' });
+});
 
-// afterAll(async () => {
-//   await MUser.destroy({
-//     where: {
-//       id: user.id,
-//     },
-//     force: true,
-//   });
-// });
+afterAll(async () => {
+  await MUser.destroy({
+    where: {
+      id: user.id,
+    },
+    force: true,
+  });
+});
 
-// beforeEach(async () => {
-//   await removeAllTodos(user.id);
-// });
+beforeEach(async () => {
+  await removeAllTodos(user.id);
+});
 
-// afterEach(async () => {
-//   await removeAllTodos(user.id);
-// });
+afterEach(async () => {
+  await removeAllTodos(user.id);
+});
 
-// describe('Todo CRUD', () => {
-//   test('GET /todos', async () => {
-//     let todos: MockTodo[] = [];
-//     for (let i = 0; i < 3; i++) {
-//       todos.push(new MockTodo(user));
-//     }
+describe('Todo CRUD', () => {
+  test('GET /todos', async () => {
+    let input: MockTodo[] = [];
+    for (let i = 0; i < 3; i++) {
+      input.push(new MockTodo(user.id));
+      await input[i].register();
+    }
 
-//     await Promise.all(
-//       todos.map(async (todo) => {
-//         todo = await Todo.create(todo);
-//         (
-//           await MUser.findOne({
-//             where: {
-//               id: user.id,
-//             },
-//           })
-//         )?.addTodo();
-//       }),
-//     );
+    const response = await request(app, 'get', '/api/v1/todos', token).expect(200);
+    let output = response.body;
 
-//     const response = await request(app, 'get', '/api/v1/todos', token).expect(200);
-//     console.log(response.body);
-//   });
-//   test('POST /todos', async () => {});
-//   test('GET /todos/{id}', async () => {});
-//   test('DELETE /todos/{id}', async () => {});
-//   test('PATCH /todos/{id}', async () => {});
-// });
+    const compare = (a: MockTodo, b: MockTodo) => a.id.localeCompare(b.id);
+    input = input.sort(compare);
+    output = output.sort(compare);
+
+    for (let i = 0; i < 3; i++) {
+      expect(input[i].id).toBe(output[i].id);
+    }
+  });
+
+  // test('POST /todos', async () => {});
+  // test('GET /todos/{id}', async () => {});
+  // test('DELETE /todos/{id}', async () => {});
+  // test('PATCH /todos/{id}', async () => {});
+});
