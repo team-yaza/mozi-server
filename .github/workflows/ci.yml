@@ -48,4 +48,7 @@ jobs:
         run: yarn test
 
       - name: Prettify code
-        run: npx prettier --write
+        uses: creyD/prettier_action@v4.2
+        with:
+          dry: True
+          github_token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
