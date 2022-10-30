@@ -62,12 +62,21 @@ describe('Todo CRUD', () => {
   test('POST /todos', async () => {
     const input = new MockTodo(user.id);
 
-    const response = await request(app, 'post', '/api/v1/todos', token);
+    const response = await request(app, 'post', '/api/v1/todos', token).send(input).expect(201);
     const output = response.body;
 
-    expect(input.compare(output)).toBeTruthy();
+    expect(input.compare(output)).toBe(0);
   });
-  // test('GET /todos/{id}', async () => {});
+
+  test('GET /todos/{id}', async () => {
+    const input = new MockTodo(user.id);
+    await input.register();
+
+    const response = await request(app, 'get', `/api/v1/todos/${input.id}`, token).expect(200);
+    const output = response.body;
+
+    expect(input.compare(output)).toBe(0);
+  });
   // test('DELETE /todos/{id}', async () => {});
   // test('PATCH /todos/{id}', async () => {});
 });
