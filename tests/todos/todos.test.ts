@@ -77,6 +77,15 @@ describe('Todo CRUD', () => {
 
     expect(input.compare(output)).toBe(0);
   });
-  // test('DELETE /todos/{id}', async () => {});
+
+  test('DELETE /todos/{id}', async () => {
+    const input = new MockTodo(user.id);
+    await input.register();
+
+    const response = await request(app, 'delete', `/api/v1/todos/${input.id}`, token).expect(200);
+    const output = response.body;
+
+    expect(output.deletedAt).toBeTruthy();
+  });
   // test('PATCH /todos/{id}', async () => {});
 });

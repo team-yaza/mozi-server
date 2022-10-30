@@ -69,19 +69,6 @@ export const removeAllTodos = async (userId: string) => {
   });
 };
 
-// export const getTodo = async (app: Application, id: string): Promise<Todo> => {
-//   const test = request(app, 'get', `/api/v1/todos/${id}`);
-//   const response = await test.expect(200);
-//   return response.body;
-// };
-
-// export const createTodo = async (app: Application, newTodo: Todo): Promise<Todo> => {
-//   const test = request(app, 'post', '/api/v1/todos');
-//   test.send(newTodo);
-//   const response = await test.expect(201);
-//   return response.body;
-// };
-
 // export const deleteTodo = async (app: Application, id: string) => {
 //   const test = request(app, 'delete', `/api/v1/todos/${id}`);
 //   const response = await test.expect(200);
