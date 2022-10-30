@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise';
 import modelInit from '@/models';
-import { Sequelize } from 'sequelize';
+import { ConnectionRefusedError, Sequelize } from 'sequelize';
 import config from '@/config/sequelize';
 
 const sequelizeLoader = async () => {
@@ -14,6 +14,7 @@ const sequelizeLoader = async () => {
   });
 
   await connection.query(`CREATE DATABASE IF NOT EXISTS ${database};`);
+  await connection.end();
 
   const sequelize = new Sequelize({
     dialect: 'mysql',
