@@ -31,7 +31,6 @@ jobs:
 
       - name: Test
         env:
-          NODE_ENV: ${{ secrets.NODE_ENV }}
           PORT: ${{ secrets.PORT }}
           NAVER_CLIENT_ID: ${{secrets.NAVER_CLIENT_ID}}
           NAVER_SECRET_KEY: ${{secrets.NAVER_SECRET_KEY}}
