@@ -17,19 +17,7 @@ jobs:
         run: |
           sudo /etc/init.d/mysql start
 
-      - name: Checkout source code
-        uses: actions/checkout@v2
-
-      - name: Install Dependencies
-        run: yarn install
-
-      - name: Build
-        run: yarn build
-
-      - name: Lint
-        run: yarn lint
-
-      - name: env
+      - name: Set up env
         env:
           NODE_ENV: ${{ secrets.NODE_ENV }}
           PORT: ${{ secrets.PORT }}
@@ -61,6 +49,18 @@ jobs:
           echo "DATABASE_NAME=$DATABASE_NAME" >> .env
           echo "DATABASE_URL=$DATABASE_URL" >> .env
           echo "DATABASE_PORT=$DATABASE_PORT" >> .env
+
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Build
+        run: yarn build
+
+      - name: Lint
+        run: yarn lint
 
       - name: Test
         run: yarn test
