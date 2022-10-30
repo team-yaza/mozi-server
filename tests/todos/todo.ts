@@ -50,6 +50,10 @@ export class MockTodo {
   async register() {
     await Todo.create(this);
   }
+
+  compare(data: Todo | MockTodo) {
+    return this.id.localeCompare(data.id);
+  }
 }
 
 export const request = (app: Application, method: 'get' | 'post' | 'delete' | 'patch', url: string, token: string) => {
@@ -64,12 +68,6 @@ export const removeAllTodos = async (userId: string) => {
     force: true,
   });
 };
-
-// export const getAllTodos = async (app: Application): Promise<Todo[]> => {
-//   const test = request(app, 'get', '/api/v1/todos');
-//   const response = await test.expect(200);
-//   return response.body;
-// };
 
 // export const getTodo = async (app: Application, id: string): Promise<Todo> => {
 //   const test = request(app, 'get', `/api/v1/todos/${id}`);
