@@ -1,24 +1,30 @@
 import mysql from 'mysql2/promise';
 import modelInit from '@/models';
 import { Sequelize } from 'sequelize';
+import config from '@/config/sequelize';
 
 const sequelizeLoader = async () => {
-  const host = process.env.NODE_ENV === 'development' ? 'localhost' : process.env.DATABASE_URL;
+  const { host, user, password, database, port } =
+    config[process.env.NODE_ENV as 'development' | 'production' | 'test'];
 
   const connection = await mysql.createConnection({
     host,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
+    user,
+    password,
   });
 
-  await connection.query('CREATE DATABASE IF NOT EXISTS mozi;');
+  await connection.query(`CREATE DATABASE IF NOT EXISTS ${database};`);
+  await connection.end();
 
-  const sequelize = new Sequelize(
-    `mysql://${process.env.MYSQL_USER}:${process.env.MYSQL_PASSWORD}@${host}:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}`,
-    {
-      logging: false,
-    },
-  );
+  const sequelize = new Sequelize({
+    dialect: 'mysql',
+    host,
+    username: user,
+    password,
+    database,
+    port: parseInt(port ?? '3306'),
+    logging: false,
+  });
 
   await modelInit(sequelize);
 };

@@ -11,7 +11,12 @@ defaults:
 jobs:
   CI:
     runs-on: ubuntu-latest
+
     steps:
+      - name: Set up MySQL
+        run: |
+          sudo /etc/init.d/mysql start
+
       - name: Checkout source code
         uses: actions/checkout@v2
 
@@ -23,6 +28,24 @@ jobs:
 
       - name: Lint
         run: yarn lint
+
+      - name: Test
+        env:
+          PORT: ${{ secrets.PORT }}
+          NAVER_CLIENT_ID: ${{secrets.NAVER_CLIENT_ID}}
+          NAVER_SECRET_KEY: ${{secrets.NAVER_SECRET_KEY}}
+          KAKAO_BASE_URL: ${{secrets.KAKAO_BASE_URL}}
+          KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
+          KAKAO_CLIENT_SECRET: ${{secrets.KAKAO_CLIENT_SECRET}}
+          JWT_SECRET: ${{secrets.JWT_SECRET}}
+          GOOGLE_NEARBYSEARCH_API_KEY: ${{secrets.GOOGLE_NEARBYSEARCH_API_KEY}}
+          MYSQL_USER: ${{secrets.MYSQL_USER}}
+          MYSQL_PASSWORD: ${{secrets.MYSQL_PASSWORD}}
+          DATABASE_NAME: ${{secrets.DATABASE_NAME}}
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
+          DATABASE_PORT: ${{secrets.DATABASE_PORT}}
+
+        run: yarn test
 
       - name: Prettify code
         uses: creyD/prettier_action@v4.2
