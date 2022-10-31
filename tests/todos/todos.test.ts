@@ -98,9 +98,6 @@ describe('Todo CRUD', () => {
     const response = await request(app, 'patch', `/api/v1/todos/${before.id}`, token).send(after).expect(201);
     const output = response.body;
 
-    console.log(after);
-    console.log(output);
-
     expect(after.compare(output)).toBe(0);
   });
 });
