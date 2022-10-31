@@ -87,5 +87,20 @@ describe('Todo CRUD', () => {
 
     expect(output.deletedAt).toBeTruthy();
   });
-  // test('PATCH /todos/{id}', async () => {});
+
+  test('PATCH /todos/{id}', async () => {
+    const before = new MockTodo(user.id);
+    await before.register();
+
+    const after = new MockTodo(user.id);
+    after.id = before.id;
+
+    const response = await request(app, 'patch', `/api/v1/todos/${before.id}`, token).send(after).expect(201);
+    const output = response.body;
+
+    console.log(after);
+    console.log(output);
+
+    expect(after.compare(output)).toBe(0);
+  });
 });
