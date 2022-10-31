@@ -5,6 +5,7 @@ import { routesLoader } from './routes';
 import sequelizeLoader from './sequelize';
 import promLoader from './prom';
 import dotenv from 'dotenv';
+import { RegisterRoutes } from '../../build/routes';
 
 const loader = async (app: express.Application) => {
   dotenv.config();
@@ -12,6 +13,7 @@ const loader = async (app: express.Application) => {
   await sequelizeLoader();
   promLoader(app);
   routesLoader(app);
+  RegisterRoutes(app);
 };
 
 export default loader;

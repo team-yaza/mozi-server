@@ -1,11 +1,9 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import helmet from 'helmet';
 import swaggerUi from 'swagger-ui-express';
-import YAML from 'yamljs';
 
-const swaggerDocument = YAML.load('./swagger.yaml');
 const options: cors.CorsOptions = {
   origin: ['http://localhost:3000', 'https://mozi-client.vercel.app', 'https://mozi.cz'],
   credentials: true,
@@ -17,13 +15,10 @@ const expressLoader = (app: express.Application) => {
   app.use(helmet());
   app.use(cors(options));
   app.use(cookieParser());
-  app.use(
-    '/api-docs',
-    swaggerUi.serve,
-    swaggerUi.setup(swaggerDocument, {
-      explorer: true,
-    }),
-  );
+
+  app.use('/docs', swaggerUi.serve, async (req: Request, res: Response) => {
+    return res.send(swaggerUi.generateHTML(await import('../../build/swagger.json')));
+  });
 };
 
 export default expressLoader;
