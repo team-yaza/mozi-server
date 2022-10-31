@@ -53,5 +53,13 @@ export const syncTodoHandler = async (req: Request, res: Response) => {
     userId: req.user.id,
   });
 
+  if (req.body.deletedAt === null) {
+    await Todo.restore({
+      where: {
+        id: req.body.id,
+      },
+    });
+  }
+
   res.status(200).json(todo);
 };
