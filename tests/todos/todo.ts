@@ -68,16 +68,3 @@ export const removeAllTodos = async (userId: string) => {
     force: true,
   });
 };
-
-// export const deleteTodo = async (app: Application, id: string) => {
-//   const test = request(app, 'delete', `/api/v1/todos/${id}`);
-//   const response = await test.expect(200);
-//   return response.body;
-// };
-
-// export const updateTodo = async (app: Application, id: string, newTodo: Todo): Promise<Todo> => {
-//   const test = request(app, 'patch', `/api/v1/todos/${id}`);
-//   test.send(newTodo);
-//   const response = await test.expect(201);
-//   return response.body;
-// };
