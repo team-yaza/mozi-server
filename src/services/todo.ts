@@ -62,6 +62,10 @@ export const updateTodo = async (todoId: string, newTodo: any) => {
     ...newTodo,
   });
 
+  if (newTodo.deletedAt == null) {
+    await todo.restore();
+  }
+
   return todo;
 };
 

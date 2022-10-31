@@ -7,6 +7,7 @@ import config from '../../src/config';
 import jwt from 'jsonwebtoken';
 
 import { MockTodo, removeAllTodos, request } from './todo';
+import Todo from '../../src/models/todo';
 
 let app: Application;
 let user: MockUser;
@@ -87,7 +88,9 @@ describe('Todo CRUD', () => {
 
     expect(output.deletedAt).toBeTruthy();
   });
+});
 
+describe('Todo Update', () => {
   test('PATCH /todos/{id}', async () => {
     const before = new MockTodo(user.id);
     await before.register();
@@ -99,5 +102,25 @@ describe('Todo CRUD', () => {
     const output = response.body;
 
     expect(after.compare(output)).toBe(0);
+  });
+
+  test('Restore deletedTodo', async () => {
+    const input = new MockTodo(user.id);
+    await input.register();
+    await input.destroy();
+
+    await request(app, 'patch', `/api/v1/todos/${input.id}`, token)
+      .send({
+        deletedAt: null,
+      })
+      .expect(201);
+
+    const result = await Todo.findOne({
+      where: {
+        id: input.id,
+      },
+    });
+
+    expect(result).toBeTruthy();
   });
 });
