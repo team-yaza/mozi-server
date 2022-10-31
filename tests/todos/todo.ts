@@ -51,6 +51,14 @@ export class MockTodo {
     await Todo.create(this);
   }
 
+  async destroy() {
+    await Todo.destroy({
+      where: {
+        id: this.id,
+      },
+    });
+  }
+
   compare(data: Todo | MockTodo) {
     return this.id.localeCompare(data.id);
   }
