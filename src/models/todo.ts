@@ -7,8 +7,8 @@ class Todo extends Model<InferAttributes<Todo>, InferCreationAttributes<Todo>> {
   declare userId: ForeignKey<User['id']>;
   declare owner?: NonAttribute<User>;
 
-  declare title: string;
-  declare description: string;
+  declare title: CreationOptional<string>;
+  declare description: CreationOptional<string>;
 
   declare done: CreationOptional<boolean>;
   declare alarmed: CreationOptional<boolean>;
