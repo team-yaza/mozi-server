@@ -1,15 +1,13 @@
 import { faker as fakerko } from '@faker-js/faker/locale/ko';
 import { faker } from '@faker-js/faker';
 
-export class MockUser {
-  declare id: string;
+export class MockUserCreateParams {
   declare email: string;
   declare name: string;
   declare profileImage: string;
   declare thumbnailImage: string;
 
   constructor() {
-    this.id = faker.random.numeric(8);
     this.email = faker.internet.email();
     this.name = fakerko.name.lastName().concat(fakerko.name.firstName());
     this.profileImage = faker.internet.avatar();

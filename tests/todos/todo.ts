@@ -7,10 +7,7 @@ import { Query } from '../location/location';
 
 import Todo from '../../src/models/todo';
 
-export class MockTodo {
-  declare id: string;
-  declare userId: string;
-
+export class MockTodoCreationParams {
   declare title: string;
   declare description: string;
 
@@ -26,10 +23,7 @@ export class MockTodo {
 
   declare index: number;
 
-  constructor(userId: string) {
-    this.id = faker.datatype.uuid();
-    this.userId = userId;
-
+  constructor() {
     this.title = fakerko.commerce.product();
     this.description = fakerko.commerce.productDescription();
 
@@ -45,22 +39,6 @@ export class MockTodo {
     this.latitude = latitude;
 
     this.index = faker.datatype.number(100);
-  }
-
-  async register() {
-    await Todo.create(this);
-  }
-
-  async destroy() {
-    await Todo.destroy({
-      where: {
-        id: this.id,
-      },
-    });
-  }
-
-  compare(data: Todo | MockTodo) {
-    return this.id.localeCompare(data.id);
   }
 }
 
