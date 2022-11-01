@@ -7,6 +7,7 @@ import { TodosService } from './todosService';
 export class TodosController extends Controller {
   /**
    * 사용자의 모든 Todo를 가져옵니다.
+   * @summary 사용자의 모든 Todo를 가져옵니다.
    */
   @SuccessResponse('200', 'Ok')
   @Security('bearerAuth')
@@ -17,6 +18,7 @@ export class TodosController extends Controller {
 
   /**
    * Todo를 DB에 생성하고 가져옵니다.
+   * @summary Todo를 DB에 생성하고 가져옵니다.
    */
   @SuccessResponse('201', 'Created')
   @Security('bearerAuth')
@@ -28,6 +30,7 @@ export class TodosController extends Controller {
   /**
    * 사용자의 Todo를 가져옵니다.
    * @param id 가져올 Todo의 UUID
+   * @summary 사용자의 Todo를 가져옵니다.
    */
   @SuccessResponse('200', 'Ok')
   @Security('bearerAuth')
@@ -39,6 +42,7 @@ export class TodosController extends Controller {
   /**
    * 사용자의 Todo를 삭제합니다.
    * @param id 삭제할 Todo의 UUID
+   * @summary 사용자의 Todo를 삭제합니다.
    */
   @SuccessResponse('200', 'Ok')
   @Security('bearerAuth')
@@ -50,6 +54,7 @@ export class TodosController extends Controller {
   /**
    * 사용자의 Todo를 업데이트합니다.
    * @param id 업데이트할 Todo의 UUID
+   * @summary 사용자의 Todo를 업데이트합니다.
    */
   @SuccessResponse('204', 'No contents')
   @Security('bearerAuth')
