@@ -1,5 +1,7 @@
 import { faker as fakerko } from '@faker-js/faker/locale/ko';
 import { faker } from '@faker-js/faker';
+import jwt from 'jsonwebtoken';
+import config from '../../src/config';
 
 export class MockUserCreateParams {
   declare email: string;
@@ -14,3 +16,7 @@ export class MockUserCreateParams {
     this.thumbnailImage = faker.internet.avatar();
   }
 }
+
+export const getToken = (id: string, name: string, email: string, profileImage: string) => {
+  return jwt.sign({ id, name, email, profileImage }, config.jwtSecret, { issuer: 'hyunjin' });
+};

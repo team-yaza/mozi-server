@@ -6,6 +6,7 @@ import { faker } from '@faker-js/faker';
 import { Query } from '../location/location';
 
 import Todo from '../../src/models/todo';
+import User from '../../src/models/user';
 
 export class MockTodoCreationParams {
   declare title: string;
@@ -46,11 +47,6 @@ export const request = (app: Application, method: 'get' | 'post' | 'delete' | 'p
   return supertest(app)[method](url).set('Authorization', `Bearer ${token}`);
 };
 
-export const removeAllTodos = async (userId: string) => {
-  await Todo.destroy({
-    where: {
-      userId,
-    },
-    force: true,
-  });
+export const removeAllTodos = async (user: User) => {
+  await user.removeTodos();
 };

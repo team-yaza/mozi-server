@@ -5,15 +5,19 @@ import { TodoCreationParams } from './todo';
 
 export class TodosService {
   public async getAll(user: User) {
-    return await user.getTodos();
+    return await user.getTodos({
+      paranoid: false,
+    });
   }
 
   public async get(user: User, todoId: string) {
-    return await user.getTodos({
+    const [todo] = await user.getTodos({
       where: {
         id: todoId,
       },
+      paranoid: false,
     });
+    return todo;
   }
 
   public async create(user: User, params: TodoCreationParams) {
