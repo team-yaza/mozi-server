@@ -21,12 +21,7 @@ export async function expressAuthentication(request: express.Request, securityNa
     }
 
     const decoded = jwt.verify(credential, config.jwtSecret) as JwtPayload;
-    const user = await User.findOne({
-      where: {
-        id: decoded.id,
-      },
-      raw: true,
-    });
+    const user = await User.findByPk(decoded.id);
 
     if (!user) {
       throw new createHttpError.Unauthorized('Token verification failed or User not found');
