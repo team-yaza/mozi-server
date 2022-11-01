@@ -5,7 +5,7 @@
   "spec": {
     "outputDirectory": "build",
     "specVersion": 3,
-    "basePath": "localhost:3001/api/v1/"
+    "basePath": "/api/v1/"
   },
   "routes": {
     "routesDir": "build"
