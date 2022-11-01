@@ -7,10 +7,10 @@
     "specVersion": 3,
     "basePath": "/api/v1/",
     "securityDefinitions": {
-      "userAuth": {
-        "type": "apiKey",
-        "name": "Authorization",
-        "in": "header"
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   },

@@ -5,7 +5,7 @@ import User from '@/models/user';
 import createHttpError from 'http-errors';
 
 export async function expressAuthentication(request: express.Request, securityName: string, scopes?: string[]) {
-  if (securityName === 'userAuth') {
+  if (securityName === 'bearerAuth') {
     if (!request.headers.authorization) {
       throw new createHttpError.Unauthorized('No authorization header provided');
     }

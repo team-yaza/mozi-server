@@ -8,7 +8,7 @@ export class TodosController extends Controller {
    * 사용자의 모든 Todo를 가져옵니다.
    */
   @SuccessResponse('200', 'Ok')
-  @Security('userAuth')
+  @Security('bearerAuth')
   @Get()
   public async getTodos(@Request() req: express.Request) {
     return await new TodosService().getAll(req.user);
@@ -19,7 +19,7 @@ export class TodosController extends Controller {
    * @param id 가져올 Todo의 UUID
    */
   @SuccessResponse('200', 'Ok')
-  @Security('userAuth')
+  @Security('bearerAuth')
   @Get('{id}')
   public async getTodo(@Path() id: string, @Request() req: express.Request) {
     return await new TodosService().get(req.user, id);
