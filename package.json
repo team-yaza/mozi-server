@@ -8,7 +8,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsoa spec-and-routes && tsc",
-    "start": "cross-env NODE_ENV=production ts-node -r tsconfig-paths/register --files build/index.js",
+    "prestart": "rm -rf ./build && yarn build",
+    "start": "cross-env NODE_ENV=production ts-node -r tsconfig-paths/register --files build/src/index.js",
     "dev": "cross-env NODE_ENV=development nodemon",
     "test": "jest --forceExit",
     "lint": "eslint --fix src",
@@ -19,7 +20,7 @@
     "@types/cookie-parser": "^1.4.3",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
-    "@types/http-errors": "^1.8.2",
+    "@types/http-errors": "^2.0.1",
     "@types/jest": "^29.1.1",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^18.11.8",

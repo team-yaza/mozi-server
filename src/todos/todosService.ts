@@ -1,12 +1,15 @@
-import Todo from '@/models/todo';
+import User from '@/models/user';
 
 export class TodosService {
-  public async getAll(userId: string) {
-    return await Todo.findAll({
+  public async getAll(user: User) {
+    return await user.getTodos();
+  }
+
+  public async get(user: User, todoId: string) {
+    return await user.getTodos({
       where: {
-        userId,
+        id: todoId,
       },
-      paranoid: false,
     });
   }
 }

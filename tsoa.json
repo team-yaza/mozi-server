@@ -5,9 +5,18 @@
   "spec": {
     "outputDirectory": "build",
     "specVersion": 3,
-    "basePath": "/api/v1/"
+    "basePath": "/api/v1/",
+    "securityDefinitions": {
+      "userAuth": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
   },
   "routes": {
-    "routesDir": "build"
+    "routesDir": "build",
+    "basePath": "/api/v1/",
+    "authenticationModule": "src/users/authentication.ts"
   }
 }
