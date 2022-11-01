@@ -9,4 +9,14 @@ export class TodosService {
       paranoid: false,
     });
   }
+
+  public async get(userId: string, todoId: string) {
+    return await Todo.findOne({
+      where: {
+        userId,
+        id: todoId,
+      },
+      paranoid: false,
+    });
+  }
 }
