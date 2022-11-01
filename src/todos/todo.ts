@@ -1,17 +1,16 @@
-import Todo from '@/models/todo';
+export interface TodoCreationParams {
+  title?: string;
+  description?: string;
 
-export type TodoCreationParams = Partial<
-  Pick<
-    Todo,
-    | 'title'
-    | 'description'
-    | 'done'
-    | 'alarmed'
-    | 'dueDate'
-    | 'alarmDate'
-    | 'locationName'
-    | 'longitude'
-    | 'latitude'
-    | 'index'
-  >
->;
+  done?: boolean;
+  alarmed?: boolean;
+
+  dueDate?: Date;
+  alarmDate?: Date;
+
+  locationName?: string;
+  longitude?: number;
+  latitude?: number;
+
+  index?: number;
+}
