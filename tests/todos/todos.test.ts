@@ -74,15 +74,15 @@ describe('Todo CRUD', () => {
     expect(input.title).toBe(output.title);
   });
 
-  // test('DELETE /todos/{id}', async () => {
-  //   const input = await Todo.create(new MockTodoCreationParams());
-  //   await user.addTodo(input);
+  test('DELETE /todos/{id}', async () => {
+    const input = await Todo.create(new MockTodoCreationParams());
+    await user.addTodo(input);
 
-  //   const response = await request(app, 'delete', `/api/v1/todos/${input.id}`, token).expect(200);
-  //   const output = response.body;
+    const response = await request(app, 'delete', `/api/v1/todos/${input.id}`, token).expect(200);
+    const output = response.body;
 
-  //   expect(output.deletedAt).toBeTruthy();
-  // });
+    expect(output.deletedAt).toBeTruthy();
+  });
 });
 
 // describe('Todo Update', () => {

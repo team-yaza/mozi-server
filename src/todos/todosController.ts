@@ -1,5 +1,5 @@
 import express from 'express';
-import { Route, Controller, Get, Request, SuccessResponse, Path, Security, Body, Post } from 'tsoa';
+import { Route, Controller, Get, Request, SuccessResponse, Path, Security, Body, Post, Delete } from 'tsoa';
 import { TodoCreationParams } from './todo';
 import { TodosService } from './todosService';
 
@@ -34,5 +34,16 @@ export class TodosController extends Controller {
   @Get('{id}')
   public async getTodo(@Path() id: string, @Request() req: express.Request) {
     return await new TodosService().get(req.user, id);
+  }
+
+  /**
+   * 사용자의 Todo를 삭제합니다.
+   * @param id 삭제할 Todo의 UUID
+   */
+  @SuccessResponse('200', 'Ok')
+  @Security('bearerAuth')
+  @Delete('{id}')
+  public async removeTodo(@Path() id: string, @Request() req: express.Request) {
+    return await new TodosService().remove(req.user, id);
   }
 }
