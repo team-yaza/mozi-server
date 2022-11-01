@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsoa spec-and-routes && tsc",
+    "prestart": "rm -rf ./build && yarn build",
     "start": "cross-env NODE_ENV=production ts-node -r tsconfig-paths/register --files build/src/index.js",
     "dev": "cross-env NODE_ENV=development nodemon",
     "test": "jest --forceExit",
