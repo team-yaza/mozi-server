@@ -1,10 +1,24 @@
 import express from 'express';
-import { Route, Controller, Get, Request, SuccessResponse, Path, Security, Body, Post, Delete, Patch } from 'tsoa';
+import {
+  Route,
+  Controller,
+  Get,
+  Request,
+  SuccessResponse,
+  Path,
+  Security,
+  Body,
+  Post,
+  Delete,
+  Patch,
+  Tags,
+} from 'tsoa';
 import { TodoCreationParams } from './todo';
 import { TodosService } from './todosService';
 
 @Route('todos')
 @Security('bearerAuth')
+@Tags('Todo')
 export class TodosController extends Controller {
   /**
    * 사용자의 모든 Todo를 가져옵니다.

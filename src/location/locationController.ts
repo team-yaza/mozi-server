@@ -1,7 +1,8 @@
-import { Controller, Get, Query, Route, SuccessResponse } from 'tsoa';
+import { Controller, Get, Query, Route, SuccessResponse, Tags } from 'tsoa';
 import { LocationService } from './locationService';
 
 @Route('location')
+@Tags('Location')
 export class LocationController extends Controller {
   /**
    * 현재 사용자의 위치와 주어진 키워드를 기반으로 장소를 검색합니다.
