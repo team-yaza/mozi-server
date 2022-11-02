@@ -98,23 +98,19 @@ describe('Todo Update', () => {
     expect(output!.title).toBe(after.title);
   });
 
-  // test('Restore deletedTodo', async () => {
-  //   const input = await Todo.create(new MockTodoCreationParams());
-  //   await user.addTodo(input);
-  //   await user.removeTodo(input);
+  test('Restore deletedTodo', async () => {
+    const input = await Todo.create(new MockTodoCreationParams());
+    await user.addTodo(input);
+    await input.destroy();
 
-  //   await request(app, 'patch', `/api/v1/todos/${input.id}`, token)
-  //     .send({
-  //       deletedAt: null,
-  //     })
-  //     .expect(204);
+    await request(app, 'patch', `/api/v1/todos/${input.id}/restore`, token).expect(204);
 
-  //   const result = await Todo.findOne({
-  //     where: {
-  //       id: input.id,
-  //     },
-  //   });
+    const result = await Todo.findOne({
+      where: {
+        id: input.id,
+      },
+    });
 
-  //   expect(result).toBeTruthy();
-  // });
+    expect(result).toBeTruthy();
+  });
 });

@@ -58,4 +58,15 @@ export class TodosController extends Controller {
   public async updateTodo(@Path() id: string, @Request() req: express.Request, @Body() reqBody: TodoCreationParams) {
     await new TodosService().update(req.user, id, reqBody);
   }
+
+  /**
+   * 사용자의 Todo를 복원합니다.
+   * @param id 복원할 Todo의 UUID
+   * @summary 사용자의 Todo를 복원합니다.
+   */
+  @SuccessResponse('204', 'No contents')
+  @Patch('{id}/restore')
+  public async restoreTodo(@Path() id: string, @Request() req: express.Request) {
+    await new TodosService().restore(req.user, id);
+  }
 }
