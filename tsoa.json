@@ -17,6 +17,6 @@
   "routes": {
     "routesDir": "build",
     "basePath": "/api/v1/",
-    "authenticationModule": "src/users/authentication.ts"
+    "authenticationModule": "src/auth/auth.ts"
   }
 }
