@@ -48,5 +48,10 @@ export const request = (app: Application, method: 'get' | 'post' | 'delete' | 'p
 };
 
 export const removeAllTodos = async (user: User) => {
-  await user.removeTodos();
+  await Todo.destroy({
+    where: {
+      userId: user.id,
+    },
+    force: true,
+  });
 };
