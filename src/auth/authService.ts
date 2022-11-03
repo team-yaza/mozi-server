@@ -4,7 +4,46 @@ import config from '@/config';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 
-export class kakaoAuth {
+abstract class Auth {
+  abstract url: string;
+
+  public async login(accessToken: string): Promise<string> {
+    const data = await this.request(accessToken);
+    const userCreationParams = this.parseUserCreationParams(data);
+
+    let user = await User.findByPk(userCreationParams.id);
+    if (!user) {
+      user = await this.register(userCreationParams);
+    }
+    await user.update(userCreationParams);
+
+    return this.getToken(userCreationParams);
+  }
+
+  public async register(userCreationParams: UserCreationParams) {
+    return await User.create(userCreationParams);
+  }
+
+  public getToken(userCreationParams: UserCreationParams) {
+    const { id, name, email, profileImage } = userCreationParams;
+
+    return jwt.sign(
+      {
+        id,
+        name,
+        email,
+        profileImage,
+      },
+      config.jwtSecret,
+      { issuer: 'hyunjin' },
+    );
+  }
+
+  abstract request(accessToken: string): Promise<any>;
+  abstract parseUserCreationParams(data: any): UserCreationParams;
+}
+
+export class kakaoAuth extends Auth {
   url = 'https://kapi.kakao.com/v2/user/me';
 
   public async request(accessToken: string) {
@@ -35,36 +74,31 @@ export class kakaoAuth {
       profileImage,
     };
   }
+}
 
-  public async login(accessToken: string) {
-    const data = await this.request(accessToken);
-    const userCreationParams = this.parseUserCreationParams(data);
+export class MockAuth extends Auth {
+  url = '';
 
-    let user = await User.findByPk(userCreationParams.id);
-    if (!user) {
-      user = await this.register(userCreationParams);
-    }
-    await user.update(userCreationParams);
-
-    return this.getToken(userCreationParams);
+  public request(): Promise<any> {
+    return Promise.resolve({
+      id: 1,
+      name: 'test',
+      email: 'test@email.com',
+    });
   }
 
-  public async register(userCreationParams: UserCreationParams) {
-    return await User.create(userCreationParams);
+  public parseUserCreationParams(data: any): UserCreationParams {
+    return data;
   }
 
-  public async getToken(userCreationParams: UserCreationParams) {
-    const { id, name, email, profileImage } = userCreationParams;
-
+  public getToken(userCreationParams: UserCreationParams): string {
     return jwt.sign(
       {
-        id,
-        name,
-        email,
-        profileImage,
+        ...userCreationParams,
+        date: new Date().toString(),
       },
       config.jwtSecret,
-      { issuer: 'hyunjin' },
+      { issuer: 'hyunjin', expiresIn: 300 },
     );
   }
 }

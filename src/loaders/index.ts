@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 import { RegisterRoutes } from '../../build/routes';
 import { ValidateError } from 'tsoa';
 import { HttpError } from 'http-errors';
+import { JsonWebTokenError } from 'jsonwebtoken';
 
 const loader = async (app: express.Application) => {
   dotenv.config();
@@ -37,6 +38,10 @@ const loader = async (app: express.Application) => {
       return res.status(err.status).json({
         message: err.message,
       });
+    }
+
+    if (err instanceof JsonWebTokenError) {
+      return res.status(401).json(err);
     }
 
     if (err instanceof Error) {
