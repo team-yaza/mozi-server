@@ -59,7 +59,18 @@ export class TodosController extends Controller {
   @SuccessResponse('200', 'Ok')
   @Delete('{id}')
   public async removeTodo(@Path() id: string, @Request() req: express.Request) {
-    return await new TodosService().remove(req.user, id);
+    await new TodosService().remove(req.user, id);
+  }
+
+  /**
+   * 사용자의 Todo를 복구가 불가능하게 삭제합니다.
+   * @param id 삭제할 Todo의 UUID
+   * @summary 사용자의 Todo를 복구가 불가능하게 삭제합니다.
+   */
+  @SuccessResponse('200', 'Ok')
+  @Delete('{id}/force')
+  public async removeTodoForce(@Path() id: string, @Request() req: express.Request) {
+    await new TodosService().remove(req.user, id, true);
   }
 
   /**

@@ -29,14 +29,17 @@ export class TodosService {
     return todo;
   }
 
-  public async remove(user: User, todoId: string) {
+  public async remove(user: User, todoId: string, force = false) {
     const [todo] = await user.getTodos({
       where: {
         id: todoId,
       },
+      paranoid: false,
     });
 
-    await todo.destroy();
+    await todo.destroy({
+      force,
+    });
 
     return todo;
   }
