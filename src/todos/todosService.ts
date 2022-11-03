@@ -17,11 +17,12 @@ export class TodosService {
       },
       paranoid: false,
     });
+
     return todo;
   }
 
   public async create(user: User, params: TodoCreationParams) {
-    const todo = Todo.build(params);
+    const todo = await Todo.create(params);
 
     await user.addTodo(todo);
 
