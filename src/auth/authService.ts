@@ -3,6 +3,7 @@ import { UserCreationParams } from '@/users/user';
 import config from '@/config';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
+import Todo from '@/models/todo';
 
 abstract class Auth {
   abstract url: string;
@@ -89,6 +90,25 @@ export class MockAuth extends Auth {
 
   public parseUserCreationParams(data: any): UserCreationParams {
     return data;
+  }
+
+  public async login(): Promise<string> {
+    const data = await this.request();
+    const userCreationParams = this.parseUserCreationParams(data);
+
+    let user = await User.findByPk(userCreationParams.id);
+    if (!user) {
+      user = await this.register(userCreationParams);
+    }
+
+    await Todo.destroy({
+      where: {
+        userId: user.id,
+      },
+      force: true,
+    });
+
+    return this.getToken(userCreationParams);
   }
 
   public getToken(userCreationParams: UserCreationParams): string {

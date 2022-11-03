@@ -22,6 +22,6 @@ export class AuthController extends Controller {
   @SuccessResponse('200', 'Ok')
   @Get('mock')
   public async mock() {
-    return await new MockAuth().login('');
+    return await new MockAuth().login();
   }
 }
