@@ -78,10 +78,11 @@ describe('Todo CRUD', () => {
     const input = await Todo.create(new MockTodoCreationParams());
     await user.addTodo(input);
 
-    const response = await request(app, 'delete', `/api/v1/todos/${input.id}`, token).expect(200);
-    const output = response.body;
+    await request(app, 'delete', `/api/v1/todos/${input.id}`, token).expect(200);
 
-    expect(output.deletedAt).toBeTruthy();
+    const output = await Todo.findByPk(input.id);
+
+    expect(output).toBeFalsy();
   });
 });
 
