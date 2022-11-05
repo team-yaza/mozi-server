@@ -47,7 +47,7 @@ export class TodosController extends Controller {
    * @param force 복구가 불가능하게 삭제합니다.
    * @summary 사용자의 모든 Todo를 삭제합니다.
    */
-  @SuccessResponse('200', 'Ok')
+  @SuccessResponse('204', 'No contents')
   @Delete()
   public async removeTodos(@Request() req: express.Request, @Query() force = false) {
     await new TodosService().remove(req.user, undefined, force);
@@ -70,7 +70,7 @@ export class TodosController extends Controller {
    * @param force 복구가 불가능하게 삭제합니다.
    * @summary 사용자의 Todo를 삭제합니다.
    */
-  @SuccessResponse('200', 'Ok')
+  @SuccessResponse('204', 'No contents')
   @Delete('{id}')
   public async removeTodo(@Path() id: string, @Request() req: express.Request, @Query() force = false) {
     await new TodosService().remove(req.user, id, force);
