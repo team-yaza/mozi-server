@@ -3,6 +3,7 @@ import Todo from '@/models/todo';
 
 import { TodoCreationParams, TodoSyncParams } from './todo';
 import { WhereOptions } from 'sequelize/types';
+import { todoNotFound } from '@/utils/error';
 
 export class TodosService {
   public async get(user: User, todoId?: string) {
@@ -15,6 +16,10 @@ export class TodosService {
       where,
       paranoid: false,
     });
+
+    if (todoId && todos.length === 0) {
+      throw todoNotFound;
+    }
 
     return todos;
   }
@@ -37,6 +42,10 @@ export class TodosService {
       where,
       paranoid: false,
     });
+
+    if (todoId && todos.length === 0) {
+      throw todoNotFound;
+    }
 
     for (const todo of todos) {
       await todo.destroy({

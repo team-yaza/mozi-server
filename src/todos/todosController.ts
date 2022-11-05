@@ -66,9 +66,6 @@ export class TodosController extends Controller {
   @Get('{id}')
   public async getTodo(@Path() id: string, @Request() req: express.Request) {
     const [todo] = await new TodosService().get(req.user, id);
-
-    if (!todo) throw todoNotFound;
-
     return todo;
   }
 
