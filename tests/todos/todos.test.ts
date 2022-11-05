@@ -3,7 +3,7 @@ import loader from '../../src/loaders/index';
 
 import { getToken, MockUserCreateParams } from '../users/user';
 
-import { MockTodoCreationParams, removeAllTodos, request } from './todo';
+import { MockTodoCreationParams, removeAllTodos, request, createTodo } from './todo';
 import Todo from '../../src/models/todo';
 import User from '../../src/models/user';
 import { faker } from '@faker-js/faker';
@@ -202,19 +202,6 @@ describe('GET /todos/{id}', () => {
 });
 
 describe('DELETE /todos/{id}', () => {
-  const createTodo = async (destroy = false, force = false) => {
-    const todo = await Todo.create(new MockTodoCreationParams());
-    await user.addTodo(todo);
-
-    if (destroy) {
-      await todo.destroy({
-        force,
-      });
-    }
-
-    return todo;
-  };
-
   const todoExists = async (todoId: string, paranoid = true) => {
     const exists = await user.getTodos({
       where: {
@@ -227,7 +214,7 @@ describe('DELETE /todos/{id}', () => {
   };
 
   test('delete one todo', async () => {
-    const todo = await createTodo();
+    const todo = await createTodo(user);
 
     await request(app, 'delete', `/api/v1/todos/${todo.id}`, token).expect(204);
 
@@ -235,13 +222,13 @@ describe('DELETE /todos/{id}', () => {
   });
 
   test('delete failed', async () => {
-    const todo = await createTodo(true, true);
+    const todo = await createTodo(user, true, true);
 
     await request(app, 'delete', `/api/v1/todos/${todo.id}`, token).expect(404);
   });
 
   test('delete force', async () => {
-    const todo = await createTodo(true);
+    const todo = await createTodo(user, true);
 
     await request(app, 'delete', `/api/v1/todos/${todo.id}?force=true`, token).expect(204);
 
@@ -250,19 +237,6 @@ describe('DELETE /todos/{id}', () => {
 });
 
 describe('PATCH /todos/{id}', () => {
-  const createTodo = async (destroy = false, force = false) => {
-    const todo = await Todo.create(new MockTodoCreationParams());
-    await user.addTodo(todo);
-
-    if (destroy) {
-      await todo.destroy({
-        force,
-      });
-    }
-
-    return todo;
-  };
-
   const matches = async (params: TodoCreationParams, todoId: string, restore = false) => {
     const todo = await Todo.findByPk(todoId, {
       paranoid: restore,
@@ -272,7 +246,7 @@ describe('PATCH /todos/{id}', () => {
   };
 
   test('update todo', async () => {
-    const todo = await createTodo();
+    const todo = await createTodo(user);
     const updateParams = new MockTodoCreationParams();
     await request(app, 'patch', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(204);
 
@@ -280,13 +254,13 @@ describe('PATCH /todos/{id}', () => {
   });
 
   test('update failed', async () => {
-    const todo = await createTodo(true, true);
+    const todo = await createTodo(user, true, true);
     const updateParams = new MockTodoCreationParams();
     await request(app, 'patch', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(404);
   });
 
   test('update deleted todo', async () => {
-    const todo = await createTodo(true);
+    const todo = await createTodo(user, true);
     const updateParams = new MockTodoCreationParams();
     await request(app, 'patch', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(204);
 
@@ -294,7 +268,7 @@ describe('PATCH /todos/{id}', () => {
   });
 
   test('restore deleted todo', async () => {
-    const todo = await createTodo(true);
+    const todo = await createTodo(user, true);
     const updateParams = new MockTodoCreationParams();
     await request(app, 'patch', `/api/v1/todos/${todo.id}?restore=true`, token).send(updateParams).expect(204);
 
@@ -303,19 +277,6 @@ describe('PATCH /todos/{id}', () => {
 });
 
 describe('PUT /todos/{id}', () => {
-  const createTodo = async (destroy = false, force = false) => {
-    const todo = await Todo.create(new MockTodoCreationParams());
-    await user.addTodo(todo);
-
-    if (destroy) {
-      await todo.destroy({
-        force,
-      });
-    }
-
-    return todo;
-  };
-
   const matches = async (params: TodoCreationParams, todoId: string, restore = false) => {
     const [todo] = await user.getTodos({
       where: {
@@ -327,7 +288,7 @@ describe('PUT /todos/{id}', () => {
   };
 
   test('create if not exists', async () => {
-    const todo = await createTodo(true, true);
+    const todo = await createTodo(user, true, true);
     const syncParams = new MockTodoCreationParams();
 
     await request(app, 'put', `/api/v1/todos/${todo.id}`, token).send(syncParams).expect(201);
@@ -336,7 +297,7 @@ describe('PUT /todos/{id}', () => {
   });
 
   test('restore sync by request body', async () => {
-    const todo = await createTodo(true);
+    const todo = await createTodo(user, true);
 
     await request(app, 'put', `/api/v1/todos/${todo.id}`, token)
       .send({
@@ -348,7 +309,7 @@ describe('PUT /todos/{id}', () => {
   });
 
   test('restore sync by query string', async () => {
-    const todo = await createTodo(true);
+    const todo = await createTodo(user, true);
 
     await request(app, 'put', `/api/v1/todos/${todo.id}?restore=true`, token).send().expect(201);
 

@@ -60,3 +60,16 @@ export const removeAllTodos = async (user: User) => {
     force: true,
   });
 };
+
+export const createTodo = async (user: User, destroy = false, force = false) => {
+  const todo = await Todo.create(new MockTodoCreationParams());
+  await user.addTodo(todo);
+
+  if (destroy) {
+    await todo.destroy({
+      force,
+    });
+  }
+
+  return todo;
+};
