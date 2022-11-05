@@ -55,6 +55,10 @@ export class TodosService {
 
     await todo.update(params);
 
+    if (restore) {
+      await todo.restore();
+    }
+
     return todo;
   }
 
