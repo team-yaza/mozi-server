@@ -6,6 +6,7 @@ import { getToken, MockUserCreateParams } from '../users/user';
 import { MockTodoCreationParams, removeAllTodos, request } from './todo';
 import Todo from '../../src/models/todo';
 import User from '../../src/models/user';
+import { faker } from '@faker-js/faker';
 
 let app: Application;
 let user: User;
@@ -95,16 +96,25 @@ describe('GET /todos', () => {
   });
 });
 
-describe('Todo CRUD', () => {
-  test('POST /todos', async () => {
+describe('POST /todos', () => {
+  test('create one todo', async () => {
     const input = new MockTodoCreationParams();
 
     const response = await request(app, 'post', '/api/v1/todos', token).send(input).expect(201);
     const output = response.body;
 
-    expect(input.title).toBe(output.title);
+    expect(input.title).toEqual(output.title);
   });
 
+  test('bad request (includes id)', async () => {
+    const input: any = new MockTodoCreationParams();
+    input.id = faker.datatype.uuid();
+
+    await request(app, 'post', '/api/v1/todos', token).send(input).expect(422);
+  });
+});
+
+describe('Todo CRUD', () => {
   test('GET /todos/{id}', async () => {
     const input = await Todo.create(new MockTodoCreationParams());
     await user.addTodo(input);
