@@ -34,6 +34,7 @@ export class TodosController extends Controller {
 
   /**
    * Todo를 DB에 생성하고 가져옵니다.
+   * @param reqBody 생성할 Todo의 값
    * @summary Todo를 DB에 생성하고 가져옵니다.
    */
   @SuccessResponse('201', 'Created')
@@ -80,6 +81,7 @@ export class TodosController extends Controller {
   /**
    * 사용자의 Todo를 업데이트합니다.
    * @param id 업데이트할 Todo의 UUID
+   * @param reqBody 업데이트할 Todo의 값
    * @param restore 삭제된 Todo라면 복구합니다.
    * @summary 사용자의 Todo를 업데이트합니다.
    */
@@ -98,6 +100,7 @@ export class TodosController extends Controller {
    * 사용자의 Todo를 동기화합니다.
    * 만약 해당하는 Todo가 존재하지 않는다면 생성하고, 존재한다면 업데이트합니다.
    * @param id 동기화할 Todo의 UUID
+   * @param reqBody 동기화할 Todo의 값
    * @summary 사용자의 Todo를 동기화합니다.
    */
   @SuccessResponse('201', 'Created')
