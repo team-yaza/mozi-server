@@ -13,8 +13,9 @@ import {
   Patch,
   Tags,
   Query,
+  Put,
 } from 'tsoa';
-import { TodoCreationParams } from './todo';
+import { TodoCreationParams, TodoSyncParams } from './todo';
 import { TodosService } from './todosService';
 
 @Route('todos')
@@ -91,5 +92,17 @@ export class TodosController extends Controller {
     @Query() restore = false,
   ) {
     await new TodosService().update(req.user, id, reqBody, restore);
+  }
+
+  /**
+   * 사용자의 Todo를 동기화합니다.
+   * 만약 해당하는 Todo가 존재하지 않는다면 생성하고, 존재한다면 업데이트합니다.
+   * @param id 동기화할 Todo의 UUID
+   * @summary 사용자의 Todo를 동기화합니다.
+   */
+  @SuccessResponse('201', 'Created')
+  @Put('{id}')
+  public async syncTodo(@Path() id: string, @Request() req: express.Request, @Body() reqBody: TodoSyncParams) {
+    return await new TodosService().sync(req.user, id, reqBody);
   }
 }

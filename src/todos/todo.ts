@@ -14,3 +14,7 @@ export interface TodoCreationParams {
 
   index?: number;
 }
+
+export interface TodoSyncParams extends TodoCreationParams {
+  deletedAt?: null;
+}

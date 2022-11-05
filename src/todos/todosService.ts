@@ -1,7 +1,7 @@
 import User from '@/models/user';
 import Todo from '@/models/todo';
 
-import { TodoCreationParams } from './todo';
+import { TodoCreationParams, TodoSyncParams } from './todo';
 import { WhereOptions } from 'sequelize/types';
 
 export class TodosService {
@@ -71,5 +71,19 @@ export class TodosService {
     });
 
     await todo.restore();
+  }
+
+  public async sync(user: User, todoId: string, params: TodoSyncParams) {
+    const [todo] = await Todo.upsert({
+      id: todoId,
+      userId: user.id,
+      ...params,
+    });
+
+    if (params.deletedAt === null) {
+      await todo.restore();
+    }
+
+    return todo;
   }
 }
