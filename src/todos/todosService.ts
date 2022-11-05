@@ -5,21 +5,18 @@ import { TodoCreationParams } from './todo';
 import { WhereOptions } from 'sequelize/types';
 
 export class TodosService {
-  public async getAll(user: User) {
-    return await user.getTodos({
-      paranoid: false,
-    });
-  }
+  public async get(user: User, todoId?: string) {
+    const where: WhereOptions = {};
+    if (todoId) {
+      where.id = todoId;
+    }
 
-  public async get(user: User, todoId: string) {
-    const [todo] = await user.getTodos({
-      where: {
-        id: todoId,
-      },
+    const todos = await user.getTodos({
+      where,
       paranoid: false,
     });
 
-    return todo;
+    return todos;
   }
 
   public async create(user: User, params: TodoCreationParams) {

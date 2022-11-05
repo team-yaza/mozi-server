@@ -28,7 +28,7 @@ export class TodosController extends Controller {
   @SuccessResponse('200', 'Ok')
   @Get()
   public async getTodos(@Request() req: express.Request) {
-    return await new TodosService().getAll(req.user);
+    return await new TodosService().get(req.user);
   }
 
   /**
@@ -48,7 +48,7 @@ export class TodosController extends Controller {
    */
   @SuccessResponse('200', 'Ok')
   @Delete()
-  public async removeAllTodo(@Request() req: express.Request, @Query() force = false) {
+  public async removeTodos(@Request() req: express.Request, @Query() force = false) {
     await new TodosService().remove(req.user, undefined, force);
   }
 
