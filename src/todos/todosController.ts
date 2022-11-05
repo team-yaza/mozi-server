@@ -104,11 +104,17 @@ export class TodosController extends Controller {
    * 만약 해당하는 Todo가 존재하지 않는다면 생성하고, 존재한다면 업데이트합니다.
    * @param id 동기화할 Todo의 UUID
    * @param reqBody 동기화할 Todo의 값
+   * @param restore 삭제된 Todo라면 복구합니다.
    * @summary 사용자의 Todo를 동기화합니다.
    */
   @SuccessResponse('201', 'Created')
   @Put('{id}')
-  public async syncTodo(@Path() id: string, @Request() req: express.Request, @Body() reqBody: TodoSyncParams) {
-    return await new TodosService().sync(req.user, id, reqBody);
+  public async syncTodo(
+    @Path() id: string,
+    @Request() req: express.Request,
+    @Body() reqBody: TodoSyncParams,
+    @Query() restore = false,
+  ) {
+    return await new TodosService().sync(req.user, id, reqBody, restore);
   }
 }

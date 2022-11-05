@@ -75,14 +75,14 @@ export class TodosService {
     return todo;
   }
 
-  public async sync(user: User, todoId: string, params: TodoSyncParams) {
+  public async sync(user: User, todoId: string, params: TodoSyncParams, restore = false) {
     const [todo] = await Todo.upsert({
       id: todoId,
       userId: user.id,
       ...params,
     });
 
-    if (params.deletedAt === null) {
+    if (restore || params.deletedAt === null) {
       await todo.restore();
     }
 
