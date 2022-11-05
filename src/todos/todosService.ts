@@ -62,6 +62,10 @@ export class TodosService {
       paranoid: false,
     });
 
+    if (!todo) {
+      throw todoNotFound;
+    }
+
     await todo.update(params);
 
     if (restore) {
