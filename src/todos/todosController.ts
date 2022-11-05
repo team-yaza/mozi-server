@@ -12,6 +12,7 @@ import {
   Delete,
   Patch,
   Tags,
+  Query,
 } from 'tsoa';
 import { TodoCreationParams } from './todo';
 import { TodosService } from './todosService';
@@ -38,6 +39,17 @@ export class TodosController extends Controller {
   @Post()
   public async createTodo(@Request() req: express.Request, @Body() reqBody: TodoCreationParams) {
     return await new TodosService().create(req.user, reqBody);
+  }
+
+  /**
+   * 사용자의 모든 Todo를 삭제합니다.
+   * @param force 복구가 불가능하게 삭제합니다.
+   * @summary 사용자의 모든 Todo를 삭제합니다.
+   */
+  @SuccessResponse('200', 'Ok')
+  @Delete()
+  public async removeAllTodo(@Request() req: express.Request, @Query() force = false) {
+    await new TodosService().remove(req.user, undefined, force);
   }
 
   /**

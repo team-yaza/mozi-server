@@ -2,6 +2,7 @@ import User from '@/models/user';
 import Todo from '@/models/todo';
 
 import { TodoCreationParams } from './todo';
+import { WhereOptions } from 'sequelize/types';
 
 export class TodosService {
   public async getAll(user: User) {
@@ -29,19 +30,22 @@ export class TodosService {
     return todo;
   }
 
-  public async remove(user: User, todoId: string, force = false) {
-    const [todo] = await user.getTodos({
-      where: {
-        id: todoId,
-      },
+  public async remove(user: User, todoId?: string, force = false) {
+    const where: WhereOptions = {};
+    if (todoId) {
+      where.id = todoId;
+    }
+
+    const todos = await user.getTodos({
+      where,
       paranoid: false,
     });
 
-    await todo.destroy({
-      force,
-    });
-
-    return todo;
+    for (const todo of todos) {
+      await todo.destroy({
+        force,
+      });
+    }
   }
 
   public async update(user: User, todoId: string, params: TodoCreationParams) {
