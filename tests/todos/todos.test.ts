@@ -7,6 +7,7 @@ import { MockTodoCreationParams, removeAllTodos, request } from './todo';
 import Todo from '../../src/models/todo';
 import User from '../../src/models/user';
 import { faker } from '@faker-js/faker';
+import { TodoCreationParams } from '../../src/todos/todo';
 
 let app: Application;
 let user: User;
@@ -248,32 +249,55 @@ describe('DELETE /todos/{id}', () => {
   });
 });
 
-describe('Todo Update', () => {
-  test('PATCH /todos/{id}', async () => {
-    const before = await Todo.create(new MockTodoCreationParams());
-    await user.addTodo(before);
+describe('PATCH /todos/{id}', () => {
+  const createTodo = async (destroy = false, force = false) => {
+    const todo = await Todo.create(new MockTodoCreationParams());
+    await user.addTodo(todo);
 
-    const after = new MockTodoCreationParams();
+    if (destroy) {
+      await todo.destroy({
+        force,
+      });
+    }
 
-    await request(app, 'patch', `/api/v1/todos/${before.id}`, token).send(after).expect(204);
-    const output = await Todo.findByPk(before.id);
+    return todo;
+  };
 
-    expect(output!.title).toBe(after.title);
-  });
-
-  test('Restore deletedTodo', async () => {
-    const input = await Todo.create(new MockTodoCreationParams());
-    await user.addTodo(input);
-    await input.destroy();
-
-    await request(app, 'patch', `/api/v1/todos/${input.id}/restore`, token).expect(204);
-
-    const result = await Todo.findOne({
-      where: {
-        id: input.id,
-      },
+  const matches = async (params: TodoCreationParams, todoId: string, restore = false) => {
+    const todo = await Todo.findByPk(todoId, {
+      paranoid: restore,
     });
 
-    expect(result).toBeTruthy();
+    return todo !== null && params.title === todo.title;
+  };
+
+  test('update todo', async () => {
+    const todo = await createTodo();
+    const updateParams = new MockTodoCreationParams();
+    await request(app, 'patch', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(204);
+
+    expect(matches(updateParams, todo.id)).toBeTruthy();
+  });
+
+  test('update failed', async () => {
+    const todo = await createTodo(true, true);
+    const updateParams = new MockTodoCreationParams();
+    await request(app, 'patch', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(404);
+  });
+
+  test('update deleted todo', async () => {
+    const todo = await createTodo(true);
+    const updateParams = new MockTodoCreationParams();
+    await request(app, 'patch', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(204);
+
+    expect(matches(updateParams, todo.id)).toBeTruthy();
+  });
+
+  test('restore deleted todo', async () => {
+    const todo = await createTodo(true);
+    const updateParams = new MockTodoCreationParams();
+    await request(app, 'patch', `/api/v1/todos/${todo.id}?restore=true`, token).send(updateParams).expect(204);
+
+    expect(matches(updateParams, todo.id, true)).toBeTruthy();
   });
 });
