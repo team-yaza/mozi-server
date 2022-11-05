@@ -123,7 +123,6 @@ describe('DELETE /todos', () => {
       await user.addTodo(todo);
 
       input.push(todo);
-      console.log(todo.userId);
     }
 
     await request(app, 'delete', '/api/v1/todos', token).expect(204);
@@ -201,16 +200,51 @@ describe('GET /todos/{id}', () => {
   });
 });
 
-describe('Todo CRUD', () => {
-  test('DELETE /todos/{id}', async () => {
-    const input = await Todo.create(new MockTodoCreationParams());
-    await user.addTodo(input);
+describe('DELETE /todos/{id}', () => {
+  const createTodo = async (destroy = false, force = false) => {
+    const todo = await Todo.create(new MockTodoCreationParams());
+    await user.addTodo(todo);
 
-    await request(app, 'delete', `/api/v1/todos/${input.id}`, token).expect(200);
+    if (destroy) {
+      await todo.destroy({
+        force,
+      });
+    }
 
-    const output = await Todo.findByPk(input.id);
+    return todo;
+  };
 
-    expect(output).toBeFalsy();
+  const todoExists = async (todoId: string, paranoid = true) => {
+    const exists = await user.getTodos({
+      where: {
+        id: todoId,
+      },
+      paranoid,
+    });
+
+    return exists.length === 1;
+  };
+
+  test('delete one todo', async () => {
+    const todo = await createTodo();
+
+    await request(app, 'delete', `/api/v1/todos/${todo.id}`, token).expect(204);
+
+    expect(await todoExists(todo.id)).toBeFalsy();
+  });
+
+  test('delete failed', async () => {
+    const todo = await createTodo(true, true);
+
+    await request(app, 'delete', `/api/v1/todos/${todo.id}`, token).expect(404);
+  });
+
+  test('delete force', async () => {
+    const todo = await createTodo(true);
+
+    await request(app, 'delete', `/api/v1/todos/${todo.id}?force=true`, token).expect(204);
+
+    expect(await todoExists(todo.id, false)).toBeFalsy();
   });
 });
 
