@@ -1,3 +1,4 @@
+import { todoNotFound } from '@/utils/error';
 import express from 'express';
 import {
   Route,
@@ -14,6 +15,8 @@ import {
   Tags,
   Query,
   Put,
+  Res,
+  TsoaResponse,
 } from 'tsoa';
 import { TodoCreationParams, TodoSyncParams } from './todo';
 import { TodosService } from './todosService';
@@ -63,6 +66,9 @@ export class TodosController extends Controller {
   @Get('{id}')
   public async getTodo(@Path() id: string, @Request() req: express.Request) {
     const [todo] = await new TodosService().get(req.user, id);
+
+    if (!todo) throw todoNotFound;
+
     return todo;
   }
 

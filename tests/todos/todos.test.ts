@@ -167,8 +167,8 @@ describe('DELETE /todos', () => {
   });
 });
 
-describe('Todo CRUD', () => {
-  test('GET /todos/{id}', async () => {
+describe('GET /todos/{id}', () => {
+  test('get one todo', async () => {
     const input = await Todo.create(new MockTodoCreationParams());
     await user.addTodo(input);
 
@@ -178,6 +178,30 @@ describe('Todo CRUD', () => {
     expect(input.title).toBe(output.title);
   });
 
+  test('soft deleted', async () => {
+    const input = await Todo.create(new MockTodoCreationParams());
+    await user.addTodo(input);
+    await input.destroy();
+
+    const response = await request(app, 'get', `/api/v1/todos/${input.id}`, token).expect(200);
+    const output = response.body;
+
+    expect(input.title).toBe(output.title);
+    expect(output.deletedAt).toBeTruthy();
+  });
+
+  test('hard deleted', async () => {
+    const input = await Todo.create(new MockTodoCreationParams());
+    await user.addTodo(input);
+    await input.destroy({
+      force: true,
+    });
+
+    await request(app, 'get', `/api/v1/todos/${input.id}`, token).expect(404);
+  });
+});
+
+describe('Todo CRUD', () => {
   test('DELETE /todos/{id}', async () => {
     const input = await Todo.create(new MockTodoCreationParams());
     await user.addTodo(input);
