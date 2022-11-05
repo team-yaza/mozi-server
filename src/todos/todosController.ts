@@ -28,8 +28,7 @@ export class TodosController extends Controller {
   @SuccessResponse('200', 'Ok')
   @Get()
   public async getTodos(@Request() req: express.Request) {
-    const [todo] = await new TodosService().get(req.user);
-    return todo;
+    return await new TodosService().get(req.user);
   }
 
   /**
@@ -61,7 +60,8 @@ export class TodosController extends Controller {
   @SuccessResponse('200', 'Ok')
   @Get('{id}')
   public async getTodo(@Path() id: string, @Request() req: express.Request) {
-    return await new TodosService().get(req.user, id);
+    const [todo] = await new TodosService().get(req.user, id);
+    return todo;
   }
 
   /**
