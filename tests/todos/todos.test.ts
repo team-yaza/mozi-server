@@ -114,6 +114,59 @@ describe('POST /todos', () => {
   });
 });
 
+describe('DELETE /todos', () => {
+  test('soft deleted', async () => {
+    let input: Todo[] = [];
+
+    for (let i = 0; i < 3; i++) {
+      const todo = await Todo.create(new MockTodoCreationParams());
+      await user.addTodo(todo);
+
+      input.push(todo);
+      console.log(todo.userId);
+    }
+
+    await request(app, 'delete', '/api/v1/todos', token).expect(204);
+
+    input = input.sort((a: Todo, b: Todo) => a.id.localeCompare(b.id));
+
+    let output = await Todo.findAll({
+      where: {
+        userId: user.id,
+      },
+      paranoid: false,
+    });
+
+    output = output.sort((a: Todo, b: Todo) => a.id.localeCompare(b.id));
+
+    for (let i = 0; i < 3; i++) {
+      expect(input[i].id).toEqual(output[i].id);
+    }
+  });
+
+  test('hard deleted', async () => {
+    const input: Todo[] = [];
+
+    for (let i = 0; i < 3; i++) {
+      const todo = await Todo.create(new MockTodoCreationParams());
+      await user.addTodo(todo);
+
+      input.push(todo);
+    }
+
+    await request(app, 'delete', '/api/v1/todos?force=true', token).expect(204);
+
+    const output = await Todo.findAll({
+      where: {
+        id: user.id,
+      },
+      paranoid: false,
+    });
+
+    expect(output.length).toBe(0);
+  });
+});
+
 describe('Todo CRUD', () => {
   test('GET /todos/{id}', async () => {
     const input = await Todo.create(new MockTodoCreationParams());
