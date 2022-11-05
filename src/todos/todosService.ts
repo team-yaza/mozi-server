@@ -45,7 +45,7 @@ export class TodosService {
     }
   }
 
-  public async update(user: User, todoId: string, params: TodoCreationParams) {
+  public async update(user: User, todoId: string, params: TodoCreationParams, restore = false) {
     const [todo] = await user.getTodos({
       where: {
         id: todoId,
