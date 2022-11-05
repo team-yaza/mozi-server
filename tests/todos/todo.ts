@@ -43,7 +43,12 @@ export class MockTodoCreationParams {
   }
 }
 
-export const request = (app: Application, method: 'get' | 'post' | 'delete' | 'patch', url: string, token: string) => {
+export const request = (
+  app: Application,
+  method: 'get' | 'post' | 'delete' | 'patch' | 'put',
+  url: string,
+  token: string,
+) => {
   return supertest(app)[method](url).set('Authorization', `Bearer ${token}`);
 };
 

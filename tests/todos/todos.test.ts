@@ -301,3 +301,57 @@ describe('PATCH /todos/{id}', () => {
     expect(matches(updateParams, todo.id, true)).toBeTruthy();
   });
 });
+
+describe('PUT /todos/{id}', () => {
+  const createTodo = async (destroy = false, force = false) => {
+    const todo = await Todo.create(new MockTodoCreationParams());
+    await user.addTodo(todo);
+
+    if (destroy) {
+      await todo.destroy({
+        force,
+      });
+    }
+
+    return todo;
+  };
+
+  const matches = async (params: TodoCreationParams, todoId: string, restore = false) => {
+    const [todo] = await user.getTodos({
+      where: {
+        id: todoId,
+      },
+      paranoid: restore,
+    });
+    return todo !== undefined && params.title === todo.title;
+  };
+
+  test('create if not exists', async () => {
+    const todo = await createTodo(true, true);
+    const syncParams = new MockTodoCreationParams();
+
+    await request(app, 'put', `/api/v1/todos/${todo.id}`, token).send(syncParams).expect(201);
+
+    expect(await matches(syncParams, todo.id)).toBeTruthy();
+  });
+
+  test('restore sync by request body', async () => {
+    const todo = await createTodo(true);
+
+    await request(app, 'put', `/api/v1/todos/${todo.id}`, token)
+      .send({
+        deletedAt: null,
+      })
+      .expect(201);
+
+    expect(await matches(todo, todo.id, true)).toBeTruthy();
+  });
+
+  test('restore sync by query string', async () => {
+    const todo = await createTodo(true);
+
+    await request(app, 'put', `/api/v1/todos/${todo.id}?restore=true`, token).send().expect(201);
+
+    expect(await matches(todo, todo.id, true)).toBeTruthy();
+  });
+});
