@@ -35,26 +35,67 @@ afterEach(async () => {
   await removeAllTodos(user);
 });
 
-describe('Todo CRUD', () => {
-  test('GET /todos', async () => {
-    let id: string[] = [];
+describe('GET /todos', () => {
+  test('get 3 todos', async () => {
+    let input: Todo[] = [];
+
     for (let i = 0; i < 3; i++) {
       const todo = await Todo.create(new MockTodoCreationParams());
-      id.push(todo.id);
       await user.addTodo(todo);
+
+      input.push(todo);
     }
 
     const response = await request(app, 'get', '/api/v1/todos', token).expect(200);
     let output = response.body;
 
-    id = id.sort();
+    input = input.sort((a: Todo, b: Todo) => a.id.localeCompare(b.id));
     output = output.sort((a: Todo, b: Todo) => a.id.localeCompare(b.id));
 
     for (let i = 0; i < 3; i++) {
-      expect(id[i]).toBe(output[i].id);
+      expect(input[i].id).toEqual(output[i].id);
     }
   });
 
+  test('get 3 soft deleted todos', async () => {
+    let input: Todo[] = [];
+
+    for (let i = 0; i < 3; i++) {
+      const todo = await Todo.create(new MockTodoCreationParams());
+      await user.addTodo(todo);
+      await todo.destroy();
+
+      input.push(todo);
+    }
+
+    const response = await request(app, 'get', '/api/v1/todos', token).expect(200);
+    let output = response.body;
+
+    input = input.sort((a: Todo, b: Todo) => a.id.localeCompare(b.id));
+    output = output.sort((a: Todo, b: Todo) => a.id.localeCompare(b.id));
+
+    for (let i = 0; i < 3; i++) {
+      expect(input[i].id).toBe(output[i].id);
+    }
+  });
+
+  test('get 3 hard deleted todos', async () => {
+    for (let i = 0; i < 3; i++) {
+      const todo = await Todo.create(new MockTodoCreationParams());
+      await user.addTodo(todo);
+      await todo.destroy({
+        force: true,
+      });
+    }
+
+    const response = await request(app, 'get', '/api/v1/todos', token).expect(200);
+    const output = response.body;
+
+    expect(output).toEqual([]);
+  });
+});
+
+describe('Todo CRUD', () => {
   test('POST /todos', async () => {
     const input = new MockTodoCreationParams();
 
