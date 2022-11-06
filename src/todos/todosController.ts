@@ -15,7 +15,7 @@ import {
   Query,
   Put,
 } from 'tsoa';
-import { TodoCreationParams, TodoUpdateParams } from './todo';
+import { TodoUpdateParams } from './todo';
 import { TodosService } from './todosService';
 
 @Route('todos')
