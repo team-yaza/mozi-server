@@ -31,7 +31,7 @@ export class TodosService {
     return todo;
   }
 
-  public async remove(user: User, todoId?: string, force = false) {
+  public async remove(user: User, todoId?: string) {
     const where: WhereOptions = {};
     if (todoId) {
       where.id = todoId;
@@ -48,7 +48,7 @@ export class TodosService {
 
     for (const todo of todos) {
       await todo.destroy({
-        force,
+        force: true,
       });
     }
   }
@@ -74,7 +74,7 @@ export class TodosService {
     return todo;
   }
 
-  public async sync(user: User, todoId: string, params: TodoUpdateParams, restore = false) {
+  public async sync(user: User, todoId: string, params: TodoUpdateParams) {
     const [todo] = await Todo.upsert({
       id: todoId,
       userId: user.id,

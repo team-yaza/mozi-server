@@ -116,35 +116,7 @@ describe('POST /todos', () => {
 });
 
 describe('DELETE /todos', () => {
-  test('soft deleted', async () => {
-    let input: Todo[] = [];
-
-    for (let i = 0; i < 3; i++) {
-      const todo = await Todo.create(new MockTodoCreationParams());
-      await user.addTodo(todo);
-
-      input.push(todo);
-    }
-
-    await request(app, 'delete', '/api/v1/todos', token).expect(204);
-
-    input = input.sort((a: Todo, b: Todo) => a.id.localeCompare(b.id));
-
-    let output = await Todo.findAll({
-      where: {
-        userId: user.id,
-      },
-      paranoid: false,
-    });
-
-    output = output.sort((a: Todo, b: Todo) => a.id.localeCompare(b.id));
-
-    for (let i = 0; i < 3; i++) {
-      expect(input[i].id).toEqual(output[i].id);
-    }
-  });
-
-  test('hard deleted', async () => {
+  test('deleted', async () => {
     const input: Todo[] = [];
 
     for (let i = 0; i < 3; i++) {
@@ -154,7 +126,7 @@ describe('DELETE /todos', () => {
       input.push(todo);
     }
 
-    await request(app, 'delete', '/api/v1/todos?force=true', token).expect(204);
+    await request(app, 'delete', '/api/v1/todos', token).expect(204);
 
     const output = await Todo.findAll({
       where: {
@@ -202,15 +174,15 @@ describe('GET /todos/{id}', () => {
 });
 
 describe('DELETE /todos/{id}', () => {
-  const todoExists = async (todoId: string, paranoid = true) => {
-    const exists = await user.getTodos({
+  const todoExists = async (todoId: string) => {
+    const [todo] = await user.getTodos({
       where: {
         id: todoId,
       },
-      paranoid,
+      paranoid: false,
     });
 
-    return exists.length === 1;
+    return todo !== undefined;
   };
 
   test('delete one todo', async () => {
@@ -225,14 +197,6 @@ describe('DELETE /todos/{id}', () => {
     const todo = await createTodo(user, true, true);
 
     await request(app, 'delete', `/api/v1/todos/${todo.id}`, token).expect(404);
-  });
-
-  test('delete force', async () => {
-    const todo = await createTodo(user, true);
-
-    await request(app, 'delete', `/api/v1/todos/${todo.id}?force=true`, token).expect(204);
-
-    expect(await todoExists(todo.id, false)).toBeFalsy();
   });
 });
 
