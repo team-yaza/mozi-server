@@ -106,13 +106,6 @@ describe('POST /todos', () => {
 
     expect(input.title).toEqual(output.title);
   });
-
-  test('bad request (includes id)', async () => {
-    const input: any = new MockTodoCreationParams();
-    input.id = faker.datatype.uuid();
-
-    await request(app, 'post', '/api/v1/todos', token).send(input).expect(422);
-  });
 });
 
 describe('DELETE /todos', () => {
