@@ -11,7 +11,7 @@
     "prestart": "rm -rf ./build && yarn build",
     "start": "cross-env NODE_ENV=production ts-node -r tsconfig-paths/register --files build/src/index.js",
     "dev": "cross-env NODE_ENV=development nodemon",
-    "test": "jest --forceExit",
+    "test": "yarn build && jest --forceExit",
     "lint": "eslint --fix src",
     "prepare": "husky install"
   },
