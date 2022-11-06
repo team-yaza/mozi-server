@@ -15,7 +15,7 @@ import {
   Query,
   Put,
 } from 'tsoa';
-import { TodoCreationParams, TodoUpdateParams } from './todo';
+import { TodoCreationParams, TodoLooseParams, TodoUpdateParams } from './todo';
 import { TodosService } from './todosService';
 
 @Route('todos')
@@ -39,7 +39,7 @@ export class TodosController extends Controller {
    */
   @SuccessResponse('201', 'Created')
   @Post()
-  public async createTodo(@Request() req: express.Request, @Body() reqBody: TodoCreationParams) {
+  public async createTodo(@Request() req: express.Request, @Body() reqBody: TodoLooseParams) {
     return await new TodosService().create(req.user, reqBody);
   }
 

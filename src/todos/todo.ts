@@ -96,3 +96,7 @@ export interface TodoUpdateParams extends TodoCreationParams {
   updatedAt?: Date | null;
   deletedAt?: Date | null;
 }
+
+export interface TodoLooseParams extends TodoUpdateParams {
+  offline?: 'created' | 'updated' | 'deleted';
+}
