@@ -13,8 +13,8 @@ beforeAll(async () => {
 
 const search = async (longitude: number, latitude: number, keyword: string) => {
   return await request(app)
-    .post(`/api/v1/location/nearby`)
-    .send({
+    .get(`/api/v1/location/`)
+    .query({
       longitude,
       latitude,
       keyword,

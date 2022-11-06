@@ -5,12 +5,10 @@ import { faker as fakerko } from '@faker-js/faker/locale/ko';
 import { faker } from '@faker-js/faker';
 import { Query } from '../location/location';
 
-import Todo from '../../src/models/todo';
+import { User } from '../../src/users/user';
+import { Todo } from '../../src/todos/todo';
 
-export class MockTodo {
-  declare id: string;
-  declare userId: string;
-
+export class MockTodoCreationParams {
   declare title: string;
   declare description: string;
 
@@ -26,10 +24,7 @@ export class MockTodo {
 
   declare index: number;
 
-  constructor(userId: string) {
-    this.id = faker.datatype.uuid();
-    this.userId = userId;
-
+  constructor() {
     this.title = fakerko.commerce.product();
     this.description = fakerko.commerce.productDescription();
 
@@ -46,33 +41,35 @@ export class MockTodo {
 
     this.index = faker.datatype.number(100);
   }
-
-  async register() {
-    await Todo.create(this);
-  }
-
-  async destroy() {
-    await Todo.destroy({
-      where: {
-        id: this.id,
-      },
-    });
-  }
-
-  compare(data: Todo | MockTodo) {
-    return this.id.localeCompare(data.id);
-  }
 }
 
-export const request = (app: Application, method: 'get' | 'post' | 'delete' | 'patch', url: string, token: string) => {
+export const request = (
+  app: Application,
+  method: 'get' | 'post' | 'delete' | 'patch' | 'put',
+  url: string,
+  token: string,
+) => {
   return supertest(app)[method](url).set('Authorization', `Bearer ${token}`);
 };
 
-export const removeAllTodos = async (userId: string) => {
+export const removeAllTodos = async (user: User) => {
   await Todo.destroy({
     where: {
-      userId,
+      userId: user.id,
     },
     force: true,
   });
+};
+
+export const createTodo = async (user: User, destroy = false, force = false) => {
+  const todo = await Todo.create(new MockTodoCreationParams());
+  await user.addTodo(todo);
+
+  if (destroy) {
+    await todo.destroy({
+      force,
+    });
+  }
+
+  return todo;
 };

@@ -14,11 +14,18 @@ import {
   HasManyHasAssociationsMixin,
   HasManyCountAssociationsMixin,
   HasManyCreateAssociationMixin,
+  Sequelize,
+  DataTypes,
+  UUID,
+  UUIDV4,
 } from 'sequelize';
 
-import Todo from '@/models/todo';
+import { Todo } from '@/todos/todo';
 
-class User extends Model<InferAttributes<User, { omit: 'todos' }>, InferCreationAttributes<User, { omit: 'todos' }>> {
+export class User extends Model<
+  InferAttributes<User, { omit: 'todos' }>,
+  InferCreationAttributes<User, { omit: 'todos' }>
+> {
   declare id: CreationOptional<string>;
 
   declare name: string;
@@ -45,4 +52,34 @@ class User extends Model<InferAttributes<User, { omit: 'todos' }>, InferCreation
   };
 }
 
-export default User;
+export const define = (sequelize: Sequelize) => {
+  User.init(
+    {
+      id: {
+        type: UUID,
+        defaultValue: UUIDV4,
+        primaryKey: true,
+      },
+
+      name: DataTypes.STRING,
+      email: DataTypes.STRING,
+      password: DataTypes.STRING,
+
+      thumbnailImage: DataTypes.STRING,
+      profileImage: DataTypes.STRING,
+    },
+    {
+      tableName: 'users',
+      sequelize,
+    },
+  );
+};
+
+export interface UserCreationParams {
+  id: string;
+  name: string;
+  email: string;
+  password?: string;
+  thumbnailImage?: string;
+  profileImage?: string;
+}

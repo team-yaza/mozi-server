@@ -1,0 +1,5 @@
+{
+  "exec": "tsoa spec-and-routes && ts-node -r tsconfig-paths/register --files src/index.ts",
+  "watch": ["src"],
+  "ext": "ts"
+}
