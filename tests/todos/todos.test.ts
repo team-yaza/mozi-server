@@ -20,7 +20,7 @@ beforeAll(async () => {
   user = await User.create(new MockUserCreateParams());
   const { id, name, email, profileImage } = user;
 
-  token = getToken(id, name, email, profileImage!);
+  token = getToken(id, name, email, profileImage ?? '');
 });
 
 afterAll(async () => {

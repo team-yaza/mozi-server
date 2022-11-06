@@ -1,4 +1,3 @@
-import { todoNotFound } from '@/utils/error';
 import express from 'express';
 import {
   Route,
@@ -15,8 +14,6 @@ import {
   Tags,
   Query,
   Put,
-  Res,
-  TsoaResponse,
 } from 'tsoa';
 import { TodoCreationParams, TodoSyncParams } from './todo';
 import { TodosService } from './todosService';

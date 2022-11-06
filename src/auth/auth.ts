@@ -4,7 +4,7 @@ import createHttpError from 'http-errors';
 import config from '@/config';
 import { User } from '@/users/user';
 
-export async function expressAuthentication(request: express.Request, securityName: string, scopes?: string[]) {
+export async function expressAuthentication(request: express.Request, securityName: string, _?: string[]) {
   if (securityName === 'bearerAuth') {
     if (!request.headers.authorization) {
       throw new createHttpError.Unauthorized('No authorization header provided');
@@ -14,7 +14,7 @@ export async function expressAuthentication(request: express.Request, securityNa
       throw new createHttpError.Unauthorized("Authorization header's type is not Bearer");
     }
 
-    const [_type, credential] = request.headers.authorization.split(' ');
+    const [, credential] = request.headers.authorization.split(' ');
 
     if (!config.jwtSecret) {
       throw new createHttpError.Unauthorized('No secret key provided');
