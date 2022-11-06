@@ -39,7 +39,7 @@ export class TodosController extends Controller {
    */
   @SuccessResponse('201', 'Created')
   @Post()
-  public async createTodo(@Request() req: express.Request, @Body() reqBody: TodoCreationParams) {
+  public async createTodo(@Request() req: express.Request, @Body() reqBody: TodoUpdateParams) {
     return await new TodosService().create(req.user, reqBody);
   }
 

@@ -24,7 +24,22 @@ export class TodosService {
   }
 
   public async create(user: User, params: TodoCreationParams) {
-    const todo = await Todo.create(params);
+    const todo = await Todo.create({
+      title: params.title,
+      description: params.description,
+
+      done: params.done,
+      alarmed: params.alarmed,
+
+      dueDate: params.dueDate,
+      alarmDate: params.alarmDate,
+
+      locationName: params.locationName,
+      longitude: params.longitude,
+      latitude: params.latitude,
+
+      index: params.index,
+    });
 
     await user.addTodo(todo);
 
