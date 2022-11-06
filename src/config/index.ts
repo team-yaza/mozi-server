@@ -1,5 +1,3 @@
-import dotenv from 'dotenv';
-
 const config = {
   port: process.env.PORT,
   mongo: process.env.MONGO_URL || '',
