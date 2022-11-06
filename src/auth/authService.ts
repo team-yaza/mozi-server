@@ -1,9 +1,9 @@
-import User from '@/models/user';
-import { UserCreationParams } from '@/users/user';
-import config from '@/config';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import Todo from '@/models/todo';
+import config from '@/config';
+import { User } from '@/users/user';
+import { UserCreationParams } from '@/users/user';
+import { Todo } from '@/todos/todo';
 
 abstract class Auth {
   abstract url: string;

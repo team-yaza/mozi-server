@@ -1,8 +1,8 @@
 import express from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import config from '@/config';
-import User from '@/models/user';
 import createHttpError from 'http-errors';
+import config from '@/config';
+import { User } from '@/users/user';
 
 export async function expressAuthentication(request: express.Request, securityName: string, scopes?: string[]) {
   if (securityName === 'bearerAuth') {

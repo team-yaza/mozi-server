@@ -5,8 +5,8 @@ import { faker as fakerko } from '@faker-js/faker/locale/ko';
 import { faker } from '@faker-js/faker';
 import { Query } from '../location/location';
 
-import Todo from '../../src/models/todo';
-import User from '../../src/models/user';
+import { User } from '../../src/users/user';
+import { Todo } from '../../src/todos/todo';
 
 export class MockTodoCreationParams {
   declare title: string;

@@ -1,7 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 
 import expressLoader from '@/loaders/express';
-// import { routesLoader } from './routes';
 import sequelizeLoader from './sequelize';
 import promLoader from './prom';
 import dotenv from 'dotenv';
@@ -16,7 +15,6 @@ const loader = async (app: express.Application) => {
   expressLoader(app);
   await sequelizeLoader();
   promLoader(app);
-  // routesLoader(app);
   RegisterRoutes(app);
 
   app.use(function notFoundHandler(_req, res: Response) {

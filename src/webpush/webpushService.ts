@@ -1,4 +1,4 @@
-import Todo from '@/models/todo';
+import { Todo } from '@/todos/todo';
 import webpush, { PushSubscription } from 'web-push';
 
 export class webpushService {

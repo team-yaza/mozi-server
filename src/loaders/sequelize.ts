@@ -1,7 +1,9 @@
 import mysql from 'mysql2/promise';
-import modelInit from '@/models';
 import { Sequelize } from 'sequelize';
 import config from '@/config/sequelize';
+import { define as todo } from '@/todos/todo';
+import { define as user } from '@/users/user';
+import { define as userTodo } from '@/users/usertodo';
 
 const sequelizeLoader = async () => {
   const { host, user, password, database, port } =
@@ -26,7 +28,14 @@ const sequelizeLoader = async () => {
     logging: false,
   });
 
-  await modelInit(sequelize);
+  define(sequelize);
+  await sequelize.sync();
+};
+
+const define = (sequelize: Sequelize) => {
+  todo(sequelize);
+  user(sequelize);
+  userTodo();
 };
 
 export default sequelizeLoader;

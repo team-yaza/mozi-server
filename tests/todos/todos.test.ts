@@ -4,8 +4,8 @@ import loader from '../../src/loaders/index';
 import { getToken, MockUserCreateParams } from '../users/user';
 
 import { MockTodoCreationParams, removeAllTodos, request, createTodo } from './todo';
-import Todo from '../../src/models/todo';
-import User from '../../src/models/user';
+import { User } from '../../src/users/user';
+import { Todo } from '../../src/todos/todo';
 import { faker } from '@faker-js/faker';
 import { TodoCreationParams } from '../../src/todos/todo';
 

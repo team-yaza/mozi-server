@@ -1,6 +1,5 @@
-import User from '@/models/user';
-import Todo from '@/models/todo';
-
+import { User } from '@/users/user';
+import { Todo } from '@/todos/todo';
 import { TodoCreationParams, TodoSyncParams } from './todo';
 import { WhereOptions } from 'sequelize/types';
 import { todoNotFound } from '@/utils/error';
