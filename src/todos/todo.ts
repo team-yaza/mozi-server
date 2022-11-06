@@ -89,6 +89,10 @@ export interface TodoCreationParams {
   index?: number;
 }
 
-export interface TodoSyncParams extends TodoCreationParams {
-  deletedAt?: null;
+export interface TodoUpdateParams extends TodoCreationParams {
+  id?: string;
+  userId?: string;
+  createdAt?: Date | null;
+  updatedAt?: Date | null;
+  deletedAt?: Date | null;
 }

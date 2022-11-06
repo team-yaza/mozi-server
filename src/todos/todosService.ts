@@ -1,6 +1,6 @@
 import { User } from '@/users/user';
 import { Todo } from '@/todos/todo';
-import { TodoCreationParams, TodoSyncParams } from './todo';
+import { TodoCreationParams, TodoUpdateParams } from './todo';
 import { WhereOptions } from 'sequelize/types';
 import { todoNotFound } from '@/utils/error';
 
@@ -74,7 +74,7 @@ export class TodosService {
     return todo;
   }
 
-  public async sync(user: User, todoId: string, params: TodoSyncParams, restore = false) {
+  public async sync(user: User, todoId: string, params: TodoUpdateParams, restore = false) {
     const [todo] = await Todo.upsert({
       id: todoId,
       userId: user.id,
