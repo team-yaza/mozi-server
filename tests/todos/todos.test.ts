@@ -259,6 +259,14 @@ describe('PATCH /todos/{id}', () => {
     await request(app, 'patch', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(404);
   });
 
+  test('wierd update(includes id but Ok)', async () => {
+    const todo = await createTodo(user);
+    const updateParams: any = new MockTodoCreationParams();
+    updateParams.id = todo.id;
+
+    await request(app, 'patch', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(204);
+  });
+
   test('update deleted todo', async () => {
     const todo = await createTodo(user, true);
     const updateParams = new MockTodoCreationParams();
