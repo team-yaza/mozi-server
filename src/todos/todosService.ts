@@ -78,12 +78,29 @@ export class TodosService {
     const [todo] = await Todo.upsert({
       id: todoId,
       userId: user.id,
-      ...params,
+
+      title: params.title,
+      description: params.description,
+
+      done: params.done,
+      alarmed: params.alarmed,
+
+      dueDate: params.dueDate,
+      alarmDate: params.alarmDate,
+
+      locationName: params.locationName,
+      longitude: params.longitude,
+      latitude: params.latitude,
+
+      index: params.index,
     });
 
-    if (restore || params.deletedAt === null) {
+    if (params.deletedAt === null || params.deletedAt === undefined) {
       await todo.restore();
+    } else {
+      todo.setDataValue('deletedAt' as any, params.deletedAt);
     }
+    await todo.save();
 
     return todo;
   }

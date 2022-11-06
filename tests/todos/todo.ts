@@ -43,6 +43,24 @@ export class MockTodoCreationParams {
   }
 }
 
+export class MockTodoUpdateParams extends MockTodoCreationParams {
+  declare deletedAt?: Date | null;
+
+  constructor(deleted = false) {
+    super();
+
+    if (deleted) {
+      this.deletedAt = faker.date.recent();
+    } else {
+      if (Math.random() >= 0.5) {
+        this.deletedAt = undefined;
+      } else {
+        this.deletedAt = null;
+      }
+    }
+  }
+}
+
 export const request = (
   app: Application,
   method: 'get' | 'post' | 'delete' | 'patch' | 'put',

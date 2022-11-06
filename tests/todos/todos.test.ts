@@ -3,7 +3,7 @@ import loader from '../../src/loaders/index';
 
 import { getToken, MockUserCreateParams } from '../users/user';
 
-import { MockTodoCreationParams, removeAllTodos, request, createTodo } from './todo';
+import { MockTodoCreationParams, removeAllTodos, request, createTodo, MockTodoUpdateParams } from './todo';
 import { User } from '../../src/users/user';
 import { Todo } from '../../src/todos/todo';
 import { faker } from '@faker-js/faker';
@@ -302,6 +302,47 @@ describe('PUT /todos/{id}', () => {
     await request(app, 'put', `/api/v1/todos/${todo.id}`, token).send(syncParams).expect(201);
 
     expect(await matches(syncParams, todo.id)).toBeTruthy();
+  });
+
+  test('create soft deleted todo', async () => {
+    const todo = await createTodo(user, true, true);
+    const updateParams = new MockTodoUpdateParams(true);
+
+    await request(app, 'put', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(201);
+
+    expect(await matches(updateParams, todo.id)).toBeTruthy();
+    expect(await matches(updateParams, todo.id, true)).toBeFalsy();
+  });
+
+  test('update some todo to soft deleted', async () => {
+    const todo = await createTodo(user);
+    const updateParams = new MockTodoUpdateParams(true);
+
+    await request(app, 'put', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(201);
+
+    expect(await matches(updateParams, todo.id)).toBeTruthy();
+    expect(await matches(updateParams, todo.id, true)).toBeFalsy();
+  });
+
+  test('update some soft deleted to soft deleted', async () => {
+    const todo = await createTodo(user, true);
+    const updateParams = new MockTodoUpdateParams(true);
+
+    await request(app, 'put', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(201);
+
+    expect(await matches(updateParams, todo.id)).toBeTruthy();
+    expect(await matches(updateParams, todo.id, true)).toBeFalsy();
+  });
+
+  test('create with id', async () => {
+    const todo = await createTodo(user, true, true);
+    const updateParams = new MockTodoUpdateParams();
+
+    const response = await request(app, 'put', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(201);
+
+    expect(await matches(updateParams, todo.id)).toBeTruthy();
+    expect(await matches(updateParams, todo.id, true)).toBeTruthy();
+    expect(response.body.id).toEqual(todo.id);
   });
 
   test('restore sync by request body', async () => {
