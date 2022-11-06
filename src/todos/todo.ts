@@ -90,13 +90,6 @@ export interface TodoCreationParams {
 }
 
 export interface TodoUpdateParams extends TodoCreationParams {
-  id?: string;
-  userId?: string;
-  createdAt?: Date | null;
-  updatedAt?: Date | null;
+  [key: string]: any;
   deletedAt?: Date | null;
-}
-
-export interface TodoLooseParams extends TodoUpdateParams {
-  offline?: 'created' | 'updated' | 'deleted';
 }
