@@ -73,20 +73,20 @@ export const define = (sequelize: Sequelize) => {
 };
 
 export interface TodoCreationParams {
-  title?: string;
-  description?: string;
+  title?: string | null;
+  description?: string | null;
 
-  done?: boolean;
-  alarmed?: boolean;
+  done?: boolean | null;
+  alarmed?: boolean | null;
 
-  dueDate?: Date;
-  alarmDate?: Date;
+  dueDate?: Date | null;
+  alarmDate?: Date | null;
 
-  locationName?: string;
-  longitude?: number;
-  latitude?: number;
+  locationName?: string | null;
+  longitude?: number | null;
+  latitude?: number | null;
 
-  index?: number;
+  index?: number | null;
 }
 
 export interface TodoUpdateParams extends TodoCreationParams {
