@@ -72,7 +72,9 @@ export const define = (sequelize: Sequelize) => {
   );
 };
 
-export interface TodoCreationParams {
+export interface TodoValidationParams {
+  [key: string]: any;
+
   title?: string | null;
   description?: string | null;
 
@@ -89,7 +91,48 @@ export interface TodoCreationParams {
   index?: number | null;
 }
 
-export interface TodoUpdateParams extends TodoCreationParams {
-  [key: string]: any;
-  deletedAt?: Date | null;
+export interface TodoCreationParams {
+  title?: string;
+  description?: string;
+
+  done?: boolean;
+  alarmed?: boolean;
+
+  dueDate?: Date;
+  alarmDate?: Date;
+
+  locationName?: string;
+  longitude?: number;
+  latitude?: number;
+
+  index?: number;
 }
+
+export const extractTodoCreationParams = (data: any) => {
+  const keys: (keyof TodoCreationParams)[] = [
+    'title',
+    'description',
+
+    'done',
+    'alarmed',
+
+    'dueDate',
+    'alarmDate',
+
+    'locationName',
+    'longitude',
+    'latitude',
+
+    'index',
+  ];
+
+  const todoCreationParams: TodoCreationParams = {};
+
+  for (const key of keys) {
+    if (data[key]) {
+      todoCreationParams[key] = data[key];
+    }
+  }
+
+  return todoCreationParams;
+};

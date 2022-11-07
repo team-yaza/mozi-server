@@ -1,6 +1,6 @@
 import { User } from '@/users/user';
-import { Todo } from '@/todos/todo';
-import { TodoCreationParams, TodoUpdateParams } from './todo';
+import { extractTodoCreationParams, Todo } from '@/todos/todo';
+import { TodoCreationParams, TodoValidationParams } from './todo';
 import { WhereOptions } from 'sequelize/types';
 import { todoNotFound } from '@/utils/error';
 
@@ -23,23 +23,9 @@ export class TodosService {
     return todos;
   }
 
-  public async create(user: User, params: TodoCreationParams) {
-    const todo = await Todo.create({
-      title: params.title,
-      description: params.description,
-
-      done: params.done,
-      alarmed: params.alarmed,
-
-      dueDate: params.dueDate,
-      alarmDate: params.alarmDate,
-
-      locationName: params.locationName,
-      longitude: params.longitude,
-      latitude: params.latitude,
-
-      index: params.index,
-    });
+  public async create(user: User, params: TodoValidationParams) {
+    const todoCreationParams = extractTodoCreationParams(params);
+    const todo = await Todo.create(todoCreationParams);
 
     await user.addTodo(todo);
 
@@ -68,7 +54,7 @@ export class TodosService {
     }
   }
 
-  public async update(user: User, todoId: string, params: TodoCreationParams, restore = false) {
+  public async update(user: User, todoId: string, params: TodoValidationParams, restore = false) {
     const [todo] = await user.getTodos({
       where: {
         id: todoId,
@@ -80,7 +66,8 @@ export class TodosService {
       throw todoNotFound;
     }
 
-    await todo.update(params);
+    const todoCreationParams = extractTodoCreationParams(params);
+    await todo.update(todoCreationParams);
 
     if (restore) {
       await todo.restore();
@@ -89,25 +76,12 @@ export class TodosService {
     return todo;
   }
 
-  public async sync(user: User, todoId: string, params: TodoUpdateParams) {
+  public async sync(user: User, todoId: string, params: TodoValidationParams) {
+    const todoCreationParams = extractTodoCreationParams(params);
     const [todo] = await Todo.upsert({
       id: todoId,
       userId: user.id,
-
-      title: params.title,
-      description: params.description,
-
-      done: params.done,
-      alarmed: params.alarmed,
-
-      dueDate: params.dueDate,
-      alarmDate: params.alarmDate,
-
-      locationName: params.locationName,
-      longitude: params.longitude,
-      latitude: params.latitude,
-
-      index: params.index,
+      ...todoCreationParams,
     });
 
     if (params.deletedAt === null || params.deletedAt === undefined) {

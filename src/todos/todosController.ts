@@ -15,7 +15,7 @@ import {
   Query,
   Put,
 } from 'tsoa';
-import { TodoUpdateParams } from './todo';
+import { TodoValidationParams } from './todo';
 import { TodosService } from './todosService';
 
 @Route('todos')
@@ -39,7 +39,7 @@ export class TodosController extends Controller {
    */
   @SuccessResponse('201', 'Created')
   @Post()
-  public async createTodo(@Request() req: express.Request, @Body() reqBody: TodoUpdateParams) {
+  public async createTodo(@Request() req: express.Request, @Body() reqBody: TodoValidationParams) {
     return await new TodosService().create(req.user, reqBody);
   }
 
@@ -88,7 +88,7 @@ export class TodosController extends Controller {
   public async updateTodo(
     @Path() id: string,
     @Request() req: express.Request,
-    @Body() reqBody: TodoUpdateParams,
+    @Body() reqBody: TodoValidationParams,
     @Query() restore = false,
   ) {
     await new TodosService().update(req.user, id, reqBody, restore);
@@ -103,7 +103,7 @@ export class TodosController extends Controller {
    */
   @SuccessResponse('201', 'Created')
   @Put('{id}')
-  public async syncTodo(@Path() id: string, @Request() req: express.Request, @Body() reqBody: TodoUpdateParams) {
+  public async syncTodo(@Path() id: string, @Request() req: express.Request, @Body() reqBody: TodoValidationParams) {
     return await new TodosService().sync(req.user, id, reqBody);
   }
 }
