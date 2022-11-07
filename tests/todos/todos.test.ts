@@ -261,6 +261,16 @@ describe('PUT /todos/{id}', () => {
     expect(await matches(syncParams, todo.id)).toBeTruthy();
   });
 
+  test('create with weird input', async () => {
+    const todo = await createTodo(user, true, true);
+    const syncParams: any = new MockTodoCreationParams();
+    syncParams.hahaha = 'haha';
+
+    await request(app, 'put', `/api/v1/todos/${todo.id}`, token).send(syncParams).expect(201);
+
+    expect(await matches(syncParams, todo.id)).toBeTruthy();
+  });
+
   test('create soft deleted todo', async () => {
     const todo = await createTodo(user, true, true);
     const updateParams = new MockTodoUpdateParams(true);
@@ -289,6 +299,17 @@ describe('PUT /todos/{id}', () => {
 
     expect(await matches(updateParams, todo.id)).toBeTruthy();
     expect(await matches(updateParams, todo.id, true)).toBeFalsy();
+  });
+
+  test('update with weird input', async () => {
+    const todo = await createTodo(user);
+    const updateParams: any = new MockTodoCreationParams();
+    updateParams.hahaha = 'haha';
+
+    const response = await request(app, 'put', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(201);
+    console.log(response.body);
+
+    expect(await matches(updateParams, todo.id)).toBeTruthy();
   });
 
   test('create with id', async () => {
