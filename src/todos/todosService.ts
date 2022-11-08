@@ -54,7 +54,7 @@ export class TodosService {
     }
   }
 
-  public async update(user: User, todoId: string, params: TodoValidationParams, restore = false) {
+  public async update(user: User, todoId: string, params: TodoValidationParams) {
     const [todo] = await user.getTodos({
       where: {
         id: todoId,
@@ -69,8 +69,11 @@ export class TodosService {
     const todoCreationParams = extractTodoCreationParams(params);
     await todo.update(todoCreationParams);
 
-    if (restore) {
+    if (params.deletedAt === null || params.deletedAt === undefined) {
       await todo.restore();
+    } else {
+      todo.setDataValue('deletedAt' as any, params.deletedAt);
+      await todo.save();
     }
 
     return todo;
@@ -88,8 +91,8 @@ export class TodosService {
       await todo.restore();
     } else {
       todo.setDataValue('deletedAt' as any, params.deletedAt);
+      await todo.save();
     }
-    await todo.save();
 
     return todo;
   }
