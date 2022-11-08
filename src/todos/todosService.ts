@@ -1,6 +1,6 @@
 import { User } from '@/users/user';
 import { extractTodoCreationParams, Todo } from '@/todos/todo';
-import { TodoCreationParams, TodoValidationParams } from './todo';
+import { TodoValidationParams } from './todo';
 import { WhereOptions } from 'sequelize/types';
 import { todoNotFound } from '@/utils/error';
 
