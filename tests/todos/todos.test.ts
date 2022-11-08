@@ -207,7 +207,7 @@ describe('PATCH /todos/{id}', () => {
     const updateParams = new MockTodoCreationParams();
     await request(app, 'patch', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(204);
 
-    expect(matches(updateParams, todo.id)).toBeTruthy();
+    expect(await matches(updateParams, todo.id)).toBeTruthy();
   });
 
   test('update failed', async () => {
@@ -229,15 +229,26 @@ describe('PATCH /todos/{id}', () => {
     const updateParams = new MockTodoCreationParams();
     await request(app, 'patch', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(204);
 
-    expect(matches(updateParams, todo.id)).toBeTruthy();
+    expect(await matches(updateParams, todo.id)).toBeTruthy();
   });
 
   test('restore deleted todo', async () => {
     const todo = await createTodo(user, true);
+    // updateParams.deletedAt은 존재하지 않기 때문에 Todo는 복구되어야 합니다.
     const updateParams = new MockTodoCreationParams();
-    await request(app, 'patch', `/api/v1/todos/${todo.id}?restore=true`, token).send(updateParams).expect(204);
+    await request(app, 'patch', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(204);
 
-    expect(matches(updateParams, todo.id, true)).toBeTruthy();
+    expect(await matches(updateParams, todo.id, true)).toBeTruthy();
+  });
+
+  test('delete todo', async () => {
+    const todo = await createTodo(user);
+    // updateParams.deletedAt을 지정해서 삭제할 수 있습니다.
+    const updateParams: any = new MockTodoCreationParams();
+    updateParams.deletedAt = new Date();
+    await request(app, 'patch', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(204);
+
+    expect(await matches(updateParams, todo.id, true)).toBeFalsy();
   });
 });
 
