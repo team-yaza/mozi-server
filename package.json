@@ -47,6 +47,7 @@
     "yamljs": "^0.3.0"
   },
   "dependencies": {
+    "@google-cloud/local-auth": "^2.1.1",
     "@sentry/node": "^7.15.0",
     "@sentry/tracing": "^7.15.0",
     "axios": "^0.27.2",
@@ -55,6 +56,7 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-prom-bundle": "^6.5.0",
+    "googleapis": "^109.0.1",
     "helmet": "^5.1.1",
     "http-errors": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
