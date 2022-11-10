@@ -14,7 +14,10 @@ export class GoogleMigration extends Migration {
     this.oauth2Client = new OAuth2Client({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_SECRET_KEY,
-      redirectUri: process.env.GOOGLE_REDIRECT_URI,
+      redirectUri: (process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3000'
+        : 'https://mozi-client.vercel.app'
+      ).concat('/migrations/google'),
     });
   }
 
