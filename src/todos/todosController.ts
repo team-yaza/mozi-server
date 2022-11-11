@@ -12,7 +12,6 @@ import {
   Delete,
   Patch,
   Tags,
-  Query,
   Put,
 } from 'tsoa';
 import { TodoValidationParams } from './todo';

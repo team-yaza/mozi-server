@@ -92,6 +92,8 @@ export interface TodoValidationParams {
 }
 
 export interface TodoCreationParams {
+  id?: string;
+
   title?: string;
   description?: string;
 
@@ -110,6 +112,8 @@ export interface TodoCreationParams {
 
 export const extractTodoCreationParams = (data: any) => {
   const keys: (keyof TodoCreationParams)[] = [
+    'id',
+
     'title',
     'description',
 

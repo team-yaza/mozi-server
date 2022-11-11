@@ -81,8 +81,12 @@ export class TodosService {
 
   public async sync(user: User, todoId: string, params: TodoValidationParams) {
     const todoCreationParams = extractTodoCreationParams(params);
+
+    if (!todoCreationParams.id) {
+      todoCreationParams.id = todoId;
+    }
+
     const [todo] = await Todo.upsert({
-      id: todoId,
       userId: user.id,
       ...todoCreationParams,
     });
