@@ -1,7 +1,6 @@
 import express from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import createHttpError from 'http-errors';
-import config from '@/config';
 import { User } from '@/users/user';
 
 export async function expressAuthentication(request: express.Request, securityName: string, _?: string[]) {
@@ -16,11 +15,11 @@ export async function expressAuthentication(request: express.Request, securityNa
 
     const [, credential] = request.headers.authorization.split(' ');
 
-    if (!config.jwtSecret) {
+    if (!process.env.JWT_SECRET) {
       throw new createHttpError.Unauthorized('No secret key provided');
     }
 
-    const decoded = jwt.verify(credential, config.jwtSecret) as JwtPayload;
+    const decoded = jwt.verify(credential, process.env.JWT_SECRET) as JwtPayload;
     const user = await User.findByPk(decoded.id);
 
     if (!user) {

@@ -21,13 +21,6 @@ jobs:
       ## docker build & push
       - name: Docker build & push
         env:
-          NODE_ENV: ${{ secrets.NODE_ENV }}
-          PORT: ${{ secrets.PORT }}
-          NAVER_CLIENT_ID: ${{secrets.NAVER_CLIENT_ID}}
-          NAVER_SECRET_KEY: ${{secrets.NAVER_SECRET_KEY}}
-          KAKAO_BASE_URL: ${{secrets.KAKAO_BASE_URL}}
-          KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
-          KAKAO_CLIENT_SECRET: ${{secrets.KAKAO_CLIENT_SECRET}}
           JWT_SECRET: ${{secrets.JWT_SECRET}}
           GOOGLE_NEARBYSEARCH_API_KEY: ${{secrets.GOOGLE_NEARBYSEARCH_API_KEY}}
           MYSQL_USER: ${{secrets.MYSQL_USER}}
@@ -37,13 +30,6 @@ jobs:
           DATABASE_PORT: ${{secrets.DATABASE_PORT}}
 
         run: |
-          echo "NODE_ENV=$NODE_ENV" > .env
-          echo "PORT=$PORT" >> .env
-          echo "NAVER_CLIENT_ID=$NAVER_CLIENT_ID" >> .env
-          echo "NAVER_SECRET_KEY=$NAVER_SECRET_KEY" >> .env
-          echo "KAKAO_BASE_URL=$KAKAO_BASE_URL" >> .env
-          echo "KAKAO_REST_API_KEY=$KAKAO_REST_API_KEY" >> .env
-          echo "KAKAO_CLIENT_SECRET=$KAKAO_CLIENT_SECRET" >> .env
           echo "JWT_SECRET=$JWT_SECRET" >> .env
           echo "GOOGLE_NEARBYSEARCH_API_KEY=$GOOGLE_NEARBYSEARCH_API_KEY" >> .env
           echo "MYSQL_USER=$MYSQL_USER" >> .env

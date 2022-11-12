@@ -1,6 +1,7 @@
 import { calendar_v3, google } from 'googleapis';
 import { OAuth2Client } from 'google-auth-library';
 import { Migration } from './migration';
+import { GoogleOauth2Config as Config } from '@/utils/config';
 
 import { User } from '@/users/user';
 import { TodoCreationParams } from '@/todos/todo';
@@ -11,20 +12,13 @@ export class GoogleMigration extends Migration {
   constructor(user: User) {
     super(user);
 
-    this.oauth2Client = new OAuth2Client({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_SECRET_KEY,
-      redirectUri: (process.env.NODE_ENV === 'development'
-        ? 'http://localhost:3000'
-        : 'https://mozi-client.vercel.app'
-      ).concat('/migrations/google'),
-    });
+    this.oauth2Client = new OAuth2Client(new Config());
   }
 
   url() {
     return this.oauth2Client.generateAuthUrl({
       access_type: 'offline',
-      scope: process.env.GOOGLE_SCOPE,
+      scope: 'https://www.googleapis.com/auth/calendar.readonly',
     });
   }
 
