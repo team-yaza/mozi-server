@@ -1,7 +1,6 @@
 import { User } from '@/users/user';
 import { TodoCreationParams } from '@/todos/todo';
 import { TodosService } from '@/todos/todosService';
-import sequelize from 'sequelize';
 
 export abstract class Migration {
   private user: User;
