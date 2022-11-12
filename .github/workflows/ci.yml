@@ -31,12 +31,6 @@ jobs:
 
       - name: Test
         env:
-          PORT: ${{ secrets.PORT }}
-          NAVER_CLIENT_ID: ${{secrets.NAVER_CLIENT_ID}}
-          NAVER_SECRET_KEY: ${{secrets.NAVER_SECRET_KEY}}
-          KAKAO_BASE_URL: ${{secrets.KAKAO_BASE_URL}}
-          KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
-          KAKAO_CLIENT_SECRET: ${{secrets.KAKAO_CLIENT_SECRET}}
           JWT_SECRET: ${{secrets.JWT_SECRET}}
           GOOGLE_NEARBYSEARCH_API_KEY: ${{secrets.GOOGLE_NEARBYSEARCH_API_KEY}}
           MYSQL_USER: ${{secrets.MYSQL_USER}}
