@@ -1,13 +1,14 @@
 import mysql from 'mysql2/promise';
 import { Sequelize } from 'sequelize';
-import config from '@/config/sequelize';
-import { define as todo } from '@/todos/todo';
+
 import { define as user } from '@/users/user';
 import { define as userTodo } from '@/users/usertodo';
+import { define as todo } from '@/todos/todo';
+
+import { sequelize as config } from '@/utils/config';
 
 const sequelizeLoader = async () => {
-  const { host, user, password, database, port } =
-    config[process.env.NODE_ENV as 'development' | 'production' | 'test'];
+  const { host, user, password, database, port } = config[process.env.NODE_ENV];
 
   const connection = await mysql.createConnection({
     host,

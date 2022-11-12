@@ -1,4 +1,10 @@
-export default {
+export interface Config {
+  development: object;
+  production: object;
+  test: object;
+}
+
+export const sequelize: Config = {
   development: {
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
