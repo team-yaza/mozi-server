@@ -1,6 +1,5 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import config from '@/config';
 import { User } from '@/users/user';
 import { UserCreationParams } from '@/users/user';
 import { Todo } from '@/todos/todo';
@@ -35,7 +34,7 @@ abstract class Auth {
         email,
         profileImage,
       },
-      config.jwtSecret,
+      process.env.JWT_SECRET,
       { issuer: 'hyunjin' },
     );
   }
@@ -117,7 +116,7 @@ export class MockAuth extends Auth {
         ...userCreationParams,
         date: new Date().toString(),
       },
-      config.jwtSecret,
+      process.env.JWT_SECRET,
       { issuer: 'hyunjin', expiresIn: 300 },
     );
   }

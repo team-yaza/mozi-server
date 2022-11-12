@@ -9,6 +9,8 @@ declare global {
       DATABASE_URL: string;
       DATABASE_PORT: string;
 
+      JWT_SECRET: string;
+
       GOOGLE_CLIENT_ID: string;
       GOOGLE_SECRET_KEY: string;
       GOOGLE_REDIRECT_URI: string;
