@@ -61,3 +61,44 @@ export class SequelizeConfig extends Config<SequelizeConfigKey> {
     };
   }
 }
+
+interface GoogleOauth2ConfigKey {
+  clientId: string;
+  clientSecret: string;
+  redirectUri: string;
+}
+
+export class GoogleOauth2Config extends Config<GoogleOauth2ConfigKey> {
+  clientId: string;
+  clientSecret: string;
+  redirectUri: string;
+
+  constructor() {
+    super();
+
+    const env = this[process.env.NODE_ENV]();
+
+    this.clientId = env.clientId;
+    this.clientSecret = env.clientSecret;
+    this.redirectUri = env.redirectUri;
+  }
+
+  protected development(): GoogleOauth2ConfigKey {
+    return {
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_SECRET_KEY,
+      redirectUri: 'http://localhost:3000/migrations/google',
+    };
+  }
+
+  protected production(): GoogleOauth2ConfigKey {
+    const env = this.development();
+    env.redirectUri = 'https://mozi-client.vercel.app/migrations/google';
+
+    return env;
+  }
+
+  protected test(): GoogleOauth2ConfigKey {
+    return this.development();
+  }
+}
