@@ -1,6 +1,7 @@
 import { User } from '@/users/user';
 import { TodoCreationParams } from '@/todos/todo';
 import { TodosService } from '@/todos/todosService';
+import sequelize from 'sequelize';
 
 export abstract class Migration {
   private user: User;
@@ -25,8 +26,18 @@ export abstract class Migration {
   abstract parse(data: any[]): TodoCreationParams[];
 
   async push(todos: TodoCreationParams[]) {
+    let lastIndex =
+      (await this.user.getTodos()).reduce(
+        (previousValue, currentValue) => Math.max(previousValue, currentValue.index),
+        0,
+      ) + 1;
+
     for (const todo of todos) {
+      todo.index = lastIndex;
+
       await new TodosService().create(this.user, todo);
+
+      lastIndex++;
     }
   }
 }
