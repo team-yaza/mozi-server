@@ -21,26 +21,17 @@ jobs:
       ## docker build & push
       - name: Docker build & push
         env:
-          JWT_SECRET: ${{secrets.JWT_SECRET}}
-          GOOGLE_NEARBYSEARCH_API_KEY: ${{secrets.GOOGLE_NEARBYSEARCH_API_KEY}}
-          MYSQL_USER: ${{secrets.MYSQL_USER}}
-          MYSQL_PASSWORD: ${{secrets.MYSQL_PASSWORD}}
-          DATABASE_NAME: ${{secrets.DATABASE_NAME}}
-          DATABASE_URL: ${{secrets.DATABASE_URL}}
-          DATABASE_PORT: ${{secrets.DATABASE_PORT}}
-          GOOGLE_CLIENT_ID: ${{secrets.GOOGLE_CLIENT_ID}}
-          GOOGLE_SECRET_KEY: ${{secrets.GOOGLE_SECRET_KEY}}
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          GOOGLE_NEARBYSEARCH_API_KEY: ${{ secrets.GOOGLE_NEARBYSEARCH_API_KEY }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_SECRET_KEY: ${{ secrets.GOOGLE_SECRET_KEY }}
 
         run: |
-          echo "JWT_SECRET=$JWT_SECRET" >> .env
-          echo "GOOGLE_NEARBYSEARCH_API_KEY=$GOOGLE_NEARBYSEARCH_API_KEY" >> .env
-          echo "MYSQL_USER=$MYSQL_USER" >> .env
-          echo "MYSQL_PASSWORD=$MYSQL_PASSWORD" >> .env
-          echo "DATABASE_NAME=$DATABASE_NAME" >> .env
-          echo "DATABASE_URL=$DATABASE_URL" >> .env
-          echo "DATABASE_PORT=$DATABASE_PORT" >> .env
-          echo "GOOGLE_CLIENT_ID"=$GOOGLE_CLIENT_ID >> .env
-          echo "GOOGLE_SECRET_KEY=$GOOGLE_SECRET_KEY" >> .env
           docker build -f Dockerfile -t hancihu/mozi-server .
           docker push hancihu/mozi-server
 
