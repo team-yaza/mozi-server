@@ -12,13 +12,7 @@ export class GoogleMigration extends Migration {
   constructor(user: User) {
     super(user);
 
-    const config = new Config();
-
-    this.oauth2Client = new OAuth2Client({
-      clientId: config.clientId,
-      clientSecret: config.clientSecret,
-      redirectUri: config.redirectUri,
-    });
+    this.oauth2Client = new OAuth2Client(new Config());
   }
 
   url() {
