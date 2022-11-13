@@ -87,7 +87,7 @@ export class GoogleOauth2Config extends Config<GoogleOauth2ConfigKey> {
     return {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_SECRET_KEY,
-      redirectUri: 'https://mozi-client.vercel.app/migrations/google',
+      redirectUri: 'http://localhost:3000/migrations/google',
     };
   }
 
