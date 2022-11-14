@@ -1,21 +1,14 @@
-import express from 'express';
+import { app } from './app';
 
-import loader from '@/loaders';
 import logger from '@/utils/logger';
 
-const getServer = async () => {
-  const app = express();
-  await loader(app);
-  return app;
+const run = async () => {
+  const server = await app();
+
+  server.listen(3001, () => logger.info('server started'));
 };
 
-const startSever = async () => {
-  const app = await getServer();
-
-  app.listen(3001, () => logger.info('server started'));
-};
-
-startSever();
+run();
 
 process.on('unhandledRejection', (error) => console.log(error));
 process.on('uncaughtException', (error) => console.log(error));
