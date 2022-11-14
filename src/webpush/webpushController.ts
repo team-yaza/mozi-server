@@ -4,7 +4,7 @@ import { WebpushService } from './webpushService';
 
 @Route('webpush')
 @Tags('Webpush')
-export class webpushController extends Controller {
+export class WebpushController extends Controller {
   /**
    * subscription으로 대상을 특정해서 web push를 보냅니다
    * @param id 보내줄 Todo의 UUID
