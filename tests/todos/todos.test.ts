@@ -317,8 +317,7 @@ describe('PUT /todos/{id}', () => {
     const updateParams: any = new MockTodoCreationParams();
     updateParams.hahaha = 'haha';
 
-    const response = await request(app, 'put', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(201);
-    console.log(response.body);
+    await request(app, 'put', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(201);
 
     expect(await matches(updateParams, todo.id)).toBeTruthy();
   });
