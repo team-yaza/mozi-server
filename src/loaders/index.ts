@@ -1,11 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
 
-import { sentryLoader } from './sentry';
-import promLoader from './prom';
-import dotenv from 'dotenv';
-
 import expressLoader from '@/loaders/express';
 import sequelizeLoader from './sequelize';
+import promLoader from './prom';
+import dotenv from 'dotenv';
 
 import { RegisterRoutes } from '../../build/routes';
 import { ValidateError } from 'tsoa';
@@ -13,15 +11,10 @@ import { HttpError } from 'http-errors';
 import { JsonWebTokenError } from 'jsonwebtoken';
 
 const loader = async (app: express.Application) => {
-  sentryLoader(app);
-  promLoader(app);
-
   dotenv.config();
-
   expressLoader(app);
-
   await sequelizeLoader();
-
+  promLoader(app);
   RegisterRoutes(app);
 
   app.use(function notFoundHandler(_req, res: Response) {
