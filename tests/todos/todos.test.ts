@@ -318,7 +318,6 @@ describe('PUT /todos/{id}', () => {
     updateParams.hahaha = 'haha';
 
     const response = await request(app, 'put', `/api/v1/todos/${todo.id}`, token).send(updateParams).expect(201);
-    console.log(response.body);
 
     expect(await matches(updateParams, todo.id)).toBeTruthy();
   });
