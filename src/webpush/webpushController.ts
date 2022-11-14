@@ -1,6 +1,6 @@
 import { Body, Controller, Post, Route, SuccessResponse, Tags } from 'tsoa';
 import { PushSubscription } from 'web-push';
-import { webpushService } from './webpushService';
+import { WebpushService } from './webpushService';
 
 @Route('webpush')
 @Tags('Webpush')
@@ -13,7 +13,7 @@ export class webpushController extends Controller {
   @SuccessResponse('201', 'Created')
   @Post('{id}')
   public async pushTodo(id: string, @Body() reqBody: { subscription: PushSubscription }) {
-    const res = await new webpushService().pushTodo(id, reqBody.subscription);
+    const res = await new WebpushService().pushTodo(id, reqBody.subscription);
     if (!res) {
       this.setStatus(500);
     }
