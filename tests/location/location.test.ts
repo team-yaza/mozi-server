@@ -11,13 +11,14 @@ beforeAll(async () => {
   await loader(app);
 });
 
-const search = async (longitude: number, latitude: number, keyword: string) => {
+const search = async (url: string, longitude: number, latitude: number, keyword: string, recommended = false) => {
   return await request(app)
-    .get(`/api/v1/location/`)
+    .get(url)
     .query({
       longitude,
       latitude,
       keyword,
+      recommended,
     })
     .expect(200);
 };
@@ -25,7 +26,18 @@ const search = async (longitude: number, latitude: number, keyword: string) => {
 describe('InstantSearch', () => {
   test('Random search', async () => {
     const { longitude, latitude, keyword } = new Query();
-    const { body: locations } = await search(longitude, latitude, keyword);
+    const { body: locations } = await search(`/api/v1/location/`, longitude, latitude, keyword);
+
+    for (const location of locations) {
+      expect(validator(location)).toBeTruthy();
+    }
+  });
+});
+
+describe('Recommended location', () => {
+  test('Random search', async () => {
+    const { longitude, latitude, keyword } = new Query();
+    const { body: locations } = await search(`/api/v1/location/`, longitude, latitude, keyword, true);
 
     for (const location of locations) {
       expect(validator(location)).toBeTruthy();
