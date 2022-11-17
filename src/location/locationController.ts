@@ -9,11 +9,21 @@ export class LocationController extends Controller {
    * @param longitude 사용자 위치 경도
    * @param latitude 사용자 위치 위도
    * @param keyword 검색할 키워드
+   * @param recommended 추천 장소만 가져올건지 여부
    * @summary 위치와 키워드를 기반으로 장소를 반환합니다.
    */
   @SuccessResponse('200', 'Ok')
   @Get()
-  public async search(@Query() longitude: number, @Query() latitude: number, @Query() keyword: string) {
-    return new LocationService().search(longitude, latitude, keyword);
+  public async search(
+    @Query() longitude: number,
+    @Query() latitude: number,
+    @Query() keyword = '',
+    @Query() recommended?: boolean,
+  ) {
+    if (recommended) {
+      return new LocationService().recommend(longitude, latitude);
+    } else {
+      return new LocationService().search(longitude, latitude, keyword);
+    }
   }
 }
