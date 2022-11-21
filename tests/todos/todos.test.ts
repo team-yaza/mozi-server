@@ -6,7 +6,6 @@ import { getToken, MockUserCreateParams } from '../users/user';
 import { MockTodoCreationParams, removeAllTodos, request, createTodo, MockTodoUpdateParams } from './todo';
 import { User } from '../../src/users/user';
 import { Todo } from '../../src/todos/todo';
-import { faker } from '@faker-js/faker';
 import { TodoCreationParams } from '../../src/todos/todo';
 
 let app: Application;
