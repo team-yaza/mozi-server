@@ -31,6 +31,9 @@ export class Todo extends Model<InferAttributes<Todo>, InferCreationAttributes<T
   declare longitude: CreationOptional<number>;
   declare latitude: CreationOptional<number>;
 
+  declare alarmType: CreationOptional<string>;
+  declare distanceType: CreationOptional<string>;
+
   declare index: CreationOptional<number>;
 }
 
@@ -62,6 +65,9 @@ export const define = (sequelize: Sequelize) => {
       longitude: DataTypes.FLOAT,
       latitude: DataTypes.FLOAT,
 
+      alarmType: DataTypes.STRING,
+      distanceType: DataTypes.STRING,
+
       index: DataTypes.INTEGER,
     },
     {
@@ -88,6 +94,9 @@ export interface TodoValidationParams {
   longitude?: number | null;
   latitude?: number | null;
 
+  alarmType?: string | null;
+  distanceType?: string | null;
+
   index?: number | null;
 }
 
@@ -106,6 +115,9 @@ export interface TodoCreationParams {
   locationName?: string;
   longitude?: number;
   latitude?: number;
+
+  alarmType?: string;
+  distanceType?: string;
 
   index?: number;
 }
@@ -126,6 +138,9 @@ export const extractTodoCreationParams = (data: any) => {
     'locationName',
     'longitude',
     'latitude',
+
+    'alarmType',
+    'distanceType',
 
     'index',
   ];
